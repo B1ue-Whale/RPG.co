@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
 {
     [Tooltip("The character motor that will receive movement commands.")]
     [SerializeField] private CharacterMotor2D motor;
+    [SerializeField] private PlayerCombat combat;
+    private IInteractable _currentInteractable;
+    [SerializeField] private PlayerHideController playerHideController;
 
     // Last horizontal input read from the Move action, in [-1, 1].
     private float _horizontalInput;
@@ -58,6 +61,68 @@ public class PlayerController : MonoBehaviour
         if (value.isPressed && motor != null)
         {
             motor.RequestJump();
+        }
+    }
+    public void OnAttack(InputValue value)
+    {
+        if (!value.isPressed)
+            return;
+
+        // Block attack while hidden
+        if (playerHideController != null && playerHideController.IsHidden)
+        {
+            Debug.Log("공격 차단: 숨은 상태");
+            return;
+        }
+
+        if (combat != null)
+        {
+            Debug.Log("공격");
+            combat.Attack();
+        }
+    }
+    public void OnInteract(InputValue value)
+    {
+        if (!value.isPressed)
+            return;
+        // If player is currently hidden, pressing E only exits hide state. Block other interactions while hidden.
+        if (playerHideController != null && playerHideController.IsHidden)
+        {
+            playerHideController.ExitHide();
+            return;
+        }
+        if ((Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed)
+        && playerHideController != null)
+        {
+            Debug.Log("숨기버튼 눌림");
+            if (playerHideController.IsHidden)
+            {
+                playerHideController.ExitHide();
+                return;
+            }
+        
+            if (playerHideController.CanHideHere())
+            {
+                playerHideController.EnterHide();
+                return;
+            }
+        }
+        if (_currentInteractable != null)
+        {
+            Debug.Log("E버튼 눌림");
+            _currentInteractable.Interact();
+        }
+    }
+    
+    public void SetInteractable(IInteractable interactable)
+    {
+        _currentInteractable = interactable;
+    }
+    public void ClearInteractable(IInteractable interactable)
+    {
+        if (_currentInteractable == interactable)
+        {
+            _currentInteractable = null;
         }
     }
 }
