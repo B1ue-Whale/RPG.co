@@ -669,6 +669,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1108115632}
   - component: {fileID: 1108115633}
+  - component: {fileID: 1108115634}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -751,6 +752,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!95 &1108115634
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108115631}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ff7e165f6a261264a9ac0184a336ce6b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1363494520
 GameObject:
   m_ObjectHideFlags: 0
@@ -15716,19 +15739,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 165.98459, y: 16.9141}
   m_EdgeRadius: 0
---- !u!114 &1873591947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873591944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 722c4896db5139c49ae1ca6ea2253ee1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraZone
-  zoneCamera: {fileID: 1403907293}
 --- !u!4 &1873591946
 Transform:
   m_ObjectHideFlags: 0
@@ -15744,6 +15754,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1873591947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873591944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722c4896db5139c49ae1ca6ea2253ee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraZone
+  zoneCamera: {fileID: 1403907293}
 --- !u!1 &2130377327
 GameObject:
   m_ObjectHideFlags: 0
@@ -15758,6 +15781,7 @@ GameObject:
   - component: {fileID: 2130377332}
   - component: {fileID: 2130377331}
   - component: {fileID: 2130377333}
+  - component: {fileID: 2130377334}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -15910,6 +15934,21 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2130377334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130377327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a90b44fed7c9b4fbd850b73c23d8c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+  motor: {fileID: 2130377331}
+  animator: {fileID: 1108115634}
+  spriteRenderer: {fileID: 1108115633}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
