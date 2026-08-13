@@ -1,26 +1,23 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LevelPortal : MonoBehaviour
+public class LevelPortal : MonoBehaviour, IInteractable
 {
     [SerializeField]
     private string targetSceneName;
 
-    private bool playerIsNearby;
 
-    private void Update()
+    public void Interact()
     {
-        if (playerIsNearby && Keyboard.current.eKey.isPressed)
-        {
-            LevelTransition.EnterLevel(targetSceneName);
-        }
+        LevelTransition.EnterLevel(targetSceneName);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            playerIsNearby = true;
+            var controller = other.GetComponent<PlayerController>();
+            controller?.SetInteractable(this);
         }
     }
 
@@ -28,7 +25,8 @@ public class LevelPortal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerIsNearby = false;
+            var controller = other.GetComponent<PlayerController>();
+            controller?.ClearInteractable(this);
         }
     }
 }
