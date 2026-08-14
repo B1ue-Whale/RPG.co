@@ -49,6 +49,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnMove(InputValue value)
     {
+        if (playerHideController != null && playerHideController.IsHidden)
+        {
+            _horizontalInput = 0f; 
+            return;
+        }
         _horizontalInput = value.Get<Vector2>().x;
     }
 
@@ -58,6 +63,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnJump(InputValue value)
     {
+        if (playerHideController != null && playerHideController.IsHidden)
+        {
+            return;
+        }
         if (value.isPressed && motor != null)
         {
             motor.RequestJump();
