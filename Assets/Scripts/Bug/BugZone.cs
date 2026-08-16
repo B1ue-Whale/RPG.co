@@ -14,15 +14,19 @@ public class BugZone : MonoBehaviour
     [SerializeField] private Tilemap targetTilemap;
 
     // 감염 표시용 오버레이 (레벨 타일맵보다 위에 그려지는 별도 타일맵) //구본환 8.15
-    [SerializeField] private Tilemap infectionTilemap; //구본환 8.15
-    // 흰색 스프라이트 타일이어야 틴트 색이 제대로 보임 //구본환 8.15
-    [SerializeField] private TileBase infectionTile; //구본환 8.15
-    // 감염 표시 색 (알파를 낮춰 반투명 오버레이로 표시) //구본환 8.15
-    [SerializeField] private Color infectionColor = new Color(1f, 0f, 1f, 0.35f); //구본환 8.15
+    [SerializeField] private Tilemap infectionTilemap; 
+    // 흰색 스프라이트 타일이어야 틴트 색이 제대로 보임 
+    [SerializeField] private TileBase infectionTile; 
+    // 감염 표시 색 (알파를 낮춰 반투명 오버레이로 표시) 
+    [SerializeField] private Color infectionColor = new Color(1f, 0f, 1f, 0.35f); 
     
 
     private BoxCollider2D bugArea;
     List<Vector3Int> infectedTiles = new List<Vector3Int>();
+    //구본환 8.16 존 클리어 판정
+    private bool infectionReady;
+    public bool IsCleared => infectionReady && infectedTiles.Count == 0;
+    public event System.Action<BugZone> Cleared;
 
     //// 오염 전 타일 색 저장 //구본환 8.15 오버레이 방식으로 변경되어 미사용
     //private Dictionary<Vector3Int, Color> originalColors
@@ -40,6 +44,10 @@ public class BugZone : MonoBehaviour
     private void Start()
     {
         InfectTiles();
+        //구본환 8.16 감염 배치 후 이미 비어 있으면 클리어 처리
+        infectionReady = true;
+        if (IsCleared)
+            Cleared?.Invoke(this);
     }
 
     private void InfectTiles()
@@ -55,12 +63,12 @@ public class BugZone : MonoBehaviour
 
             //originalColors[cellPosition] = targetTilemap.GetColor(cellPosition); //구본환 8.15 오버레이 방식으로 변경되어 미사용
 
-            //targetTilemap.SetTileFlags(cellPosition, TileFlags.None); //구본환 8.15 미사용
-            //targetTilemap.SetColor(cellPosition, Color.magenta); //구본환 8.15 미사용
+            //targetTilemap.SetTileFlags(cellPosition, TileFlags.None); 
+            //targetTilemap.SetColor(cellPosition, Color.magenta); 
 
-            infectionTilemap.SetTile(cellPosition, infectionTile); //구본환 8.15
-            infectionTilemap.SetTileFlags(cellPosition, TileFlags.None); //구본환 8.15
-            infectionTilemap.SetColor(cellPosition, infectionColor); //구본환 8.15
+            infectionTilemap.SetTile(cellPosition, infectionTile); 
+            infectionTilemap.SetTileFlags(cellPosition, TileFlags.None); 
+            infectionTilemap.SetColor(cellPosition, infectionColor); 
             infectedTiles.Add(cellPosition);
             // 같은 타일이 또 뽑히지 않게 제거
             tilesInArea.RemoveAt(randomIndex);
@@ -108,5 +116,9 @@ public class BugZone : MonoBehaviour
        
         infectedTiles.Remove(cell);
         //destroy 할 필요 없을듯 
+
+        //구본환 8.16 마지막 타일이 정화되면 존 클리어
+        if (IsCleared)
+            Cleared?.Invoke(this);
     }
 }

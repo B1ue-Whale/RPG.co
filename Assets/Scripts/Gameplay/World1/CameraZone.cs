@@ -14,6 +14,7 @@ public class CameraZone : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera zoneCamera;
 
+    //구본환 8.16 존 전환 시 배경 교체 + 이전 배경 잠시 유지
     [Tooltip("Optional. Background shown while this zone is active. Other zone backgrounds are hidden.")]
     [SerializeField] private GameObject backgroundRoot;
 
@@ -21,7 +22,6 @@ public class CameraZone : MonoBehaviour
     [FormerlySerializedAs("backgroundFadeDuration")]
     [SerializeField] private float backgroundHoldDuration = 1f;
 
-    // 현재 켜져 있는 배경 (모든 CameraZone이 공유)
     private static GameObject activeBackground;
     private static Coroutine pendingHide;
     private static CameraZone pendingHideHost;
@@ -32,9 +32,10 @@ public class CameraZone : MonoBehaviour
             return;
 
         zoneCamera.Prioritize();
-        SwitchBackground();
+        SwitchBackground(); //구본환 8.16
     }
 
+    //구본환 8.16
     private void SwitchBackground()
     {
         if (backgroundRoot == null)
@@ -60,16 +61,17 @@ public class CameraZone : MonoBehaviour
         }
     }
 
+    //구본환 8.16
     private static void ShowBackground(GameObject root)
     {
         root.SetActive(true);
 
-        // 이전 페이드가 레이어를 개별로 꺼 둔 상태가 남아 있으면 복구
         Background[] layers = root.GetComponentsInChildren<Background>(true);
         for (int i = 0; i < layers.Length; i++)
             layers[i].gameObject.SetActive(true);
     }
 
+    //구본환 8.16
     private IEnumerator HideAfterDelay(GameObject toHide)
     {
         yield return new WaitForSeconds(backgroundHoldDuration);
@@ -81,6 +83,7 @@ public class CameraZone : MonoBehaviour
         pendingHideHost = null;
     }
 
+    //구본환 8.16
     private static void StopPendingHide()
     {
         if (pendingHide != null && pendingHideHost != null)

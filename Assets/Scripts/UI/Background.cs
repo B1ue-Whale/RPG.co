@@ -1,6 +1,7 @@
 using Unity.Cinemachine;
 using UnityEngine;
 
+//구본환 8.16 패럴랙스 배경 레이어
 /// <summary>
 /// One component per background layer sprite. The layer follows the camera
 /// at parallaxFactor (0 = fixed in the world / closest, 1 = glued to the
