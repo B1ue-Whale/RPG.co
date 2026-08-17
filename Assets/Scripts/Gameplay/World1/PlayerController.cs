@@ -59,18 +59,28 @@ public class PlayerController : MonoBehaviour
 
     /// <summary>
     /// Message from PlayerInput ("Send Messages" mode) for the "Jump" action.
-    /// Sends a single jump request on the press, ignoring the release.
+    /// Press requests a jump; hold/release is forwarded so jump height can vary.
     /// </summary>
     public void OnJump(InputValue value)
     {
-        if (playerHideController != null && playerHideController.IsHidden)
+        if (motor == null)
         {
             return;
         }
-        if (value.isPressed && motor != null)
+
+        bool pressed = value.isPressed;
+        if (playerHideController != null && playerHideController.IsHidden)
+        {
+            motor.SetJumpHeld(false);
+            return;
+        }
+
+        if (pressed)
         {
             motor.RequestJump();
         }
+
+        motor.SetJumpHeld(pressed);
     }
     public void OnAttack(InputValue value)
     {
