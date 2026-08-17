@@ -4,34 +4,40 @@ public class PipeTeleport : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform exitPoint;
 
-    private PlayerController _playerController;
+    private InteractionAgent _agent;
+    private Transform _interactorTransform;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player"))
+        var agent = other.GetComponent<InteractionAgent>();
+        if (agent == null)
             return;
 
-        _playerController = other.GetComponent<PlayerController>();
-        _playerController?.SetInteractable(this);
+        _agent = agent;
+        _interactorTransform = other.transform;
+        agent.SetInteractable(this);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Player"))
+        var agent = other.GetComponent<InteractionAgent>();
+        if (agent == null)
             return;
 
-        var controller = other.GetComponent<PlayerController>();
-        controller?.ClearInteractable(this);
+        agent.ClearInteractable(this);
 
-        if (controller == _playerController)
-            _playerController = null;
+        if (agent == _agent)
+        {
+            _agent = null;
+            _interactorTransform = null;
+        }
     }
 
     public void Interact()
     {
-        if (_playerController == null || exitPoint == null)
+        if (_interactorTransform == null || exitPoint == null)
             return;
 
-        _playerController.transform.position = exitPoint.position;
+        _interactorTransform.position = exitPoint.position;
     }
 }

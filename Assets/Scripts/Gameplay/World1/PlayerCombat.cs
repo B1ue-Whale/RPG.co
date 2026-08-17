@@ -23,13 +23,19 @@ public class PlayerCombat : MonoBehaviour
             new Vector3(direction * attackOffset, 0f, 0f);
 
         attackHitbox.enabled = true;
-        hitboxRenderer.enabled = true;
+        if (hitboxRenderer != null)
+        {
+            hitboxRenderer.enabled = true;
+        }
 
         yield return new WaitForSeconds(attackDuration);
 
 
         attackHitbox.enabled = false;
-        hitboxRenderer.enabled = false;
+        if (hitboxRenderer != null)
+        {
+            hitboxRenderer.enabled = false;
+        }
     }
 }
 
