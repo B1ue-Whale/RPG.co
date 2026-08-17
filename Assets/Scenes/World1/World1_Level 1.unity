@@ -744,6 +744,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602a406dc30dc3744b232e2ac154df01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelClearCondition
+  portal: {fileID: 0}
+  bugZones: []
 --- !u!1 &76408920
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,7 +900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressCheckpoint
   checkpointId: CP4
   arrivalHalfExtents: {x: 0.5, y: 0.5}
-  showInPlayMode: 1
+  showInPlayMode: 0
   visualColor: {r: 0, g: 1, b: 1, a: 1}
   anchorMarkerRadius: 0.08
   sortingOrder: 100
@@ -1117,7 +1119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressCheckpoint
   checkpointId: CP6
   arrivalHalfExtents: {x: 0.5, y: 0.5}
-  showInPlayMode: 1
+  showInPlayMode: 0
   visualColor: {r: 0, g: 1, b: 1, a: 1}
   anchorMarkerRadius: 0.08
   sortingOrder: 100
@@ -1757,7 +1759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressCheckpoint
   checkpointId: CP3
   arrivalHalfExtents: {x: 0.5, y: 0.5}
-  showInPlayMode: 1
+  showInPlayMode: 0
   visualColor: {r: 0, g: 1, b: 1, a: 1}
   anchorMarkerRadius: 0.08
   sortingOrder: 100
@@ -2734,6 +2736,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
   m_PrefabInstance: {fileID: 1049075619885252190}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1301147711 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+  m_PrefabInstance: {fileID: 1049075619885252190}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb939f77be227f14589ec821cac8ab03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BugZone
 --- !u!1 &1315437645
 GameObject:
   m_ObjectHideFlags: 0
@@ -17671,7 +17684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressCheckpoint
   checkpointId: CP1
   arrivalHalfExtents: {x: 0.5, y: 0.5}
-  showInPlayMode: 1
+  showInPlayMode: 0
   visualColor: {r: 0, g: 1, b: 1, a: 1}
   anchorMarkerRadius: 0.08
   sortingOrder: 100
@@ -17723,8 +17736,10 @@ GameObject:
   - component: {fileID: 1472330298}
   - component: {fileID: 1472330307}
   - component: {fileID: 1472330308}
+  - component: {fileID: 1472330310}
+  - component: {fileID: 1472330309}
   m_Layer: 0
-  m_Name: NPC_ReplayTest
+  m_Name: NPC
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17852,7 +17867,7 @@ Transform:
   m_GameObject: {fileID: 1472330297}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -13.74, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17901,8 +17916,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 694ec95064e603f4e880645cfa3f5db4, type: 2}
   autoStart: 1
   arrivalGracePeriod: 0.25
-  playerCollider: {fileID: 0}
-  npcCollider: {fileID: 0}
+  playerCollider: {fileID: 2130377328}
+  npcCollider: {fileID: 1472330304}
 --- !u!114 &1472330308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17917,6 +17932,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TrajectoryDebugComparator
   playback: {fileID: 1472330302}
   positionErrorThreshold: 0.15
+--- !u!114 &1472330309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472330297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20220849eab11a7469910ede00d2a51b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcSuspicionController
+  vision: {fileID: 1472330310}
+  playback: {fileID: 1472330302}
+  motor: {fileID: 1472330303}
+  awarenessGainRate: 1
+  awarenessDecayRate: 0.5
+  suspiciousEnterThreshold: 0.15
+  suspiciousExitThreshold: 0
+  suspicionBarOffset: {x: 0, y: 1.5, z: 0}
+  suspicionBarSize: {x: 1, y: 0.15}
+  suspicionBarBackground: {r: 0, g: 0, b: 0, a: 0.6}
+  suspicionBarFill: {r: 1, g: 0.6, b: 0, a: 1}
+--- !u!114 &1472330310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472330297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27f1853bbd4a5694d990b23f71544ecc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcVisionSensor
+  eye: {fileID: 1472330306}
+  motor: {fileID: 1472330303}
+  visionDistance: 8
+  visionAngle: 89
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 8
+  player: {fileID: 2130377330}
+  playerHideController: {fileID: 2130377335}
+  bugZones:
+  - {fileID: 1301147711}
+  - {fileID: 2070924616}
 --- !u!1 &1603556868
 GameObject:
   m_ObjectHideFlags: 0
@@ -20320,7 +20382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressCheckpoint
   checkpointId: CP5
   arrivalHalfExtents: {x: 0.5, y: 0.5}
-  showInPlayMode: 1
+  showInPlayMode: 0
   visualColor: {r: 0, g: 1, b: 1, a: 1}
   anchorMarkerRadius: 0.08
   sortingOrder: 100
@@ -20376,6 +20438,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
   m_PrefabInstance: {fileID: 330373670}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2070924616 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+  m_PrefabInstance: {fileID: 330373670}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb939f77be227f14589ec821cac8ab03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BugZone
 --- !u!1 &2077170372
 GameObject:
   m_ObjectHideFlags: 0
@@ -20422,7 +20495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProgressCheckpoint
   checkpointId: CP2
   arrivalHalfExtents: {x: 0.5, y: 0.5}
-  showInPlayMode: 1
+  showInPlayMode: 0
   visualColor: {r: 0, g: 1, b: 1, a: 1}
   anchorMarkerRadius: 0.08
   sortingOrder: 100
@@ -20722,6 +20795,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 806051850}
     m_Modifications:
+    - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: progressBarFill.b
+      value: 0.29844782
+      objectReference: {fileID: 0}
+    - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: progressBarFill.g
+      value: 0.94716984
+      objectReference: {fileID: 0}
+    - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: progressBarFill.r
+      value: 0.35696194
+      objectReference: {fileID: 0}
     - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: playerHideController
       value: 
