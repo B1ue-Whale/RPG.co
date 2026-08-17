@@ -11,6 +11,8 @@ public class PlayerHideController : MonoBehaviour
 
     private Vector3Int _currentHideCell;
 
+    public Vector3Int GetCurrentHideCell() => _currentHideCell;
+
     public bool CanHideHere()
     {
         if (hideableTilemap == null || hideCheckPoint == null)
