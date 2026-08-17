@@ -128,6 +128,24 @@ public class CharacterMotor2D : MonoBehaviour
         _coyoteTimeCounter = 0f;
     }
 
+    /// <summary>
+    /// Directly sets facing direction (left/right) without touching velocity or move
+    /// input. Facing is normally only derived from move input sign via
+    /// <see cref="ApplyHorizontalMovement"/>; this lets external logic (e.g. Suspicious
+    /// behavior) turn a stationary character to look at something.
+    /// </summary>
+    public void SetFacing(int direction)
+    {
+        if (direction > 0)
+        {
+            _facing = 1;
+        }
+        else if (direction < 0)
+        {
+            _facing = -1;
+        }
+    }
+
     private void FixedUpdate()
     {
         if (_rigidbody == null)

@@ -27,6 +27,13 @@ public class NpcCommandPlayback : MonoBehaviour
     private int _tickIndex;
 
     public bool IsPlaying { get; private set; }
+    /// <summary>
+    /// True while playback is paused mid-segment (e.g. NPC is Suspicious). Distinct
+    /// from IsPlaying being false: a paused playback is still "in progress" - it just
+    /// isn't consuming commands - so PlaybackCompleted does not fire and
+    /// NpcProgressionController does not treat the segment as finished.
+    /// </summary>
+    public bool IsPaused { get; private set; }
     public CharacterMotor2D Motor => motor;
     public Rigidbody2D Body => body;
     /// <summary>How many commands have been consumed so far (or in total, once stopped).</summary>
@@ -55,6 +62,7 @@ public class NpcCommandPlayback : MonoBehaviour
     public void Play()
     {
         _tickIndex = 0;
+        IsPaused = false;
         IsPlaying = _commands.Count > 0;
         if (!IsPlaying)
         {
@@ -65,8 +73,40 @@ public class NpcCommandPlayback : MonoBehaviour
     public void Stop()
     {
         IsPlaying = false;
+        IsPaused = false;
         // Otherwise the NPC keeps drifting on whatever moveInput was last applied.
         motor?.SetMoveInput(0f);
+    }
+
+    /// <summary>
+    /// Pauses command consumption at the exact current _tickIndex without touching it.
+    /// No-op if not playing or already paused. Zeroes move input (same reasoning as
+    /// Stop()) so the NPC doesn't keep drifting on the last command's input while
+    /// paused.
+    /// </summary>
+    public void Pause()
+    {
+        if (!IsPlaying || IsPaused)
+        {
+            return;
+        }
+
+        IsPaused = true;
+        motor?.SetMoveInput(0f);
+    }
+
+    /// <summary>
+    /// Resumes consuming commands from the exact tick Pause() left off at. No-op if
+    /// not playing or not paused.
+    /// </summary>
+    public void Resume()
+    {
+        if (!IsPlaying || !IsPaused)
+        {
+            return;
+        }
+
+        IsPaused = false;
     }
 
     /// <summary>
@@ -103,7 +143,7 @@ public class NpcCommandPlayback : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsPlaying || motor == null)
+        if (!IsPlaying || IsPaused || motor == null)
         {
             return;
         }
