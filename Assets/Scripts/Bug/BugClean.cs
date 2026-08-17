@@ -8,7 +8,7 @@ public class BugClean : MonoBehaviour
    
     private Vector3Int currentCell;
     private float timer;
-
+    private int lastDisplayedTime = -1;
     private void Update()
     {
         // 숨기 상태 확인
@@ -28,13 +28,21 @@ public class BugClean : MonoBehaviour
         // 맞으면 timer 증가
 
         timer += Time.deltaTime;
-        Debug.Log(timer);
 
-        if (timer>= cleanseTime)
+        int remainingTime = Mathf.CeilToInt(cleanseTime - timer);
+
+        if (remainingTime != lastDisplayedTime && remainingTime > 0)
+        {
+            Debug.Log(remainingTime);
+            lastDisplayedTime = remainingTime;
+        }
+
+        if (timer >= cleanseTime)
         {
             bugZone.ClearInfection(currentCell);
 
-            timer = 0f; 
+            timer = 0f;
+            lastDisplayedTime = -1;
         }
         // cleanseTime 이상이면 ClearInfection()
     }
