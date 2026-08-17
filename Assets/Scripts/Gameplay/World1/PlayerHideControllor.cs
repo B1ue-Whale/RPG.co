@@ -6,7 +6,7 @@ public class PlayerHideController : MonoBehaviour
     [SerializeField] private GameObject graphicsRoot;
     [SerializeField] private Transform hideCheckPoint;
     [SerializeField] private HideableTilemap hideableTilemap;
-
+    
     public bool IsHidden { get; private set; }
 
     private Vector3Int _currentHideCell;
@@ -52,5 +52,9 @@ public class PlayerHideController : MonoBehaviour
     {
         if (graphicsRoot != null)
             graphicsRoot.SetActive(visible);
+    }
+    public Vector3Int GetCurrentHideCell()
+    {
+        return _currentHideCell;
     }
 }
