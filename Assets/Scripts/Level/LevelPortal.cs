@@ -9,7 +9,7 @@ public class LevelPortal : MonoBehaviour, IInteractable
     [SerializeField]
     private bool startsLocked = true;
     private bool unlocked;
-    private PlayerController nearbyPlayer;
+    private InteractionAgent nearbyPlayer;
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class LevelPortal : MonoBehaviour, IInteractable
             return;
 
         //구본환 8.16 잠금 해제된 경우에만 상호작용 등록
-        nearbyPlayer = other.GetComponent<PlayerController>();
+        nearbyPlayer = other.GetComponent<InteractionAgent>();
         if (unlocked)
             nearbyPlayer?.SetInteractable(this);
     }
@@ -51,7 +51,7 @@ public class LevelPortal : MonoBehaviour, IInteractable
         if (!other.CompareTag("Player"))
             return;
 
-        var controller = other.GetComponent<PlayerController>();
+        var controller = other.GetComponent<InteractionAgent>();
         controller?.ClearInteractable(this);
 
         //구본환 8.16

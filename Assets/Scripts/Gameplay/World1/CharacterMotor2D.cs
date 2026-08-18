@@ -56,6 +56,16 @@ public class CharacterMotor2D : MonoBehaviour
     /// <summary>-1 when facing left, +1 when facing right.</summary>
     public int FacingDirection => _facing;
 
+    /// <summary>The move input currently pending consumption by this tick's FixedUpdate.</summary>
+    public float PendingMoveInput => _moveInput;
+
+    /// <summary>
+    /// Raised the instant <see cref="RequestJump"/> is called, before buffering/coyote
+    /// logic runs. Lets external observers (e.g. a command recorder) capture the
+    /// momentary jump press itself rather than inferring it from buffer/airborne state.
+    /// </summary>
+    public event System.Action JumpRequested;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -102,7 +112,38 @@ public class CharacterMotor2D : MonoBehaviour
     /// </summary>
     public void RequestJump()
     {
+        JumpRequested?.Invoke();
         _jumpBufferCounter = jumpBufferTime;
+    }
+
+    /// <summary>
+    /// Clears pending move input and the jump buffer/coyote timers, without touching
+    /// position or velocity. Used when a character is snapped to a checkpoint so it
+    /// doesn't carry over stale intent (e.g. a jump buffered a tick before teleporting).
+    /// </summary>
+    public void ResetTransientState()
+    {
+        _moveInput = 0f;
+        _jumpBufferCounter = 0f;
+        _coyoteTimeCounter = 0f;
+    }
+
+    /// <summary>
+    /// Directly sets facing direction (left/right) without touching velocity or move
+    /// input. Facing is normally only derived from move input sign via
+    /// <see cref="ApplyHorizontalMovement"/>; this lets external logic (e.g. Suspicious
+    /// behavior) turn a stationary character to look at something.
+    /// </summary>
+    public void SetFacing(int direction)
+    {
+        if (direction > 0)
+        {
+            _facing = 1;
+        }
+        else if (direction < 0)
+        {
+            _facing = -1;
+        }
     }
 
     private void FixedUpdate()

@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The character motor that will receive movement commands.")]
     [SerializeField] private CharacterMotor2D motor;
     [SerializeField] private PlayerCombat combat;
-    private IInteractable _currentInteractable;
+    [Tooltip("Tracks the current interactable in range and triggers it. Shared with NPC playback so interaction triggers don't need to know about PlayerController specifically.")]
+    [SerializeField] private InteractionAgent interactionAgent;
     [SerializeField] private PlayerHideController playerHideController;
 
     // Last horizontal input read from the Move action, in [-1, 1].
@@ -87,7 +88,9 @@ public class PlayerController : MonoBehaviour
         if (combat != null)
         {
             Debug.Log("공격");
-            combat.Attack();
+            // Temporarily disabled: attacking makes the player disappear (no
+            // attack animation yet). Re-enable once that's sorted out.
+            // combat.Attack();
         }
     }
     public void OnInteract(InputValue value)
@@ -116,22 +119,10 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
-        if (_currentInteractable != null)
+        if (interactionAgent != null)
         {
             Debug.Log("E버튼 눌림");
-            _currentInteractable.Interact();
-        }
-    }
-    
-    public void SetInteractable(IInteractable interactable)
-    {
-        _currentInteractable = interactable;
-    }
-    public void ClearInteractable(IInteractable interactable)
-    {
-        if (_currentInteractable == interactable)
-        {
-            _currentInteractable = null;
+            interactionAgent.TryInteract();
         }
     }
 }

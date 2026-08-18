@@ -103,6 +103,17 @@ public class BugZone : MonoBehaviour
     {
         return infectedTiles.Contains(cell);
     }
+
+    /// <summary>Currently infected cells, for callers (e.g. NpcVisionSensor) that need
+    /// to check each one rather than a single cell.</summary>
+    public IReadOnlyList<Vector3Int> InfectedCells => infectedTiles;
+
+    /// <summary>World-space center of a cell on this zone's tilemap, for LOS/distance
+    /// checks against a tile rather than a collider.</summary>
+    public Vector3 GetCellWorldCenter(Vector3Int cell)
+    {
+        return targetTilemap != null ? targetTilemap.GetCellCenterWorld(cell) : (Vector3)cell;
+    }
     public void ClearInfection(Vector3Int cell)
     {
         if (!infectedTiles.Contains(cell))
