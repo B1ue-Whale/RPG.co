@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3328540711285553970}
-  - component: {fileID: 7673087190454202923}
   - component: {fileID: 8744833543343490996}
   - component: {fileID: 206474729391243254}
   m_Layer: 0
@@ -34,52 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7673087190454202923
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 777890199514243890}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 2.431879, y: 2.8064404}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 16.992092, y: 9.882757}
-  m_EdgeRadius: 0
 --- !u!114 &8744833543343490996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb939f77be227f14589ec821cac8ab03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BugZone
-  bugCount: 5
-  range: 5
+  spawnInterval: 5
+  npcSafeRadius: 5
+  npcs: []
   targetTilemap: {fileID: 0}
   infectionTilemap: {fileID: 0}
   infectionTile: {fileID: 11400000, guid: 4d78f2b972896324698d3df552c72f7d, type: 2}

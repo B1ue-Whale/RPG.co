@@ -464,8 +464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602a406dc30dc3744b232e2ac154df01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelClearCondition
-  portal: {fileID: 0}
-  bugZones: []
 --- !u!1 &76408920
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,79 +841,6 @@ MonoBehaviour:
   visualColor: {r: 0, g: 1, b: 1, a: 1}
   anchorMarkerRadius: 0.08
   sortingOrder: 100
---- !u!1001 &330373670
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 806051850}
-    m_Modifications:
-    - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: cleanseTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: playerHideController
-      value: 
-      objectReference: {fileID: 2130377335}
-    - target: {fileID: 777890199514243890, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_Name
-      value: BugZone (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: targetTilemap
-      value: 
-      objectReference: {fileID: 1603556872}
-    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-      propertyPath: infectionTilemap
-      value: 
-      objectReference: {fileID: 50322988}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
 --- !u!1001 &337809948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -926,7 +851,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1468817750391982546, guid: b7eadd13abc5f7541b46a3f7d7f38cd7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.29854
+      value: -18.65854
       objectReference: {fileID: 0}
     - target: {fileID: 1468817750391982546, guid: b7eadd13abc5f7541b46a3f7d7f38cd7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1799,7 +1724,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1301147709}
-  - {fileID: 2070924614}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &851642877
@@ -18248,7 +18172,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMotor2D
   moveSpeed: 10
+  accelerationTime: 0.35
+  decelerationTime: 0.05
+  turnaroundTime: 0.08
   jumpForce: 20
+  fallGravityMultiplier: 1.6
+  jumpCutGravityMultiplier: 2.5
   coyoteTime: 0.1
   jumpBufferTime: 0.1
   groundCheck: {fileID: 1315437646}
@@ -18440,7 +18369,6 @@ MonoBehaviour:
   playerHideController: {fileID: 2130377335}
   bugZones:
   - {fileID: 1301147711}
-  - {fileID: 2070924616}
 --- !u!1 &1603556868
 GameObject:
   m_ObjectHideFlags: 0
@@ -20895,22 +20823,6 @@ Transform:
   - {fileID: 50322986}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2070924614 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-  m_PrefabInstance: {fileID: 330373670}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2070924616 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
-  m_PrefabInstance: {fileID: 330373670}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb939f77be227f14589ec821cac8ab03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BugZone
 --- !u!1 &2077170372
 GameObject:
   m_ObjectHideFlags: 0
@@ -21262,6 +21174,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 806051850}
     m_Modifications:
+    - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: cleanseTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: playerHideController
       value: 
