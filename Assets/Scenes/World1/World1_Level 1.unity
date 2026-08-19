@@ -926,7 +926,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1468817750391982546, guid: b7eadd13abc5f7541b46a3f7d7f38cd7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.29854
+      value: -18.65854
       objectReference: {fileID: 0}
     - target: {fileID: 1468817750391982546, guid: b7eadd13abc5f7541b46a3f7d7f38cd7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18248,7 +18248,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMotor2D
   moveSpeed: 10
+  accelerationTime: 0.35
+  decelerationTime: 0.05
+  turnaroundTime: 0.08
   jumpForce: 20
+  fallGravityMultiplier: 1.6
+  jumpCutGravityMultiplier: 2.5
   coyoteTime: 0.1
   jumpBufferTime: 0.1
   groundCheck: {fileID: 1315437646}
@@ -18360,22 +18365,21 @@ MonoBehaviour:
   - {fileID: 1932396812}
   - {fileID: 289291633}
   recordingLibrary:
-  - {fileID: 11400000, guid: d4291d255c2ee8c4ca47fe6ffbc950cb, type: 2}
-  - {fileID: 11400000, guid: 0aa5ba311c8b8ad4c921edcd4a4a9bb9, type: 2}
-  - {fileID: 11400000, guid: b466d3e0fc301f841851eb7fc4595a1b, type: 2}
-  - {fileID: 11400000, guid: f85390326e6def242a50bb474efd8c07, type: 2}
-  - {fileID: 11400000, guid: 9996454345c43cc40b002daf08da1d04, type: 2}
-  - {fileID: 11400000, guid: d952008a50d612f41aee1a7d875e6b3c, type: 2}
-  - {fileID: 11400000, guid: aaa7ea3766600704da48c451967756e8, type: 2}
-  - {fileID: 11400000, guid: 34549a744e2e28f4fa0f45a4d7616719, type: 2}
-  - {fileID: 11400000, guid: 4b512f5c507495841b7f21a9ddb07900, type: 2}
-  - {fileID: 11400000, guid: 25a914cb92dc0cf4b8664b5c7e5e4b68, type: 2}
-  - {fileID: 11400000, guid: 8ca92fc31bdbded4fb6723716deadc9d, type: 2}
-  - {fileID: 11400000, guid: bf6b2e2024da22b47ad5b426c469d90b, type: 2}
-  - {fileID: 11400000, guid: 451f22bf14afc304c8cd5f4dab33f81d, type: 2}
-  - {fileID: 11400000, guid: 6e0a9a5ad466ef9498453c0ecc98feda, type: 2}
-  - {fileID: 11400000, guid: c239262e406c66841a72b350fcc400a7, type: 2}
-  - {fileID: 11400000, guid: 694ec95064e603f4e880645cfa3f5db4, type: 2}
+  - {fileID: 11400000, guid: db70a1bfbda2aed4fa26e0f7af9bea57, type: 2}
+  - {fileID: 11400000, guid: 5a98640a103fc31488269fe24eeb4283, type: 2}
+  - {fileID: 11400000, guid: 7382bc9080e82b546b9b874416129f61, type: 2}
+  - {fileID: 11400000, guid: eda64532364835d47952b091574c4af0, type: 2}
+  - {fileID: 11400000, guid: f9556bda260b8d144b4fbdf4e932090d, type: 2}
+  - {fileID: 11400000, guid: 3a1b77bd3d61b8b4bb431531600506a6, type: 2}
+  - {fileID: 11400000, guid: b396139a3a1093747a7a744100a4b06f, type: 2}
+  - {fileID: 11400000, guid: 179c17d1460535a438fef60e2caa4121, type: 2}
+  - {fileID: 11400000, guid: 7d76d1aec2e97d4498d311573e631cf0, type: 2}
+  - {fileID: 11400000, guid: 99bb34640c081354096c399f9d80a973, type: 2}
+  - {fileID: 11400000, guid: 1febaca3157fb8b4c86f8ce03e17ceb0, type: 2}
+  - {fileID: 11400000, guid: 46fda7dd80064cb4091ea7d3e198fc4f, type: 2}
+  - {fileID: 11400000, guid: bccd6133ef5e8ef4eb6be347359b033d, type: 2}
+  - {fileID: 11400000, guid: 2096a2d794e35c148bfdfb97d82915c8, type: 2}
+  - {fileID: 11400000, guid: ab49b96a85e82b24798bd9691c7d2682, type: 2}
   autoStart: 1
   arrivalGracePeriod: 0.25
   playerCollider: {fileID: 2130377328}
@@ -18441,6 +18445,97 @@ MonoBehaviour:
   bugZones:
   - {fileID: 1301147711}
   - {fileID: 2070924616}
+--- !u!1 &1597102881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1597102884}
+  - component: {fileID: 1597102883}
+  - component: {fileID: 1597102882}
+  m_Layer: 0
+  m_Name: KillBorder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1597102882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597102881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3848cc420b74bf74998bc699e36bbcd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KillBorder
+--- !u!61 &1597102883
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597102881}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -67.5536, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 165.99644, y: 1}
+  m_EdgeRadius: 0
+--- !u!4 &1597102884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597102881}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 119.49, y: -5.29, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1603556868
 GameObject:
   m_ObjectHideFlags: 0
@@ -21236,8 +21331,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CheckpointRecordingController
   recorder: {fileID: 2130377338}
   playerBody: {fileID: 2130377329}
-  startCheckpoint: {fileID: 1405758062}
-  endCheckpoint: {fileID: 2077170374}
+  startCheckpoint: {fileID: 1932396812}
+  endCheckpoint: {fileID: 289291633}
   saveFolder: Assets/Recordings
 --- !u!114 &2130377340
 MonoBehaviour:
@@ -21412,3 +21507,4 @@ SceneRoots:
   - {fileID: 754487857}
   - {fileID: 1413778906}
   - {fileID: 1097486222}
+  - {fileID: 1597102884}

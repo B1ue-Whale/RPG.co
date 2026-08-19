@@ -40,6 +40,13 @@ public class NpcProgressionController : MonoBehaviour
     private bool _running;
     private bool _waitingForArrival;
     private float _graceTimeRemaining;
+    private NpcSuspicionController _suspicion;
+
+    // Last recording played per segment index. On the next visit to the same segment
+    // (e.g. after dying and restarting from the first checkpoint) that recording is
+    // excluded from the random pick when alternatives exist, so each retry takes
+    // different routes instead of repeating the exact run that just failed.
+    private readonly Dictionary<int, NpcRecording> _lastPlayedBySegment = new Dictionary<int, NpcRecording>();
 
     public bool IsRunning => _running;
     public int CurrentCheckpointIndex => _currentIndex;
@@ -55,6 +62,8 @@ public class NpcProgressionController : MonoBehaviour
         {
             Physics2D.IgnoreCollision(playerCollider, npcCollider, true);
         }
+
+        _suspicion = GetComponent<NpcSuspicionController>();
     }
 
     private void OnEnable()
@@ -98,7 +107,30 @@ public class NpcProgressionController : MonoBehaviour
     public void Stop()
     {
         _running = false;
+        _waitingForArrival = false;
         playback?.Stop();
+    }
+
+    /// <summary>
+    /// Kills the NPC (e.g. it fell into a KillBorder): abandons the current segment,
+    /// resets back to the first checkpoint, and restarts the whole chain. Route
+    /// selection re-rolls on the way back up, avoiding each segment's previous pick
+    /// where alternatives exist.
+    /// </summary>
+    public void Die()
+    {
+        Debug.Log($"[{nameof(NpcProgressionController)}] NPC died. Resetting to '{(checkpointChain.Count > 0 ? checkpointChain[0].Id : "?")}' and restarting chain.");
+
+        _waitingForArrival = false;
+        playback?.Stop();
+
+        // Otherwise the NPC could respawn still flagged Suspicious from before it died.
+        if (_suspicion != null)
+        {
+            _suspicion.ResetSuspicion();
+        }
+
+        BeginChain();
     }
 
     private void PlayNextSegment()
@@ -129,7 +161,15 @@ public class NpcProgressionController : MonoBehaviour
             return;
         }
 
+        // Avoid replaying the same variant this segment used last time around, so a
+        // respawned NPC takes different routes on its next attempt.
+        if (candidates.Count > 1 && _lastPlayedBySegment.TryGetValue(_currentIndex, out NpcRecording lastPlayed))
+        {
+            candidates.Remove(lastPlayed);
+        }
+
         NpcRecording chosen = candidates[Random.Range(0, candidates.Count)];
+        _lastPlayedBySegment[_currentIndex] = chosen;
         Debug.Log($"[{nameof(NpcProgressionController)}] Segment '{from.Id}' -> '{to.Id}': playing '{chosen.name}' ({chosen.Commands.Count} ticks).");
 
         playback.PrepareAtCheckpoint(from);
