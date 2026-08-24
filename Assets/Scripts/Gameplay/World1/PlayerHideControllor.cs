@@ -10,6 +10,15 @@ public class PlayerHideController : MonoBehaviour
     public bool IsHidden { get; private set; }
 
     private Vector3Int _currentHideCell;
+    private Collider2D _bodyCollider;
+    private Rigidbody2D _rigidbody;
+    private RigidbodyConstraints2D _savedConstraints;
+
+    private void Awake()
+    {
+        _bodyCollider = GetComponent<Collider2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+    }
 
     public Vector3Int GetCurrentHideCell() => _currentHideCell;
 
@@ -36,6 +45,7 @@ public class PlayerHideController : MonoBehaviour
         Debug.Log("EnterHide 호출됨");
         IsHidden = true;
         SetGraphicsVisible(false);
+        SetBodyCollisionActive(false);
         hideableTilemap.ShowHighlight(_currentHideCell);
     }
 
@@ -47,7 +57,27 @@ public class PlayerHideController : MonoBehaviour
         Debug.Log("ExitHide 호출됨");
         IsHidden = false;
         SetGraphicsVisible(true);
+        SetBodyCollisionActive(true);
         hideableTilemap.ClearHighlight();
+    }
+
+    private void SetBodyCollisionActive(bool active)
+    {
+        if (_bodyCollider != null)
+            _bodyCollider.enabled = active;
+
+        if (_rigidbody == null)
+            return;
+
+        if (active)
+        {
+            _rigidbody.constraints = _savedConstraints;
+            return;
+        }
+
+        _savedConstraints = _rigidbody.constraints;
+        _rigidbody.linearVelocity = Vector2.zero;
+        _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     private void SetGraphicsVisible(bool visible)
