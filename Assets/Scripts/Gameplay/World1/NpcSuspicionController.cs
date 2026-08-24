@@ -57,6 +57,21 @@ public class NpcSuspicionController : MonoBehaviour
     public float Awareness { get; private set; }
     public bool IsSuspicious => _state == State.Suspicious;
 
+    /// <summary>
+    /// Clears all suspicion state (awareness, Suspicious/pending state, bar). Called
+    /// when the NPC dies and respawns so it doesn't come back still suspicious.
+    /// </summary>
+    public void ResetSuspicion()
+    {
+        Awareness = 0f;
+        _state = State.Progressing;
+        if (_suspicionBar != null)
+        {
+            _suspicionBar.SetFill(0f);
+            _suspicionBar.SetVisible(false);
+        }
+    }
+
     private void Awake()
     {
         _suspicionBar = WorldSpaceProgressBar.Create(transform, suspicionBarOffset, suspicionBarSize, suspicionBarBackground, suspicionBarFill);
