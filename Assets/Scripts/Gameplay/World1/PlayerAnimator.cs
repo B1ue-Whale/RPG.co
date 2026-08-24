@@ -1,11 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// Drives the player's Animator from <see cref="CharacterMotor2D"/> state.
+/// Drives a character Animator from <see cref="CharacterMotor2D"/> state.
 /// Owns no logic of its own: it only mirrors motor state into Animator
 /// parameters each frame and flips the sprite to match facing direction.
-/// Expected Animator parameters: "Speed" (float), "IsGrounded" (bool),
-/// "VerticalVelocity" (float).
+/// Used by both the player and NPCs. Expected Animator parameters:
+/// "Speed" (float), "IsGrounded" (bool), "VerticalVelocity" (float).
 /// </summary>
 public class PlayerAnimator : MonoBehaviour
 {
@@ -17,8 +17,10 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private CharacterMotor2D motor;
     [Tooltip("Animator on the Graphics child.")]
     [SerializeField] private Animator animator;
-    [Tooltip("Sprite renderer to flip when facing left.")]
+    [Tooltip("Sprite renderer whose flipX is driven by facing direction.")]
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [Tooltip("Enable if the sprite art faces left by default (player art in this project). Disable for right-facing art such as the NPC.")]
+    [SerializeField] private bool spriteFacesLeft = true;
 
     private void Update()
     {
@@ -26,7 +28,8 @@ public class PlayerAnimator : MonoBehaviour
         animator.SetBool(IsGroundedParam, motor.IsGrounded);
         animator.SetFloat(VerticalVelocityParam, motor.Velocity.y);
 
-        // Sprite art faces left by default, so flip when moving right.
-        spriteRenderer.flipX = motor.FacingDirection > 0;
+        spriteRenderer.flipX = spriteFacesLeft
+            ? motor.FacingDirection > 0
+            : motor.FacingDirection < 0;
     }
 }
