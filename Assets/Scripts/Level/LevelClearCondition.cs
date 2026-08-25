@@ -1,59 +1,44 @@
 using UnityEngine;
 
-//구본환 8.16 모든 BugZone 정화 시 포탈 해금
+//구본환 8.16 -> 8.19 클리어 조건 변경: 버그존 정화 -> NPC가 레벨 끝에 도착
 /// <summary>
-/// Unlocks the level portal once every BugZone in the scene has been cleansed.
-/// Add this to LevelManager (or any always-active object) and assign the portal.
-/// Bug zones are found automatically if the list is left empty.
+/// Unlocks the level portal once the NPC has reached the end of its checkpoint
+/// chain. Add this to LevelManager (or any always-active object) and assign the
+/// portal. The NPC progression controller is found automatically if left unassigned.
 /// </summary>
 public class LevelClearCondition : MonoBehaviour
 {
     [SerializeField] private LevelPortal portal;
-    [SerializeField] private BugZone[] bugZones;
+    [SerializeField] private NpcProgressionController npcProgression;
 
     private void Start()
     {
-        if (bugZones == null || bugZones.Length == 0)
-            bugZones = FindObjectsByType<BugZone>(FindObjectsSortMode.None);
+        if (npcProgression == null)
+            npcProgression = FindFirstObjectByType<NpcProgressionController>();
 
         portal?.SetUnlocked(false);
 
-        for (int i = 0; i < bugZones.Length; i++)
+        if (npcProgression == null)
         {
-            if (bugZones[i] == null)
-                continue;
-            bugZones[i].Cleared += OnZoneCleared;
+            Debug.LogWarning($"[{nameof(LevelClearCondition)}] No {nameof(NpcProgressionController)} in the scene; the portal will stay locked.");
+            return;
         }
 
-        TryUnlockPortal();
+        npcProgression.ChainCompleted += OnChainCompleted;
+
+        // In case the chain already finished before this Start ran.
+        if (npcProgression.IsChainComplete)
+            OnChainCompleted();
     }
 
     private void OnDestroy()
     {
-        if (bugZones == null)
-            return;
-
-        for (int i = 0; i < bugZones.Length; i++)
-        {
-            if (bugZones[i] == null)
-                continue;
-            bugZones[i].Cleared -= OnZoneCleared;
-        }
+        if (npcProgression != null)
+            npcProgression.ChainCompleted -= OnChainCompleted;
     }
 
-    private void OnZoneCleared(BugZone zone)
+    private void OnChainCompleted()
     {
-        TryUnlockPortal();
-    }
-
-    private void TryUnlockPortal()
-    {
-        for (int i = 0; i < bugZones.Length; i++)
-        {
-            if (bugZones[i] != null && !bugZones[i].IsCleared)
-                return;
-        }
-
         portal?.SetUnlocked(true);
     }
 }

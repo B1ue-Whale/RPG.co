@@ -50,6 +50,12 @@ public class NpcProgressionController : MonoBehaviour
 
     public bool IsRunning => _running;
     public int CurrentCheckpointIndex => _currentIndex;
+    /// <summary>True once the NPC has reached the final checkpoint of the chain.</summary>
+    public bool IsChainComplete { get; private set; }
+
+    /// <summary>Raised once when the NPC reaches the final checkpoint of the chain
+    /// (the level goal). Not raised on arrival failure or external Stop().</summary>
+    public event System.Action ChainCompleted;
 
     private void Awake()
     {
@@ -99,6 +105,7 @@ public class NpcProgressionController : MonoBehaviour
         }
 
         _currentIndex = 0;
+        IsChainComplete = false;
         checkpointChain[0].SnapTo(playback.Body, playback.Motor);
         _running = true;
         PlayNextSegment();
@@ -144,6 +151,8 @@ public class NpcProgressionController : MonoBehaviour
         {
             Debug.Log($"[{nameof(NpcProgressionController)}] Chain complete at checkpoint '{checkpointChain[_currentIndex].Id}'.");
             _running = false;
+            IsChainComplete = true;
+            ChainCompleted?.Invoke();
             return;
         }
 

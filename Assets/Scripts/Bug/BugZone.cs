@@ -2,103 +2,130 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(BoxCollider2D))]
+/// <summary>
+/// A single map-wide bug zone. Bugs spawn endlessly, one at a time at a fixed
+/// interval, on random tiles of the target tilemap, skipping tiles near an NPC.
+/// Clearing bugs is no longer the level goal - the player just keeps the map
+/// clean while the NPC works toward the end of the level.
+/// </summary>
 public class BugZone : MonoBehaviour
 {
-    [SerializeField] private int bugCount = 3;
+    [Header("Spawning")]
+    [Tooltip("Seconds between bug spawns. The first bug spawns immediately.")]
+    [SerializeField] private float spawnInterval = 5f;
 
-    
-    [SerializeField] private float range = 5f;
+    [Header("NPC Avoidance")]
+    [Tooltip("Bugs never spawn on a tile whose center is within this world-space radius of an NPC.")]
+    [SerializeField] private float npcSafeRadius = 5f;
+    [Tooltip("NPCs to keep bug spawns away from. Found automatically if the list is left empty.")]
+    [SerializeField] private NpcCommandPlayback[] npcs;
 
-
+    [Header("Tilemaps")]
+    // 감염 후보 타일맵 (숨을 수 있는 타일 전체가 스폰 후보)
     [SerializeField] private Tilemap targetTilemap;
-
     // 감염 표시용 오버레이 (레벨 타일맵보다 위에 그려지는 별도 타일맵) //구본환 8.15
-    [SerializeField] private Tilemap infectionTilemap; 
-    // 흰색 스프라이트 타일이어야 틴트 색이 제대로 보임 
-    [SerializeField] private TileBase infectionTile; 
-    // 감염 표시 색 (알파를 낮춰 반투명 오버레이로 표시) 
-    [SerializeField] private Color infectionColor = new Color(1f, 0f, 1f, 0.35f); 
-    
+    [SerializeField] private Tilemap infectionTilemap;
+    // 흰색 스프라이트 타일이어야 틴트 색이 제대로 보임
+    [SerializeField] private TileBase infectionTile;
+    // 감염 표시 색 (알파를 낮춰 반투명 오버레이로 표시)
+    [SerializeField] private Color infectionColor = new Color(1f, 0f, 1f, 0.35f);
 
-    private BoxCollider2D bugArea;
-    List<Vector3Int> infectedTiles = new List<Vector3Int>();
-    //구본환 8.16 존 클리어 판정
-    private bool infectionReady;
-    public bool IsCleared => infectionReady && infectedTiles.Count == 0;
-    public event System.Action<BugZone> Cleared;
-
-    //// 오염 전 타일 색 저장 //구본환 8.15 오버레이 방식으로 변경되어 미사용
-    //private Dictionary<Vector3Int, Color> originalColors
-    //    = new Dictionary<Vector3Int, Color>();
-
-    private void Awake()
-    {
-        bugArea = GetComponent<BoxCollider2D>();
-
-        // range가 5라면 전체 크기는 10 x 10
-        bugArea.size = new Vector2(range * 2f, range * 2f);
-        bugArea.isTrigger = true;
-    }
+    private readonly List<Vector3Int> spawnableCells = new List<Vector3Int>();
+    private readonly List<Vector3Int> infectedTiles = new List<Vector3Int>();
+    private float spawnTimer;
 
     private void Start()
     {
-        InfectTiles();
-        //구본환 8.16 감염 배치 후 이미 비어 있으면 클리어 처리
-        infectionReady = true;
-        if (IsCleared)
-            Cleared?.Invoke(this);
+        CollectSpawnableCells();
+
+        if (npcs == null || npcs.Length == 0)
+            npcs = FindObjectsByType<NpcCommandPlayback>(FindObjectsSortMode.None);
+
+        // First bug spawns on the first Update tick, the rest every spawnInterval.
+        spawnTimer = 0f;
     }
 
-    private void InfectTiles()
+    private void Update()
     {
-        List<Vector3Int> tilesInArea = GetTilesInArea();
-        int infectCount = Mathf.Min(bugCount, tilesInArea.Count);
+        spawnTimer -= Time.deltaTime;
+        if (spawnTimer > 0f)
+            return;
 
-        for (int i = 0; i < infectCount; i++)
+        // Wait a full interval before retrying even when no valid tile was found
+        // (e.g. the NPC is currently near every free tile), so we don't rescan
+        // the map every frame.
+        spawnTimer = spawnInterval;
+
+        TrySpawnBug();
+    }
+
+    /// <summary>The whole target tilemap is the zone: every painted cell is a spawn candidate.</summary>
+    private void CollectSpawnableCells()
+    {
+        spawnableCells.Clear();
+
+        foreach (Vector3Int cell in targetTilemap.cellBounds.allPositionsWithin)
         {
-            int randomIndex = Random.Range(0, tilesInArea.Count);
-
-            Vector3Int cellPosition = tilesInArea[randomIndex];
-
-            //originalColors[cellPosition] = targetTilemap.GetColor(cellPosition); //구본환 8.15 오버레이 방식으로 변경되어 미사용
-
-            //targetTilemap.SetTileFlags(cellPosition, TileFlags.None); 
-            //targetTilemap.SetColor(cellPosition, Color.magenta); 
-
-            infectionTilemap.SetTile(cellPosition, infectionTile); 
-            infectionTilemap.SetTileFlags(cellPosition, TileFlags.None); 
-            infectionTilemap.SetColor(cellPosition, infectionColor); 
-            infectedTiles.Add(cellPosition);
-            // 같은 타일이 또 뽑히지 않게 제거
-            tilesInArea.RemoveAt(randomIndex);
+            if (targetTilemap.HasTile(cell))
+                spawnableCells.Add(cell);
         }
     }
 
-    private List<Vector3Int> GetTilesInArea()
+    private bool TrySpawnBug()
     {
-        List<Vector3Int> tiles = new List<Vector3Int>();
+        List<Vector3Int> candidates = new List<Vector3Int>();
 
-        Bounds bounds = bugArea.bounds;
-
-        Vector3Int minCell = targetTilemap.WorldToCell(bounds.min);
-        Vector3Int maxCell = targetTilemap.WorldToCell(bounds.max);
-
-        for (int x = minCell.x; x <= maxCell.x; x++)
+        for (int i = 0; i < spawnableCells.Count; i++)
         {
-            for (int y = minCell.y; y <= maxCell.y; y++)
-            {
-                Vector3Int cellPosition = new Vector3Int(x, y, 0);
+            Vector3Int cell = spawnableCells[i];
 
-                if (targetTilemap.HasTile(cellPosition))
-                {
-                    tiles.Add(cellPosition);
-                }
-            }
+            if (infectedTiles.Contains(cell))
+                continue;
+            if (IsNearNpc(cell))
+                continue;
+
+            candidates.Add(cell);
         }
 
-        return tiles;
+        if (candidates.Count == 0)
+            return false;
+
+        Vector3Int cellPosition = candidates[Random.Range(0, candidates.Count)];
+
+        infectionTilemap.SetTile(cellPosition, infectionTile);
+        infectionTilemap.SetTileFlags(cellPosition, TileFlags.None);
+        infectionTilemap.SetColor(cellPosition, infectionColor);
+        infectedTiles.Add(cellPosition);
+
+        return true;
     }
+
+    private bool IsNearNpc(Vector3Int cell)
+    {
+        if (npcs == null || npcSafeRadius <= 0f)
+            return false;
+
+        Vector2 cellCenter = targetTilemap.GetCellCenterWorld(cell);
+        float sqrSafeRadius = npcSafeRadius * npcSafeRadius;
+
+        for (int i = 0; i < npcs.Length; i++)
+        {
+            NpcCommandPlayback npc = npcs[i];
+            if (npc == null)
+                continue;
+
+            // Rigidbody position is the physics-accurate one while playback moves the NPC.
+            Vector2 npcPosition = npc.Body != null
+                ? npc.Body.position
+                : (Vector2)npc.transform.position;
+
+            if ((npcPosition - cellCenter).sqrMagnitude <= sqrSafeRadius)
+                return true;
+        }
+
+        return false;
+    }
+
     public bool isInfected(Vector3Int cell)
     {
         return infectedTiles.Contains(cell);
@@ -114,6 +141,7 @@ public class BugZone : MonoBehaviour
     {
         return targetTilemap != null ? targetTilemap.GetCellCenterWorld(cell) : (Vector3)cell;
     }
+
     public void ClearInfection(Vector3Int cell)
     {
         if (!infectedTiles.Contains(cell))
@@ -121,15 +149,8 @@ public class BugZone : MonoBehaviour
             return; //아무것도 없음 
         }
 
-        //targetTilemap.SetColor(cell, originalColors[cell]); //구본환 8.15 오버레이 방식으로 변경되어 미사용
-
         infectionTilemap.SetTile(cell, null); //구본환 8.15
-       
-        infectedTiles.Remove(cell);
-        //destroy 할 필요 없을듯 
 
-        //구본환 8.16 마지막 타일이 정화되면 존 클리어
-        if (IsCleared)
-            Cleared?.Invoke(this);
+        infectedTiles.Remove(cell);
     }
 }
