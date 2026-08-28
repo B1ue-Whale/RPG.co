@@ -157,6 +157,7 @@ MonoBehaviour:
   ledgeCheckDepth: 0.5
   ledgeCheckAhead: 0.05
   turnCooldown: 0.2
+  minSideNormal: 0.5
   spriteRenderer: {fileID: 813247926879137689}
   spriteFacesLeft: 0
 --- !u!1 &5296483582701516052

@@ -49,13 +49,29 @@ public class ProgressCheckpoint : MonoBehaviour
     {
         if (body != null)
         {
-            body.linearVelocity = Vector2.zero;
-            body.angularVelocity = 0f;
-            body.position = Anchor;
-            body.rotation = 0f;
+            TeleportRigidbody(body, Anchor);
         }
 
         motor?.ResetTransientState();
+    }
+
+    /// <summary>
+    /// Instantly moves a (possibly interpolated) Rigidbody2D. With Physics2D auto-sync
+    /// off, writing only <see cref="Rigidbody2D.position"/> leaves the Transform and
+    /// child ground-check at the old pose until the next physics step — and interpolation
+    /// can even discard the teleport. Disable interpolation, write both poses, then sync.
+    /// </summary>
+    public static void TeleportRigidbody(Rigidbody2D body, Vector2 worldPosition)
+    {
+        RigidbodyInterpolation2D interpolation = body.interpolation;
+        body.interpolation = RigidbodyInterpolation2D.None;
+        body.linearVelocity = Vector2.zero;
+        body.angularVelocity = 0f;
+        body.rotation = 0f;
+        body.transform.position = worldPosition;
+        body.position = worldPosition;
+        Physics2D.SyncTransforms();
+        body.interpolation = interpolation;
     }
 
     private void Awake()

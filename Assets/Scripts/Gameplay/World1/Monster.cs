@@ -1,9 +1,10 @@
 using UnityEngine;
 
-/// Simple patrol brain for a walking monster. Feeds move input into the shared
-/// <see cref="CharacterMotor2D"/> so all acceleration/gravity behavior matches
-/// other characters. The monster walks in one direction until it detects an
-/// obstacle (a wall/block ahead) or a ledge (no ground ahead), then turns around.
+/// Walking monster: patrols left/right and kills an NPC that touches its sides.
+/// Feeds move input into the shared <see cref="CharacterMotor2D"/> so movement
+/// matches other characters. Turns around at walls or ledges. Side contact with
+/// an NPC calls <see cref="NpcProgressionController.Die"/> (same reset as KillBorder);
+/// contact from above or below does not count.
 [RequireComponent(typeof(CharacterMotor2D))]
 [RequireComponent(typeof(Collider2D))]
 public class MonsterPatrolController : MonoBehaviour
@@ -34,6 +35,10 @@ public class MonsterPatrolController : MonoBehaviour
 
     [Tooltip("Minimum seconds between direction flips, so a tight spot cannot cause flickering turns every physics tick.")]
     [SerializeField] private float turnCooldown = 0.2f;
+
+    [Header("Kill")]
+    [Tooltip("Minimum absolute X of a contact normal to count as a side hit. 0.5 matches the wall-check (mostly-horizontal). Lower = more forgiving side detection.")]
+    [SerializeField] private float minSideNormal = 0.5f;
 
     [Header("Visuals")]
     [Tooltip("Optional sprite to flip to match walk direction. Leave empty if an animator handles facing instead.")]
@@ -91,6 +96,62 @@ public class MonsterPatrolController : MonoBehaviour
         {
             spriteRenderer.flipX = spriteFacesLeft ? _direction > 0 : _direction < 0;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        TryKillFromCollision(collision);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        TryKillFromCollision(collision);
+    }
+
+    private void TryKillFromCollision(Collision2D collision)
+    {
+        if (!IsSideContact(collision))
+        {
+            return;
+        }
+
+        NpcProgressionController npc = ResolveNpc(collision);
+        if (npc != null)
+        {
+            npc.Die();
+        }
+    }
+
+    private static NpcProgressionController ResolveNpc(Collision2D collision)
+    {
+        // Resolve through the rigidbody so child colliders on the NPC still find the
+        // controller on the root object (same pattern as KillBorder).
+        if (collision.rigidbody != null)
+        {
+            NpcProgressionController fromBody = collision.rigidbody.GetComponentInParent<NpcProgressionController>();
+            if (fromBody != null)
+            {
+                return fromBody;
+            }
+        }
+
+        return collision.collider != null
+            ? collision.collider.GetComponentInParent<NpcProgressionController>()
+            : null;
+    }
+
+    private bool IsSideContact(Collision2D collision)
+    {
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            Vector2 normal = collision.GetContact(i).normal;
+            if (Mathf.Abs(normal.x) > minSideNormal)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>

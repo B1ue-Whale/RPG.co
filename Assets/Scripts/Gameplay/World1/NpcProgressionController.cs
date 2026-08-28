@@ -69,7 +69,38 @@ public class NpcProgressionController : MonoBehaviour
             Physics2D.IgnoreCollision(playerCollider, npcCollider, true);
         }
 
+        IgnoreDynamicObstacles();
+
         _suspicion = GetComponent<NpcSuspicionController>();
+    }
+
+    /// <summary>
+    /// Recordings do not include other moving bodies. A patrolling monster (or any
+    /// other CharacterMotor2D) sitting on the path would pin the NPC at a wall and
+    /// fail arrival even though the recorded jumps/walks were valid.
+    /// </summary>
+    private void IgnoreDynamicObstacles()
+    {
+        if (npcCollider == null)
+        {
+            return;
+        }
+
+        CharacterMotor2D[] motors = FindObjectsByType<CharacterMotor2D>(FindObjectsSortMode.None);
+        for (int i = 0; i < motors.Length; i++)
+        {
+            CharacterMotor2D otherMotor = motors[i];
+            if (otherMotor == null || otherMotor == playback?.Motor)
+            {
+                continue;
+            }
+
+            Collider2D otherCollider = otherMotor.GetComponent<Collider2D>();
+            if (otherCollider != null)
+            {
+                Physics2D.IgnoreCollision(npcCollider, otherCollider, true);
+            }
+        }
     }
 
     private void OnEnable()

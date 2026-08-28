@@ -81,6 +81,15 @@ public class CharacterMotor2D : MonoBehaviour
     /// <summary>The move input currently pending consumption by this tick's FixedUpdate.</summary>
     public float PendingMoveInput => _moveInput;
 
+    /// <summary>Whether jump is currently held. Sampled by the command recorder so playback can reproduce variable jump height.</summary>
+    public bool JumpHeld => _jumpHeld;
+
+    /// <summary>
+    /// When true, FixedUpdate does not touch the rigidbody. Used by NPC playback to
+    /// freeze mid-segment (e.g. Suspicious) without dumping accel/jump/coyote state.
+    /// </summary>
+    public bool SimulationPaused { get; set; }
+
     /// <summary>
     /// Raised the instant <see cref="RequestJump"/> is called, before buffering/coyote
     /// logic runs. Lets external observers (e.g. a command recorder) capture the
@@ -133,11 +142,21 @@ public class CharacterMotor2D : MonoBehaviour
     /// seconds, so a press made slightly before landing still fires on touchdown.
     /// Calling this repeatedly only refreshes the buffer; it cannot stack jumps.
     /// </summary>
-    public void RequestJump()
+    /// <param name="ignoreGroundedRequirement">
+    /// When true, coyote time is refreshed so this request can fire even if the
+    /// character is not currently grounded. Used by NPC command playback: a recorded
+    /// jump press must execute, otherwise a one-tick grounded mismatch next to a wall
+    /// silently eats the jump and the NPC walks into geometry the player jumped over.
+    /// </param>
+    public void RequestJump(bool ignoreGroundedRequirement = false)
     {
         JumpRequested?.Invoke();
         _jumpBufferCounter = jumpBufferTime;
         _jumpHeld = true;
+        if (ignoreGroundedRequirement)
+        {
+            _coyoteTimeCounter = coyoteTime;
+        }
     }
 
     /// <summary>
@@ -150,15 +169,56 @@ public class CharacterMotor2D : MonoBehaviour
     }
 
     /// <summary>
-    /// Clears pending move input and the jump buffer/coyote timers, without touching
-    /// position or velocity. Used when a character is snapped to a checkpoint so it
-    /// doesn't carry over stale intent (e.g. a jump buffered a tick before teleporting).
+    /// Clears pending move input, jump hold, accel run-up, and the jump buffer/coyote
+    /// timers, without touching position or velocity. Used when a character is snapped
+    /// to a checkpoint so it doesn't carry over stale intent (e.g. a jump buffered a
+    /// tick before teleporting, or a leftover full-speed run-up).
     /// </summary>
     public void ResetTransientState()
     {
         _moveInput = 0f;
+        _accelTimer = 0f;
         _jumpBufferCounter = 0f;
         _coyoteTimeCounter = 0f;
+        _jumpHeld = false;
+        _isJumping = false;
+        if (_rigidbody != null)
+        {
+            _rigidbody.gravityScale = _baseGravityScale;
+        }
+    }
+
+    /// <summary>
+    /// Copies movement/jump tunables (and rigidbody gravity scale) from another motor
+    /// so two characters physically respond the same way to the same command stream.
+    /// Does not copy instance-specific refs such as <see cref="groundCheck"/>.
+    /// </summary>
+    public void CopyMovementSettingsFrom(CharacterMotor2D other)
+    {
+        if (other == null || other == this)
+        {
+            return;
+        }
+
+        moveSpeed = other.moveSpeed;
+        accelerationTime = other.accelerationTime;
+        decelerationTime = other.decelerationTime;
+        turnaroundTime = other.turnaroundTime;
+        jumpForce = other.jumpForce;
+        fallGravityMultiplier = other.fallGravityMultiplier;
+        jumpCutGravityMultiplier = other.jumpCutGravityMultiplier;
+        coyoteTime = other.coyoteTime;
+        jumpBufferTime = other.jumpBufferTime;
+        groundCheckSize = other.groundCheckSize;
+        groundLayer = other.groundLayer;
+
+        Rigidbody2D otherBody = other.GetComponent<Rigidbody2D>();
+        Rigidbody2D selfBody = _rigidbody != null ? _rigidbody : GetComponent<Rigidbody2D>();
+        if (otherBody != null && selfBody != null)
+        {
+            selfBody.gravityScale = otherBody.gravityScale;
+            _baseGravityScale = otherBody.gravityScale;
+        }
     }
 
     /// <summary>
@@ -181,7 +241,7 @@ public class CharacterMotor2D : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_rigidbody == null)
+        if (_rigidbody == null || SimulationPaused)
         {
             return;
         }
@@ -209,7 +269,14 @@ public class CharacterMotor2D : MonoBehaviour
         const float skin = 0.05f;
         float halfWidth = groundCheckSize.x * 0.5f;
         float rayLength = groundCheckSize.y + skin;
-        Vector2 feet = (Vector2)groundCheck.position + Vector2.up * skin;
+        // Use the rigidbody pose, not the interpolated Transform. With interpolation
+        // on, groundCheck.position lags by a render frame and whether we count as
+        // grounded depends on framerate - which is why a recorded jump can fail on
+        // replay next to a wall even though the player made it while recording.
+        Vector2 localOffset = groundCheck.localPosition;
+        localOffset.x *= transform.lossyScale.x;
+        localOffset.y *= transform.lossyScale.y;
+        Vector2 feet = _rigidbody.position + localOffset + Vector2.up * skin;
 
         IsGrounded = false;
         for (int i = -1; i <= 1; i++)

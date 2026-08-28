@@ -17,2644 +17,4281 @@ MonoBehaviour:
   commands:
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 1
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 1
+    jumpHeld: 1
     interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 1
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 1
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
-    jumpRequested: 1
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: -1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 1
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 1
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 1
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 1
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 1
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
-  - moveInput: 1
+  - moveInput: -1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
-  - moveInput: 1
+  - moveInput: -1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
-  - moveInput: 0
+  - moveInput: -1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
-  - moveInput: 0
+  - moveInput: -1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
-  - moveInput: 0
+  - moveInput: -1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
-    jumpRequested: 0
-    interactRequested: 0
-  - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 1
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 0
     jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 1
+    jumpHeld: 1
     interactRequested: 0
   - moveInput: 1
     jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 1
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 1
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 1
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: -1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 1
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 1
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 0
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
+    interactRequested: 0
+  - moveInput: 1
+    jumpRequested: 0
+    jumpHeld: 0
     interactRequested: 0

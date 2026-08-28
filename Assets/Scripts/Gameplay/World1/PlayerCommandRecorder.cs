@@ -68,13 +68,12 @@ public class PlayerCommandRecorder : MonoBehaviour
     }
 
     // No execution-order dependency on CharacterMotor2D is needed here:
-    // - moveInput is read from CharacterMotor2D.PendingMoveInput, a field the motor
-    //   never mutates inside its own FixedUpdate (only ApplyHorizontalMovement reads
-    //   it), so this is safe to sample regardless of whether this FixedUpdate runs
-    //   before or after the motor's this tick.
-    // - jump/interact are read from latches this component owns exclusively (see
-    //   above), not from the motor's internal buffer-timer state, so there is nothing
-    //   for CharacterMotor2D.FixedUpdate to race with or clear out from under us.
+    // - moveInput/jumpHeld are read from CharacterMotor2D fields the motor never
+    //   mutates inside its own FixedUpdate, so this is safe to sample regardless of
+    //   whether this FixedUpdate runs before or after the motor's this tick.
+    // - jump/interact presses are read from latches this component owns exclusively
+    //   (see above), not from the motor's internal buffer-timer state, so there is
+    //   nothing for CharacterMotor2D.FixedUpdate to race with or clear out from under us.
     private void FixedUpdate()
     {
         if (!IsRecording || motor == null)
@@ -86,6 +85,7 @@ public class PlayerCommandRecorder : MonoBehaviour
         {
             moveInput = motor.PendingMoveInput,
             jumpRequested = _jumpRequestedSinceLastTick,
+            jumpHeld = motor.JumpHeld,
             interactRequested = _interactRequestedSinceLastTick
         });
 

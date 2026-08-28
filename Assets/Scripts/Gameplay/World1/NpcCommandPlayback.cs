@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 // Default execution order is 0, which is what CharacterMotor2D.FixedUpdate runs at.
 // -100 guarantees this component's FixedUpdate runs first every tick, so
-// SetMoveInput/RequestJump for tick N are applied before CharacterMotor2D consumes
+// SetMoveInput/RequestJump/SetJumpHeld for tick N are applied before CharacterMotor2D consumes
 // tick N - not one tick late. This is Unity's documented, code-level ordering
 // mechanism (equivalent to the Project Settings > Script Execution Order list, but
 // declared in source instead of a hidden project asset), not incidental component
@@ -25,6 +25,13 @@ public class NpcCommandPlayback : MonoBehaviour
 
     private IReadOnlyList<MotorCommand> _commands = System.Array.Empty<MotorCommand>();
     private int _tickIndex;
+    // Old recordings predate jumpHeld. Those assets deserialize the new field as
+    // false on every tick; applying that would cut every jump. Only replay hold
+    // when the stream actually recorded a hold at least once.
+    private bool _replayJumpHeld;
+    private bool _bodyFrozen;
+    private Vector2 _pausedVelocity;
+    private RigidbodyType2D _pausedBodyType;
 
     public bool IsPlaying { get; private set; }
     /// <summary>
@@ -52,11 +59,22 @@ public class NpcCommandPlayback : MonoBehaviour
         {
             body = GetComponent<Rigidbody2D>();
         }
+
+        SyncMotorSettingsFromPlayer();
     }
 
     public void SetRecording(IReadOnlyList<MotorCommand> commands)
     {
         _commands = commands ?? System.Array.Empty<MotorCommand>();
+        _replayJumpHeld = false;
+        for (int i = 0; i < _commands.Count; i++)
+        {
+            if (_commands[i].jumpHeld)
+            {
+                _replayJumpHeld = true;
+                break;
+            }
+        }
     }
 
     public void Play()
@@ -74,15 +92,16 @@ public class NpcCommandPlayback : MonoBehaviour
     {
         IsPlaying = false;
         IsPaused = false;
-        // Otherwise the NPC keeps drifting on whatever moveInput was last applied.
-        motor?.SetMoveInput(0f);
+        UnfreezeBody(restoreVelocity: false);
+        // Otherwise the NPC keeps drifting on whatever moveInput was last applied,
+        // and leftover jump-hold would turn the next jump into a full-height hop.
+        ClearMotorIntent();
     }
 
     /// <summary>
-    /// Pauses command consumption at the exact current _tickIndex without touching it.
-    /// No-op if not playing or already paused. Zeroes move input (same reasoning as
-    /// Stop()) so the NPC doesn't keep drifting on the last command's input while
-    /// paused.
+    /// Pauses command consumption at the exact current _tickIndex. Freezes the body
+    /// in place and leaves motor accel/jump state untouched so Resume() continues the
+    /// recorded trajectory instead of restarting from a standstill.
     /// </summary>
     public void Pause()
     {
@@ -92,12 +111,12 @@ public class NpcCommandPlayback : MonoBehaviour
         }
 
         IsPaused = true;
-        motor?.SetMoveInput(0f);
+        FreezeBody();
     }
 
     /// <summary>
-    /// Resumes consuming commands from the exact tick Pause() left off at. No-op if
-    /// not playing or not paused.
+    /// Resumes consuming commands from the exact tick Pause() left off at, restoring
+    /// the velocity that was frozen. No-op if not playing or not paused.
     /// </summary>
     public void Resume()
     {
@@ -107,13 +126,12 @@ public class NpcCommandPlayback : MonoBehaviour
         }
 
         IsPaused = false;
+        UnfreezeBody(restoreVelocity: true);
     }
 
     /// <summary>
-    /// Snaps the NPC back to startPoint with zero velocity and rewinds playback to
-    /// tick 0. Does not reset CharacterMotor2D's internal coyote/jump-buffer timers
-    /// directly - there's no accessor for them, and it wasn't necessary to add one for
-    /// this spike, since they settle within a tick or two once grounded again.
+    /// Snaps the NPC back to startPoint with zero velocity, clears motor transient
+    /// state, and rewinds playback to tick 0.
     /// </summary>
     public void ResetToStart()
     {
@@ -122,11 +140,10 @@ public class NpcCommandPlayback : MonoBehaviour
 
         if (body != null && startPoint != null)
         {
-            body.linearVelocity = Vector2.zero;
-            body.angularVelocity = 0f;
-            body.position = startPoint.position;
-            body.rotation = 0f;
+            ProgressCheckpoint.TeleportRigidbody(body, startPoint.position);
         }
+
+        motor?.ResetTransientState();
     }
 
     /// <summary>
@@ -159,7 +176,13 @@ public class NpcCommandPlayback : MonoBehaviour
         motor.SetMoveInput(cmd.moveInput);
         if (cmd.jumpRequested)
         {
-            motor.RequestJump();
+            motor.RequestJump(ignoreGroundedRequirement: true);
+        }
+        // After RequestJump so a same-tick tap (jumpRequested + jumpHeld false) can
+        // still cut; RequestJump itself forces hold true.
+        if (_replayJumpHeld)
+        {
+            motor.SetJumpHeld(cmd.jumpHeld);
         }
         if (cmd.interactRequested)
         {
@@ -167,5 +190,72 @@ public class NpcCommandPlayback : MonoBehaviour
         }
 
         _tickIndex++;
+    }
+
+    private void ClearMotorIntent()
+    {
+        motor?.SetMoveInput(0f);
+        motor?.SetJumpHeld(false);
+    }
+
+    private void FreezeBody()
+    {
+        if (_bodyFrozen)
+        {
+            return;
+        }
+
+        if (motor != null)
+        {
+            motor.SimulationPaused = true;
+        }
+
+        if (body != null)
+        {
+            _pausedVelocity = body.linearVelocity;
+            _pausedBodyType = body.bodyType;
+            body.linearVelocity = Vector2.zero;
+            body.bodyType = RigidbodyType2D.Kinematic;
+        }
+
+        _bodyFrozen = true;
+    }
+
+    private void UnfreezeBody(bool restoreVelocity)
+    {
+        if (motor != null)
+        {
+            motor.SimulationPaused = false;
+        }
+
+        if (_bodyFrozen && body != null)
+        {
+            body.bodyType = _pausedBodyType;
+            body.linearVelocity = restoreVelocity ? _pausedVelocity : Vector2.zero;
+        }
+
+        _bodyFrozen = false;
+    }
+
+    private void SyncMotorSettingsFromPlayer()
+    {
+        if (motor == null)
+        {
+            return;
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            return;
+        }
+
+        CharacterMotor2D playerMotor = player.GetComponent<CharacterMotor2D>();
+        if (playerMotor == null || playerMotor == motor)
+        {
+            return;
+        }
+
+        motor.CopyMovementSettingsFrom(playerMotor);
     }
 }

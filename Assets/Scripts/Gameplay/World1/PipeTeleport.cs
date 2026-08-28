@@ -38,6 +38,14 @@ public class PipeTeleport : MonoBehaviour, IInteractable
         if (_interactorTransform == null || exitPoint == null)
             return;
 
-        _interactorTransform.position = exitPoint.position;
+        Rigidbody2D body = _interactorTransform.GetComponent<Rigidbody2D>();
+        if (body != null)
+        {
+            ProgressCheckpoint.TeleportRigidbody(body, exitPoint.position);
+        }
+        else
+        {
+            _interactorTransform.position = exitPoint.position;
+        }
     }
 }
