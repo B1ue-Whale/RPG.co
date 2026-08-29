@@ -110,7 +110,10 @@ public class NpcCommandPlayback : MonoBehaviour
     /// <summary>
     /// Pauses command consumption at the exact current _tickIndex. Freezes the body
     /// in place and leaves motor accel/jump state untouched so Resume() continues the
-    /// recorded trajectory instead of restarting from a standstill.
+    /// recorded trajectory instead of restarting from a standstill. If an external
+    /// controller currently has the motor (see <see cref="BeginExternalControl"/>),
+    /// the freeze is deferred until it hands control back - freezing now would break
+    /// whatever physics-dependent thing (e.g. a reaction jump) is in progress.
     /// </summary>
     public void Pause()
     {
@@ -120,12 +123,19 @@ public class NpcCommandPlayback : MonoBehaviour
         }
 
         IsPaused = true;
-        FreezeBody();
+
+        if (!IsExternallyControlled)
+        {
+            FreezeBody();
+        }
     }
 
     /// <summary>
     /// Resumes consuming commands from the exact tick Pause() left off at, restoring
-    /// the velocity that was frozen. No-op if not playing or not paused.
+    /// the velocity that was frozen. No-op if not playing or not paused. If an
+    /// external controller currently has the motor, the body is already unfrozen for
+    /// it, so there is nothing to restore here - command consumption itself stays
+    /// gated by IsExternallyControlled regardless.
     /// </summary>
     public void Resume()
     {
@@ -135,29 +145,52 @@ public class NpcCommandPlayback : MonoBehaviour
         }
 
         IsPaused = false;
-        UnfreezeBody(restoreVelocity: true);
+
+        if (!IsExternallyControlled)
+        {
+            UnfreezeBody(restoreVelocity: true);
+        }
     }
 
     /// <summary>
     /// Hands motor control to an external caller for the duration of some override
     /// behavior (e.g. a reaction jump): command consumption stops - no SetMoveInput,
-    /// RequestJump, or SetJumpHeld calls from the recording - but the motor and
-    /// rigidbody keep simulating normally, unlike <see cref="Pause"/>. The caller is
-    /// responsible for driving the motor itself and calling <see cref="EndExternalControl"/>
-    /// when done.
+    /// RequestJump, or SetJumpHeld calls from the recording. If currently Paused
+    /// (Suspicious), the body's freeze is lifted too - a frozen, Kinematic body can't
+    /// jump or fall, so physics has to actually run for the caller's own motor calls
+    /// to do anything. Command consumption stays blocked regardless of IsPaused, via
+    /// IsExternallyControlled alone, so this never resumes the recording early - it
+    /// only lets physics run for whoever is driving the motor right now. The caller
+    /// is responsible for driving the motor itself and calling
+    /// <see cref="EndExternalControl"/> when done.
     /// </summary>
     public void BeginExternalControl()
     {
         IsExternallyControlled = true;
+
+        if (IsPaused)
+        {
+            UnfreezeBody(restoreVelocity: true);
+        }
     }
 
     /// <summary>
-    /// Hands motor control back to the recorded command stream, which resumes
-    /// consuming from the exact tick it was suspended at.
+    /// Hands motor control back to whichever source should have it: the recorded
+    /// command stream resumes from the exact tick it was suspended at, unless
+    /// Suspicion is still active (IsPaused), in which case the freeze Pause()
+    /// deferred is applied now instead - from wherever things ended up, not
+    /// necessarily where Suspicious originally paused. If Suspicion exited on its own
+    /// while control was external (Resume() already ran), there is nothing to
+    /// re-freeze and this is a no-op beyond clearing the flag.
     /// </summary>
     public void EndExternalControl()
     {
         IsExternallyControlled = false;
+
+        if (IsPaused)
+        {
+            FreezeBody();
+        }
     }
 
     /// <summary>

@@ -37,6 +37,8 @@ public class NpcMonsterJumpReaction : MonoBehaviour
     [Header("Reaction")]
     [Tooltip("Minimum seconds between reaction jumps, so landing next to the same monster doesn't cause repeated hops.")]
     [SerializeField] private float reactionCooldown = 0.5f;
+    [Tooltip("Chance [0-1] that a qualifying trigger is ignored entirely - the NPC just continues whatever it was doing (recorded playback, or stays Suspicious) as if the monster wasn't there. Rolled once per trigger, not per tick, and still starts reactionCooldown so an ignored encounter doesn't just get re-rolled again a moment later against the same monster.")]
+    [SerializeField, Range(0f, 1f)] private float ignoreChance = 0.1f;
 
     [Header("Gizmos")]
     [Tooltip("Draw the detection radius and worst-case trigger range in the Scene view.")]
@@ -79,19 +81,32 @@ public class NpcMonsterJumpReaction : MonoBehaviour
             return;
         }
 
-        // Never start while Suspicious (playback frozen, motor physics halted - a
-        // jump could never execute and this would wait forever for a landing that
-        // won't come) or already mid-reaction.
-        if (_cooldownRemaining > 0f || playback.IsPaused || !motor.IsGrounded)
+        // Suspicious no longer blocks this - NpcCommandPlayback.BeginExternalControl()
+        // lifts the Suspicious freeze for the duration of the jump and re-applies it
+        // afterward (from wherever the jump ended up) if still relevant by then. Still
+        // skip while already mid-reaction (handled above) or not grounded.
+        if (_cooldownRemaining > 0f || !motor.IsGrounded)
         {
             return;
         }
 
-        if (TryFindClosingMonster(out MonsterPatrolController threat, out float timeToCollision))
+        if (!TryFindClosingMonster(out MonsterPatrolController threat, out float timeToCollision))
         {
-            Debug.Log($"[{nameof(NpcMonsterJumpReaction)}] '{threat.name}' entered trigger range of '{name}' (time-to-collision={timeToCollision:F2}s, reactionLeadTime={reactionLeadTime:F2}s).", this);
-            BeginReaction();
+            return;
         }
+
+        if (Random.value < ignoreChance)
+        {
+            // Rolled to ignore this specific encounter entirely - starts the same
+            // cooldown a real reaction would, so it isn't just re-rolled again a tick
+            // later against the same still-closing monster.
+            Debug.Log($"[{nameof(NpcMonsterJumpReaction)}] '{threat.name}' entered trigger range of '{name}' but was ignored (time-to-collision={timeToCollision:F2}s).", this);
+            _cooldownRemaining = reactionCooldown;
+            return;
+        }
+
+        Debug.Log($"[{nameof(NpcMonsterJumpReaction)}] '{threat.name}' entered trigger range of '{name}' (time-to-collision={timeToCollision:F2}s, reactionLeadTime={reactionLeadTime:F2}s).", this);
+        BeginReaction();
     }
 
     /// <summary>Ground-check position when available (feet-level), falling back to the transform's own position otherwise.</summary>

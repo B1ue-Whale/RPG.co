@@ -1,10 +1,9 @@
 using UnityEngine;
 
-/// Walking monster: patrols left/right and kills an NPC that touches its sides.
-/// Feeds move input into the shared <see cref="CharacterMotor2D"/> so movement
-/// matches other characters. Turns around at walls or ledges. Side contact with
-/// an NPC calls <see cref="NpcProgressionController.Die"/> (same reset as KillBorder);
-/// contact from above or below does not count.
+/// Walking monster: patrols left/right, and resolves contact with an NPC as either
+/// a stomp (NPC lands on top - kills the monster) or a side hit (kills the NPC, same
+/// reset as KillBorder). Feeds move input into the shared <see cref="CharacterMotor2D"/>
+/// so movement matches other characters. Turns around at walls or ledges.
 [RequireComponent(typeof(CharacterMotor2D))]
 [RequireComponent(typeof(Collider2D))]
 public class MonsterPatrolController : MonoBehaviour
@@ -39,6 +38,10 @@ public class MonsterPatrolController : MonoBehaviour
     [Header("Kill")]
     [Tooltip("Minimum absolute X of a contact normal to count as a side hit. 0.5 matches the wall-check (mostly-horizontal). Lower = more forgiving side detection.")]
     [SerializeField] private float minSideNormal = 0.5f;
+    [Tooltip("Minimum downward speed (units/second) of the NPC relative to this monster, at the moment of contact, to count as a legitimate stomp from above. Filters out near-zero velocity noise from a frictionless body settling into resting contact - a real jump/fall onto the monster clears this by a wide margin.")]
+    [SerializeField] private float stompMinDownwardSpeed = 0.5f;
+    [Tooltip("How far below this monster's vertical midpoint the NPC's lowest point is still allowed to be and count as a stomp, in units. Covers the case where physics resolves the landing a bit lower than the NPC's true contact moment. Still requires stompMinDownwardSpeed, so it does not turn an ordinary side hit into a stomp.")]
+    [SerializeField] private float stompVerticalForgiveness = 0.1f;
 
     [Header("Visuals")]
     [Tooltip("Optional sprite to flip to match walk direction. Leave empty if an animator handles facing instead.")]
@@ -52,6 +55,7 @@ public class MonsterPatrolController : MonoBehaviour
 
     private CharacterMotor2D _motor;
     private Collider2D _collider;
+    private Rigidbody2D _rigidbody;
 
     // -1 = walking left, +1 = walking right.
     private int _direction = 1;
@@ -59,18 +63,28 @@ public class MonsterPatrolController : MonoBehaviour
     // Counts down after a flip; no new flip is allowed while > 0.
     private float _turnCooldownTimer;
 
+    private bool _isDead;
+    private Vector2 _spawnPosition;
+    private int _spawnDirection;
+
+    /// <summary>True once this monster has been stomped. Cleared by ResetMonster().</summary>
+    public bool IsDead => _isDead;
+
     private void Awake()
     {
         _motor = GetComponent<CharacterMotor2D>();
         _collider = GetComponent<Collider2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
 
         // The motor moves this body purely through velocity writes, and a sleeping
         // Rigidbody2D ignores those. If the monster gets pinned for half a second
         // (e.g. caught on a tile seam), physics puts it to sleep and it would freeze
         // until an external collision wakes it. Never allow it to sleep.
-        GetComponent<Rigidbody2D>().sleepMode = RigidbodySleepMode2D.NeverSleep;
+        _rigidbody.sleepMode = RigidbodySleepMode2D.NeverSleep;
 
-        _direction = startDirection == StartDirection.Right ? 1 : -1;
+        _spawnDirection = startDirection == StartDirection.Right ? 1 : -1;
+        _direction = _spawnDirection;
+        _spawnPosition = _rigidbody.position;
 
         if (obstacleLayer == 0)
         {
@@ -110,16 +124,89 @@ public class MonsterPatrolController : MonoBehaviour
 
     private void TryKillFromCollision(Collision2D collision)
     {
-        if (!IsSideContact(collision))
+        NpcProgressionController npc = ResolveNpc(collision);
+        if (npc == null)
+        {
+            // Ordinary ground/wall contact, not the NPC - nothing to resolve.
+            return;
+        }
+
+        if (IsStomp(collision))
+        {
+            Die();
+            return;
+        }
+
+        if (IsSideContact(collision))
+        {
+            npc.Die();
+        }
+    }
+
+    /// <summary>
+    /// Kills this monster (e.g. an NPC stomped it from above): disables the
+    /// GameObject so it stops moving, colliding, and rendering. No impulse or
+    /// velocity change is applied to whatever killed it.
+    /// </summary>
+    public void Die()
+    {
+        if (_isDead)
         {
             return;
         }
 
-        NpcProgressionController npc = ResolveNpc(collision);
-        if (npc != null)
+        _isDead = true;
+        gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Reverts a stomped monster back to its spawn position/direction and
+    /// reactivates it. SetActive(true) does not re-run Awake(), so every piece of
+    /// spawn-derived state that Awake() would have set up is restored explicitly here.
+    /// </summary>
+    public void ResetMonster()
+    {
+        if (!_isDead)
         {
-            npc.Die();
+            return;
         }
+
+        _isDead = false;
+        gameObject.SetActive(true);
+
+        ProgressCheckpoint.TeleportRigidbody(_rigidbody, _spawnPosition);
+        _direction = _spawnDirection;
+        _turnCooldownTimer = 0f;
+    }
+
+    /// <summary>
+    /// A legitimate stomp: the NPC's lowest point is at/above this monster's vertical
+    /// midpoint, allowing stompVerticalForgiveness units of slack for physics
+    /// resolving the landing slightly lower than the NPC's true contact moment
+    /// (regardless of what the capsule's curved contact normal happens to report),
+    /// and it is moving downward relative to this monster faster than
+    /// stompMinDownwardSpeed - that speed requirement is what keeps the forgiveness
+    /// from turning an ordinary side hit into a stomp. Deliberately does not require
+    /// vertical-dominant velocity - a fast horizontal run should not disqualify an
+    /// otherwise clear landing from above.
+    /// </summary>
+    private bool IsStomp(Collision2D collision)
+    {
+        Collider2D npcCollider = collision.collider;
+        Rigidbody2D npcBody = collision.rigidbody;
+        if (npcCollider == null || npcBody == null)
+        {
+            return false;
+        }
+
+        bool npcAboveMonster = npcCollider.bounds.min.y >= _collider.bounds.center.y - stompVerticalForgiveness;
+        if (!npcAboveMonster)
+        {
+            return false;
+        }
+
+        float relativeVerticalVelocity = npcBody.linearVelocity.y - _rigidbody.linearVelocity.y;
+        return relativeVerticalVelocity < -stompMinDownwardSpeed;
     }
 
     private static NpcProgressionController ResolveNpc(Collision2D collision)
