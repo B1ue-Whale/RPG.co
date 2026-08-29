@@ -41,6 +41,15 @@ public class NpcCommandPlayback : MonoBehaviour
     /// NpcProgressionController does not treat the segment as finished.
     /// </summary>
     public bool IsPaused { get; private set; }
+    /// <summary>
+    /// True while an external system (e.g. a monster-avoidance reaction) is driving
+    /// the motor directly and command consumption must stay frozen. Unlike
+    /// <see cref="IsPaused"/>/<see cref="Pause"/>, this does not freeze the rigidbody
+    /// or touch CharacterMotor2D.SimulationPaused - physics keeps running normally so
+    /// the external system's own motor calls (e.g. a jump) can actually execute.
+    /// Resumes from the exact same tick once cleared, same as a Pause/Resume cycle.
+    /// </summary>
+    public bool IsExternallyControlled { get; private set; }
     public CharacterMotor2D Motor => motor;
     public Rigidbody2D Body => body;
     /// <summary>How many commands have been consumed so far (or in total, once stopped).</summary>
@@ -130,6 +139,28 @@ public class NpcCommandPlayback : MonoBehaviour
     }
 
     /// <summary>
+    /// Hands motor control to an external caller for the duration of some override
+    /// behavior (e.g. a reaction jump): command consumption stops - no SetMoveInput,
+    /// RequestJump, or SetJumpHeld calls from the recording - but the motor and
+    /// rigidbody keep simulating normally, unlike <see cref="Pause"/>. The caller is
+    /// responsible for driving the motor itself and calling <see cref="EndExternalControl"/>
+    /// when done.
+    /// </summary>
+    public void BeginExternalControl()
+    {
+        IsExternallyControlled = true;
+    }
+
+    /// <summary>
+    /// Hands motor control back to the recorded command stream, which resumes
+    /// consuming from the exact tick it was suspended at.
+    /// </summary>
+    public void EndExternalControl()
+    {
+        IsExternallyControlled = false;
+    }
+
+    /// <summary>
     /// Snaps the NPC back to startPoint with zero velocity, clears motor transient
     /// state, and rewinds playback to tick 0.
     /// </summary>
@@ -160,7 +191,7 @@ public class NpcCommandPlayback : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsPlaying || IsPaused || motor == null)
+        if (!IsPlaying || IsPaused || IsExternallyControlled || motor == null)
         {
             return;
         }
