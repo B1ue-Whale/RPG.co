@@ -135,6 +135,10 @@ public class BugZone : MonoBehaviour
     /// to check each one rather than a single cell.</summary>
     public IReadOnlyList<Vector3Int> InfectedCells => infectedTiles;
 
+    /// <summary>Tilemap whose cells can get infected (e.g. so the minimap can draw
+    /// the hideable layer without a manual reference).</summary>
+    public Tilemap TargetTilemap => targetTilemap;
+
     /// <summary>World-space center of a cell on this zone's tilemap, for LOS/distance
     /// checks against a tile rather than a collider.</summary>
     public Vector3 GetCellWorldCenter(Vector3Int cell)
