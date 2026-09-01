@@ -72,8 +72,14 @@ public class CharacterMotor2D : MonoBehaviour
     /// <summary>True while the ground-check box overlaps a ground collider.</summary>
     public bool IsGrounded { get; private set; }
 
+    /// <summary>Transform marking the ground-check point (typically at/near the character's feet).</summary>
+    public Transform GroundCheck => groundCheck;
+
     /// <summary>Current rigidbody velocity (read-only mirror).</summary>
     public Vector2 Velocity => _rigidbody != null ? _rigidbody.linearVelocity : Vector2.zero;
+
+    /// <summary>Configured maximum horizontal move speed (units/second).</summary>
+    public float MoveSpeed => moveSpeed;
 
     /// <summary>-1 when facing left, +1 when facing right.</summary>
     public int FacingDirection => _facing;

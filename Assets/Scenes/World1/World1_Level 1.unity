@@ -1733,6 +1733,98 @@ Transform:
   - {fileID: 1301147709}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &843543806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 843543809}
+  - component: {fileID: 843543808}
+  - component: {fileID: 843543807}
+  m_Layer: 0
+  m_Name: Reset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &843543807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843543806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d8427b2c5800d42a8266407e89b2c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerResetZone
+  startPoint: {fileID: 1634490370}
+--- !u!61 &843543808
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843543806}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.023439407, y: -3.0538006}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 48.205097, y: 3.557787}
+  m_EdgeRadius: 0
+--- !u!4 &843543809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843543806}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 55.98709, y: -15.47, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &851642877
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18870,6 +18962,7 @@ GameObject:
   - component: {fileID: 1472330310}
   - component: {fileID: 1472330309}
   - component: {fileID: 1472330311}
+  - component: {fileID: 1472330312}
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
@@ -19052,6 +19145,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c7e3e188167de54d9c2fd7b2adb456f, type: 2}
   autoStart: 1
   arrivalGracePeriod: 0.25
+  stuckTimeoutBuffer: 1
+  recoveryTimeout: 5
+  recoveryObstacleLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  recoveryWallCheckDistance: 0.15
   playerCollider: {fileID: 2130377328}
   npcCollider: {fileID: 1472330304}
 --- !u!114 &1472330308
@@ -19131,6 +19230,27 @@ MonoBehaviour:
   animator: {fileID: 1283208935}
   spriteRenderer: {fileID: 1283208933}
   spriteFacesLeft: 0
+--- !u!114 &1472330312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472330297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a50dc5bb6138be4db35d230f7d52dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NpcMonsterJumpReaction
+  motor: {fileID: 1472330303}
+  playback: {fileID: 1472330302}
+  detectionRadius: 1.2
+  reactionLeadTime: 0.35
+  reactionCooldown: 0.5
+  ignoreChance: 0.1
+  showDetectionGizmos: 1
+  detectionRadiusColor: {r: 1, g: 0.92, b: 0.016, a: 0.5}
+  worstCaseRadiusColor: {r: 1, g: 0.15, b: 0.15, a: 0.8}
 --- !u!1 &1597102881
 GameObject:
   m_ObjectHideFlags: 0
@@ -21705,7 +21825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3134941066239191603, guid: 398f508453196824e96909126647f4d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.3605
+      value: -4.79
       objectReference: {fileID: 0}
     - target: {fileID: 3134941066239191603, guid: 398f508453196824e96909126647f4d8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22341,3 +22461,4 @@ SceneRoots:
   - {fileID: 1097486222}
   - {fileID: 1597102884}
   - {fileID: 1990182950}
+  - {fileID: 843543809}

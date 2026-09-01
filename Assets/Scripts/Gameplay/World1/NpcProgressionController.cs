@@ -28,18 +28,43 @@ public class NpcProgressionController : MonoBehaviour
     [SerializeField] private bool autoStart = true;
 
     [Header("Arrival")]
-    [Tooltip("After a segment's commands run out, how long to keep checking for a valid arrival before giving up. Covers the tick or two it takes CharacterMotor2D's IsGrounded to catch up to the NPC's final resting position.")]
+    [Tooltip("After a segment's commands run out, how long to keep checking for a valid arrival before logging a diagnostic warning. Covers the tick or two it takes CharacterMotor2D's IsGrounded to catch up to the NPC's final resting position. Does not stop the chain by itself - see stuckTimeoutBuffer.")]
     [SerializeField] private float arrivalGracePeriod = 0.25f;
+    [Tooltip("Extra seconds added on top of the longest known recording for the current segment before the outer safety-net watchdog force-teleports the NPC to the next checkpoint. Only guards Playback and ArrivalGrace - a backstop for playback itself never finishing (e.g. a future bug leaves it stuck mid-recording). Recovery below always gets its own full, independent recoveryTimeout regardless of this value.")]
+    [SerializeField] private float stuckTimeoutBuffer = 1f;
+
+    [Header("Recovery")]
+    [Tooltip("If the NPC hasn't arrived by the end of arrivalGracePeriod, it enters recovery: walks directly toward the next checkpoint and jumps over simple obstacles in its way. Not pathfinding - just enough to shrug off small replay drift or a slightly bad end position.")]
+    [SerializeField] private float recoveryTimeout = 2f;
+    [Tooltip("Layers that count as walls for the recovery jump-over check. Usually the same Ground layer the motor uses.")]
+    [SerializeField] private LayerMask recoveryObstacleLayer;
+    [Tooltip("How far ahead to check for a wall while recovering.")]
+    [SerializeField] private float recoveryWallCheckDistance = 0.15f;
 
     [Header("Collision")]
     [Tooltip("If both are assigned, collision between the player and this NPC is disabled - otherwise the player's body can physically bump the NPC off its recorded path, causing arrival checks to fail just short of the checkpoint.")]
     [SerializeField] private Collider2D playerCollider;
     [SerializeField] private Collider2D npcCollider;
 
+    private enum SegmentPhase
+    {
+        // Recorded commands are still being consumed; waiting on PlaybackCompleted.
+        Playback,
+        // Commands ran out; briefly waiting for CharacterMotor2D.IsGrounded to catch
+        // up before judging arrival (see class-level comment on execution order).
+        ArrivalGrace,
+        // Arrival didn't succeed within the grace window; actively walking/jumping
+        // toward the next checkpoint instead of idly waiting.
+        Recovering
+    }
+
     private int _currentIndex;
     private bool _running;
-    private bool _waitingForArrival;
+    private SegmentPhase _phase;
     private float _graceTimeRemaining;
+    private float _segmentElapsedTime;
+    private float _segmentTimeoutSeconds;
+    private float _recoveryElapsedTime;
     private NpcSuspicionController _suspicion;
 
     // Last recording played per segment index. On the next visit to the same segment
@@ -75,9 +100,10 @@ public class NpcProgressionController : MonoBehaviour
     }
 
     /// <summary>
-    /// Recordings do not include other moving bodies. A patrolling monster (or any
+    /// Recordings do not include other moving bodies. A non-lethal obstacle (any
     /// other CharacterMotor2D) sitting on the path would pin the NPC at a wall and
-    /// fail arrival even though the recorded jumps/walks were valid.
+    /// fail arrival even though the recorded jumps/walks were valid. Monsters are
+    /// excluded so their kill-on-touch collision with the NPC still fires.
     /// </summary>
     private void IgnoreDynamicObstacles()
     {
@@ -90,7 +116,7 @@ public class NpcProgressionController : MonoBehaviour
         for (int i = 0; i < motors.Length; i++)
         {
             CharacterMotor2D otherMotor = motors[i];
-            if (otherMotor == null || otherMotor == playback?.Motor)
+            if (otherMotor == null || otherMotor == playback?.Motor || otherMotor.GetComponent<MonsterPatrolController>() != null)
             {
                 continue;
             }
@@ -145,7 +171,7 @@ public class NpcProgressionController : MonoBehaviour
     public void Stop()
     {
         _running = false;
-        _waitingForArrival = false;
+        _phase = SegmentPhase.Playback;
         playback?.Stop();
     }
 
@@ -159,7 +185,7 @@ public class NpcProgressionController : MonoBehaviour
     {
         Debug.Log($"[{nameof(NpcProgressionController)}] NPC died. Resetting to '{(checkpointChain.Count > 0 ? checkpointChain[0].Id : "?")}' and restarting chain.");
 
-        _waitingForArrival = false;
+        _phase = SegmentPhase.Playback;
         playback?.Stop();
 
         // Otherwise the NPC could respawn still flagged Suspicious from before it died.
@@ -168,7 +194,28 @@ public class NpcProgressionController : MonoBehaviour
             _suspicion.ResetSuspicion();
         }
 
+        ReviveStompedMonsters();
+
         BeginChain();
+    }
+
+    /// <summary>
+    /// Brings back any monster this NPC previously stomped, so a death/restart
+    /// doesn't leave the level permanently missing whatever it killed on the way.
+    /// Scoped to MonsterPatrolController.IsDead specifically (not just "inactive")
+    /// so a monster switched off for some unrelated reason is left alone, and a
+    /// still-alive, still-patrolling monster is never touched by this.
+    /// </summary>
+    private void ReviveStompedMonsters()
+    {
+        MonsterPatrolController[] monsters = FindObjectsByType<MonsterPatrolController>(FindObjectsInactive.Include);
+        for (int i = 0; i < monsters.Length; i++)
+        {
+            if (monsters[i] != null && monsters[i].IsDead)
+            {
+                monsters[i].ResetMonster();
+            }
+        }
     }
 
     private void PlayNextSegment()
@@ -201,6 +248,14 @@ public class NpcProgressionController : MonoBehaviour
             return;
         }
 
+        // Watchdog timeout for this segment: the longest recording known for this
+        // checkpoint pair (not just whichever one gets chosen below) plus a buffer,
+        // so a short variant doesn't get judged against an unreasonably tight window.
+        int longestTickCount = candidates.Max(r => r.Commands.Count);
+        _segmentTimeoutSeconds = longestTickCount * Time.fixedDeltaTime + stuckTimeoutBuffer;
+        _segmentElapsedTime = 0f;
+        _phase = SegmentPhase.Playback;
+
         // Avoid replaying the same variant this segment used last time around, so a
         // respawned NPC takes different routes on its next attempt.
         if (candidates.Count > 1 && _lastPlayedBySegment.TryGetValue(_currentIndex, out NpcRecording lastPlayed))
@@ -229,26 +284,72 @@ public class NpcProgressionController : MonoBehaviour
             return;
         }
 
-        _waitingForArrival = true;
+        _phase = SegmentPhase.ArrivalGrace;
         _graceTimeRemaining = arrivalGracePeriod;
     }
 
     private void FixedUpdate()
     {
-        if (!_waitingForArrival)
+        if (!_running)
         {
             return;
         }
 
+        // True while nothing is intentionally holding things up - not Suspicious
+        // (structurally can't happen past Playback anyway, since NpcSuspicionController
+        // requires playback.IsPlaying) and not a reaction (e.g. monster-avoidance jump)
+        // currently driving the motor directly. Used to keep both the outer watchdog
+        // and the arrival-grace/recovery timers from burning down while something else
+        // legitimately has control for a moment.
+        bool activelyProgressing = playback != null && !playback.IsPaused && !playback.IsExternallyControlled;
+
+        // Outer safety net for Playback + ArrivalGrace only - guards against playback
+        // itself somehow never completing. Deliberately stops advancing (and stops
+        // being checked) once Recovering begins: recovery's own dedicated timeout
+        // owns that phase completely from then on, so there is no implicit dependency
+        // between stuckTimeoutBuffer, arrivalGracePeriod, and recoveryTimeout - a
+        // recovery attempt always gets its full configured budget regardless of how
+        // long Playback/ArrivalGrace happened to take first.
+        if (_phase != SegmentPhase.Recovering)
+        {
+            if (activelyProgressing)
+            {
+                _segmentElapsedTime += Time.fixedDeltaTime;
+            }
+
+            if (_segmentElapsedTime >= _segmentTimeoutSeconds)
+            {
+                ForceAdvancePastStuckSegment();
+                return;
+            }
+        }
+
+        switch (_phase)
+        {
+            case SegmentPhase.ArrivalGrace:
+                TickArrivalGrace(activelyProgressing);
+                break;
+
+            case SegmentPhase.Recovering:
+                TickRecovery(activelyProgressing);
+                break;
+        }
+    }
+
+    private void TickArrivalGrace(bool activelyProgressing)
+    {
         ProgressCheckpoint expected = checkpointChain[_currentIndex + 1];
 
         if (expected.HasArrived(playback.Body, playback.Motor))
         {
-            _waitingForArrival = false;
-            Debug.Log($"[{nameof(NpcProgressionController)}] Reached checkpoint '{expected.Id}'.");
-            expected.SnapTo(playback.Body, playback.Motor);
-            _currentIndex++;
-            PlayNextSegment();
+            AdvanceToNextCheckpoint(expected);
+            return;
+        }
+
+        if (!activelyProgressing)
+        {
+            // A reaction currently owns the motor - don't burn the grace window while
+            // it's in control.
             return;
         }
 
@@ -258,10 +359,118 @@ public class NpcProgressionController : MonoBehaviour
         _graceTimeRemaining -= Time.fixedDeltaTime;
         if (_graceTimeRemaining <= 0f)
         {
-            _waitingForArrival = false;
             LogArrivalFailure(expected);
-            _running = false;
+            BeginRecovery(expected);
         }
+    }
+
+    private void BeginRecovery(ProgressCheckpoint expected)
+    {
+        _phase = SegmentPhase.Recovering;
+        _recoveryElapsedTime = 0f;
+        Debug.Log($"[{nameof(NpcProgressionController)}] Entering recovery toward checkpoint '{expected.Id}'.");
+    }
+
+    /// <summary>
+    /// Simple, non-pathfinding recovery: walk directly toward the next checkpoint's
+    /// anchor and jump over anything immediately blocking that direction. Meant to
+    /// shrug off small replay drift or a slightly bad end position, not replace the
+    /// recorded route - if it can't get there within recoveryTimeout, ForceAdvancePastStuckSegment
+    /// takes over.
+    /// </summary>
+    private void TickRecovery(bool activelyProgressing)
+    {
+        ProgressCheckpoint expected = checkpointChain[_currentIndex + 1];
+
+        if (expected.HasArrived(playback.Body, playback.Motor))
+        {
+            AdvanceToNextCheckpoint(expected);
+            return;
+        }
+
+        if (!activelyProgressing)
+        {
+            // e.g. the monster-jump-reaction is mid-jump and currently owns the motor.
+            // Let it finish instead of fighting it, and don't spend recovery's own
+            // budget while it's in control.
+            return;
+        }
+
+        _recoveryElapsedTime += Time.fixedDeltaTime;
+        if (_recoveryElapsedTime >= recoveryTimeout)
+        {
+            ForceAdvancePastStuckSegment();
+            return;
+        }
+
+        CharacterMotor2D motor = playback.Motor;
+        float dx = expected.Anchor.x - playback.Body.position.x;
+        int direction = dx > 0.01f ? 1 : (dx < -0.01f ? -1 : 0);
+
+        motor.SetMoveInput(direction);
+
+        if (direction != 0 && motor.IsGrounded && IsWallAhead(direction))
+        {
+            motor.RequestJump();
+        }
+    }
+
+    /// <summary>
+    /// Two short rays (foot and mid height) cast from the leading edge of npcCollider,
+    /// same pattern as Monster's own wall check. A hit with a mostly-horizontal normal
+    /// counts as a wall worth jumping over.
+    /// </summary>
+    private bool IsWallAhead(int direction)
+    {
+        if (npcCollider == null)
+        {
+            return false;
+        }
+
+        const float skin = 0.02f;
+        Bounds bounds = npcCollider.bounds;
+        float frontX = direction > 0 ? bounds.max.x : bounds.min.x;
+        Vector2 dir = Vector2.right * direction;
+        float length = skin + recoveryWallCheckDistance;
+
+        Vector2 footOrigin = new Vector2(frontX - direction * skin, bounds.min.y + skin);
+        Vector2 midOrigin = new Vector2(frontX - direction * skin, bounds.center.y);
+
+        return IsWallHit(Physics2D.Raycast(footOrigin, dir, length, recoveryObstacleLayer))
+            || IsWallHit(Physics2D.Raycast(midOrigin, dir, length, recoveryObstacleLayer));
+    }
+
+    private static bool IsWallHit(RaycastHit2D hit)
+    {
+        return hit.collider != null && Mathf.Abs(hit.normal.x) > 0.5f;
+    }
+
+    private void AdvanceToNextCheckpoint(ProgressCheckpoint expected)
+    {
+        Debug.Log($"[{nameof(NpcProgressionController)}] Reached checkpoint '{expected.Id}'.");
+        expected.SnapTo(playback.Body, playback.Motor);
+        _currentIndex++;
+        PlayNextSegment();
+    }
+
+    /// <summary>
+    /// Final fallback: either the outer segment watchdog or recovery's own dedicated
+    /// timeout gave up on this segment. Rather than leaving the chain permanently
+    /// stalled, forcibly places the NPC at the next checkpoint and resumes as if it
+    /// had arrived normally.
+    /// </summary>
+    private void ForceAdvancePastStuckSegment()
+    {
+        ProgressCheckpoint expected = checkpointChain[_currentIndex + 1];
+
+        Debug.LogWarning(
+            $"[{nameof(NpcProgressionController)}] Segment '{checkpointChain[_currentIndex].Id}' -> '{expected.Id}' could not reach arrival " +
+            $"(phase={_phase}) within its timeout budget. Teleporting NPC to '{expected.Id}' to avoid a softlock.");
+
+        playback.Stop();
+        expected.SnapTo(playback.Body, playback.Motor);
+        _currentIndex++;
+        PlayNextSegment();
     }
 
     private void LogArrivalFailure(ProgressCheckpoint expected)
@@ -275,8 +484,8 @@ public class NpcProgressionController : MonoBehaviour
         Vector2 offset = position - expected.Anchor;
         Vector2 tolerance = expected.ArrivalHalfExtents;
 
-        Debug.LogError(
+        Debug.LogWarning(
             $"[{nameof(NpcProgressionController)}] Segment ended but NPC did not reach expected checkpoint '{expected.Id}' within {arrivalGracePeriod:F2}s grace window. " +
-            $"position={position} velocity={velocity} grounded={grounded} offsetFromAnchor={offset} (arrivalHalfExtents={tolerance}). Stopping chain.");
+            $"position={position} velocity={velocity} grounded={grounded} offsetFromAnchor={offset} (arrivalHalfExtents={tolerance}). Entering recovery.");
     }
 }
