@@ -18870,6 +18870,7 @@ GameObject:
   - component: {fileID: 1472330310}
   - component: {fileID: 1472330309}
   - component: {fileID: 1472330311}
+  - component: {fileID: 1472330312}
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
@@ -19131,6 +19132,18 @@ MonoBehaviour:
   animator: {fileID: 1283208935}
   spriteRenderer: {fileID: 1283208933}
   spriteFacesLeft: 0
+--- !u!114 &1472330312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472330297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35c7702ae5135e5418e562c81db4c00c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectController
 --- !u!1 &1597102881
 GameObject:
   m_ObjectHideFlags: 0
@@ -21905,6 +21918,7 @@ GameObject:
   - component: {fileID: 2130377337}
   - component: {fileID: 2130377340}
   - component: {fileID: 2130377339}
+  - component: {fileID: 2130377341}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -22173,6 +22187,18 @@ MonoBehaviour:
   controller: {fileID: 2130377339}
   prepareKey: 28
   beginRecordingKey: 27
+--- !u!114 &2130377341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130377327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35c7702ae5135e5418e562c81db4c00c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectController
 --- !u!1001 &1049075619885252190
 PrefabInstance:
   m_ObjectHideFlags: 0
