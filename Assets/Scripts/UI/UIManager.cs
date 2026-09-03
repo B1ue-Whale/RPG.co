@@ -1,11 +1,80 @@
 using UnityEngine;
 
 /// <summary>
-/// ViewsÀÇ UI Ãâ·Â / ¼û±è µî °ü¸® ´ã´ç
-/// <para>°ÔÀÓ ÀüÃ¼ Àü¿ª ½Ì±ÛÅæ</para>
+/// Viewsï¿½ï¿½ UI ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+/// <para>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½</para>
 /// </summary>
 public class UIManager : Singleton<UIManager>
 {
+    // UI ìš”ì†Œë“¤ ê´€ë¦¬
+    [SerializeField] private MainMenuController mainMenuController;
+    [SerializeField] private LevelSelectionController levelSelectionController;
+    [SerializeField] private PauseMenuController pauseMenuController;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
+    private void Start()
+    {
+        // ì´ˆê¸° UI ìƒíƒœ ì„¤ì •
+        if (GameManager.Instance != null)
+        {
+            UpdateUIForState(GameManager.Instance.CurrentState);
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StateChanged += OnGameStateChanged;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StateChanged -= OnGameStateChanged;
+        }
+    }
+
+    private void OnGameStateChanged(Enums.GameState newState)
+    {
+        UpdateUIForState(newState);
+    }
+
+    private void UpdateUIForState(Enums.GameState state)
+    {
+        // ìƒíƒœì— ë”°ë¥¸ UI ì—…ë°ì´íŠ¸ ë¡œì§
+        switch (state)
+        {
+            case Enums.GameState.Main:
+                Debug.Log("[UIManager] Main Menu State");
+                break;
+
+            case Enums.GameState.LevelSelection:
+                Debug.Log("[UIManager] Level Selection State");
+                break;
+
+            case Enums.GameState.Level:
+                Debug.Log("[UIManager] Level Playing State");
+                break;
+
+            case Enums.GameState.Paused:
+                Debug.Log("[UIManager] Paused State");
+                break;
+
+            case Enums.GameState.WorldSelection:
+                Debug.Log("[UIManager] World Selection State");
+                break;
+
+            case Enums.GameState.Story:
+                Debug.Log("[UIManager] Story State");
+                break;
+        }
+    }
 }
 

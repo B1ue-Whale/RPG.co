@@ -157,4 +157,21 @@ public class BugZone : MonoBehaviour
 
         infectedTiles.Remove(cell);
     }
+    public void ClearInfectionInRange(Vector3 center, float range)
+    {
+        float sqrRange = range * range;
+
+        // ClearInfection()에서 infectedTiles가 삭제되므로 뒤에서부터 순회
+        for (int i = infectedTiles.Count - 1; i >= 0; i--)
+        {
+            Vector3Int cell = infectedTiles[i];
+            Vector3 cellCenter = targetTilemap.GetCellCenterWorld(cell);
+
+            if ((cellCenter - center).sqrMagnitude <= sqrRange)
+            {
+                ClearInfection(cell);
+            }
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// ¿­°ÅÇü(Enums) ¸ðÀ½ Å¬·¡½º
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(Enums) ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 public static class Enums
 {
@@ -12,6 +12,7 @@ public static class Enums
         WorldSelection,
         LevelSelection,
         Level,
+        Paused,
         Story
     }
 
