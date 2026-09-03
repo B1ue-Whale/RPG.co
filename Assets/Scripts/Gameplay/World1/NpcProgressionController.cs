@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -41,6 +42,10 @@ public class NpcProgressionController : MonoBehaviour
     [Tooltip("How far ahead to check for a wall while recovering.")]
     [SerializeField] private float recoveryWallCheckDistance = 0.15f;
 
+    [Header("Death")]
+    [Tooltip("Seconds the NPC stays hidden after the death clip finishes, before respawning at the first checkpoint.")]
+    [SerializeField] private float respawnDelay = 4f;
+
     [Header("Collision")]
     [Tooltip("If both are assigned, collision between the player and this NPC is disabled - otherwise the player's body can physically bump the NPC off its recorded path, causing arrival checks to fail just short of the checkpoint.")]
     [SerializeField] private Collider2D playerCollider;
@@ -66,6 +71,8 @@ public class NpcProgressionController : MonoBehaviour
     private float _segmentTimeoutSeconds;
     private float _recoveryElapsedTime;
     private NpcSuspicionController _suspicion;
+    private PlayerAnimator _visualAnimator;
+    private NpcMonsterJumpReaction _jumpReaction;
 
     // Last recording played per segment index. On the next visit to the same segment
     // (e.g. after dying and restarting from the first checkpoint) that recording is
@@ -77,6 +84,8 @@ public class NpcProgressionController : MonoBehaviour
     public int CurrentCheckpointIndex => _currentIndex;
     /// <summary>True once the NPC has reached the final checkpoint of the chain.</summary>
     public bool IsChainComplete { get; private set; }
+    /// <summary>True while the death clip is playing and respawn has not started yet.</summary>
+    public bool IsDying { get; private set; }
 
     /// <summary>Raised once when the NPC reaches the final checkpoint of the chain
     /// (the level goal). Not raised on arrival failure or external Stop().</summary>
@@ -97,6 +106,8 @@ public class NpcProgressionController : MonoBehaviour
         IgnoreDynamicObstacles();
 
         _suspicion = GetComponent<NpcSuspicionController>();
+        _visualAnimator = GetComponent<PlayerAnimator>();
+        _jumpReaction = GetComponent<NpcMonsterJumpReaction>();
     }
 
     /// <summary>
@@ -176,27 +187,63 @@ public class NpcProgressionController : MonoBehaviour
     }
 
     /// <summary>
-    /// Kills the NPC (e.g. it fell into a KillBorder): abandons the current segment,
-    /// resets back to the first checkpoint, and restarts the whole chain. Route
-    /// selection re-rolls on the way back up, avoiding each segment's previous pick
-    /// where alternatives exist.
+    /// Kills the NPC (e.g. it fell into a KillBorder or was hit by a monster):
+    /// plays the death clip in place, hides the sprite, waits, then resets back to
+    /// the first checkpoint and restarts the whole chain. Route selection re-rolls
+    /// on the way back up, avoiding each segment's previous pick where alternatives exist.
     /// </summary>
     public void Die()
     {
-        Debug.Log($"[{nameof(NpcProgressionController)}] NPC died. Resetting to '{(checkpointChain.Count > 0 ? checkpointChain[0].Id : "?")}' and restarting chain.");
+        if (IsDying)
+        {
+            return;
+        }
 
+        StartCoroutine(DieRoutine());
+    }
+
+    private IEnumerator DieRoutine()
+    {
+        IsDying = true;
+        _running = false;
         _phase = SegmentPhase.Playback;
-        playback?.Stop();
 
-        // Otherwise the NPC could respawn still flagged Suspicious from before it died.
+        _jumpReaction?.Cancel();
+        playback?.Stop();
+        playback?.ForceFreeze();
+
+        if (npcCollider != null)
+        {
+            npcCollider.enabled = false;
+        }
+
+        // Hide the suspicion bar immediately so it doesn't linger over the corpse.
         if (_suspicion != null)
         {
             _suspicion.ResetSuspicion();
         }
 
+        _visualAnimator?.SetDead(true);
+
+        float clipLength = _visualAnimator != null ? _visualAnimator.DeathClipLength : 0.875f;
+        Debug.Log($"[{nameof(NpcProgressionController)}] NPC died. Playing death animation ({clipLength:F2}s), then hidden for {respawnDelay:F2}s before resetting to '{(checkpointChain.Count > 0 ? checkpointChain[0].Id : "?")}'.");
+        yield return new WaitForSeconds(clipLength);
+
+        _visualAnimator?.SetVisible(false);
+        yield return new WaitForSeconds(respawnDelay);
+
         ReviveStompedMonsters();
 
+        _visualAnimator?.SetDead(false);
+
+        if (npcCollider != null)
+        {
+            npcCollider.enabled = true;
+        }
+
+        IsDying = false;
         BeginChain();
+        _visualAnimator?.SetVisible(true);
     }
 
     /// <summary>

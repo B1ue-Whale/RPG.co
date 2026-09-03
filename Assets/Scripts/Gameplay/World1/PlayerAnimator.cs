@@ -6,12 +6,14 @@ using UnityEngine;
 /// parameters each frame and flips the sprite to match facing direction.
 /// Used by both the player and NPCs. Expected Animator parameters:
 /// "Speed" (float), "IsGrounded" (bool), "VerticalVelocity" (float).
+/// NPCs also use "IsDead" (bool); the player controller does not have that parameter.
 /// </summary>
 public class PlayerAnimator : MonoBehaviour
 {
     private static readonly int SpeedParam = Animator.StringToHash("Speed");
     private static readonly int IsGroundedParam = Animator.StringToHash("IsGrounded");
     private static readonly int VerticalVelocityParam = Animator.StringToHash("VerticalVelocity");
+    private static readonly int IsDeadParam = Animator.StringToHash("IsDead");
 
     [Tooltip("Motor whose state is mirrored into the Animator.")]
     [SerializeField] private CharacterMotor2D motor;
@@ -22,8 +24,62 @@ public class PlayerAnimator : MonoBehaviour
     [Tooltip("Enable if the sprite art faces left by default (player art in this project). Disable for right-facing art such as the NPC.")]
     [SerializeField] private bool spriteFacesLeft = true;
 
+    /// <summary>True while a death animation is playing. Cleared by <see cref="SetDead"/>.</summary>
+    public bool IsDead { get; private set; }
+
+    /// <summary>
+    /// Length of the Death_NPC clip if this animator has one, otherwise a fallback
+    /// matching that clip's authored duration. Used so respawn can wait for the pose.
+    /// </summary>
+    public float DeathClipLength
+    {
+        get
+        {
+            if (animator != null && animator.runtimeAnimatorController != null)
+            {
+                AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+                for (int i = 0; i < clips.Length; i++)
+                {
+                    if (clips[i] != null && clips[i].name == "Death_NPC")
+                    {
+                        return clips[i].length;
+                    }
+                }
+            }
+
+            return 0.875f;
+        }
+    }
+
+    /// <summary>
+    /// Enters or leaves the death pose. While dead, motor state is no longer
+    /// mirrored so walk/jump transitions cannot interrupt the clip.
+    /// </summary>
+    public void SetDead(bool dead)
+    {
+        IsDead = dead;
+        if (animator != null)
+        {
+            animator.SetBool(IsDeadParam, dead);
+        }
+    }
+
+    /// <summary>Shows or hides the character sprite without touching animator state.</summary>
+    public void SetVisible(bool visible)
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = visible;
+        }
+    }
+
     private void Update()
     {
+        if (IsDead)
+        {
+            return;
+        }
+
         animator.SetFloat(SpeedParam, Mathf.Abs(motor.Velocity.x));
         animator.SetBool(IsGroundedParam, motor.IsGrounded);
         animator.SetFloat(VerticalVelocityParam, motor.Velocity.y);

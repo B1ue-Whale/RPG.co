@@ -101,6 +101,9 @@ public class NpcCommandPlayback : MonoBehaviour
     {
         IsPlaying = false;
         IsPaused = false;
+        // Death (and any other external cancel) can interrupt a reaction jump.
+        // Leaving this set would block command consumption after the next Play().
+        IsExternallyControlled = false;
         UnfreezeBody(restoreVelocity: false);
         // Otherwise the NPC keeps drifting on whatever moveInput was last applied,
         // and leftover jump-hold would turn the next jump into a full-height hop.
