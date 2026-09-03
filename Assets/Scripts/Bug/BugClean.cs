@@ -54,7 +54,9 @@ public class BugClean : MonoBehaviour
 
         if (timer >= effectiveCleanseTime)
         {
-            bugZone.ClearInfection(currentCell);
+            // The player personally stood on this tile for the full cleanse time, so this
+            // arms the recently-cleaned cooldown and can earn Relief.
+            bugZone.ClearInfection(currentCell, InfectionClearCause.Player);
 
             timer = 0f;
             progressBar.SetVisible(false);

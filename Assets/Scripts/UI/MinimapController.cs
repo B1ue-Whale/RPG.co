@@ -52,6 +52,16 @@ public class MinimapController : MonoBehaviour
     [SerializeField] private Color playerColor = new Color(0.2f, 1f, 0.25f, 1f);
     [SerializeField] private Color npcColor = new Color(0.25f, 0.55f, 1f, 1f);
 
+    [Header("Crash Danger Marker")]
+    [Tooltip("Color for infected cells currently contributing to the Crash Gauge (BugZone.CrashContributingCells). Pulses between this and infectedColor.")]
+    [SerializeField] private Color crashDangerColor = new Color(1f, 0.15f, 0.1f, 1f);
+    [Tooltip("Pulse cycles per second.")]
+    [SerializeField] private float dangerPulseSpeed = 2.5f;
+    [Tooltip("How far the pulse dips back toward infectedColor (0 = no pulse, stays at crashDangerColor; 1 = pulses all the way down to infectedColor).")]
+    [SerializeField, Range(0f, 1f)] private float dangerPulseIntensity = 0.5f;
+    [Tooltip("Strength of the 1-pixel outer-edge size pulse at its peak (synced with the color pulse), as a blend factor against whatever is already drawn there. 0 disables it.")]
+    [SerializeField, Range(0f, 1f)] private float dangerSizePulseIntensity = 0.5f;
+
     private const int MaxTextureDimension = 2048;
 
     private Texture2D _texture;
@@ -187,6 +197,7 @@ public class MinimapController : MonoBehaviour
         System.Array.Copy(_basePixels, _framePixels, _basePixels.Length);
 
         DrawInfectedCells();
+        DrawCrashDangerCells();
         DrawNpcDots();
         DrawPlayerDot();
 
@@ -202,6 +213,60 @@ public class MinimapController : MonoBehaviour
         IReadOnlyList<Vector3Int> cells = bugZone.InfectedCells;
         for (int i = 0; i < cells.Count; i++)
             FillCell(_framePixels, bugZone.GetCellWorldCenter(cells[i]), infectedColor);
+    }
+
+    /// <summary>
+    /// Overlays infected cells that BugZone reports as currently contributing to the
+    /// Crash Gauge, in a brighter/pulsing color layered on top of the normal infected
+    /// fill. Reads BugZone.CrashContributingCells only - no age/proximity logic here.
+    /// </summary>
+    private void DrawCrashDangerCells()
+    {
+        if (bugZone == null)
+            return;
+
+        IReadOnlyCollection<Vector3Int> cells = bugZone.CrashContributingCells;
+        if (cells.Count == 0)
+            return;
+
+        // 0 at the pulse peak (most saturated crashDangerColor), 1 at the trough
+        // (faded back toward infectedColor) - the size pulse is derived from the same
+        // phase so the edge expansion peaks together with the color.
+        float pulse = 0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * dangerPulseSpeed * Mathf.PI * 2f);
+        Color32 pulseColor = Color.Lerp(crashDangerColor, infectedColor, pulse * dangerPulseIntensity);
+        float sizePulseStrength = (1f - pulse) * dangerSizePulseIntensity;
+
+        foreach (Vector3Int cell in cells)
+        {
+            Vector2 worldCenter = bugZone.GetCellWorldCenter(cell);
+            FillCell(_framePixels, worldCenter, pulseColor);
+            DrawCellOutline(_framePixels, worldCenter, pulseColor, sizePulseStrength);
+        }
+    }
+
+    /// <summary>
+    /// Subtle size-pulse effect: blends a 1-pixel ring just outside the cell's normal
+    /// footprint toward `color`, by `strength` (0 = invisible, 1 = fully color). Never
+    /// resizes the cell itself - FillCell's block stays exactly as it always has been.
+    /// </summary>
+    private void DrawCellOutline(Color32[] pixels, Vector2 worldCenter, Color32 color, float strength)
+    {
+        if (strength <= 0f)
+            return;
+
+        Vector2Int origin = WorldToPixel(worldCenter - new Vector2(0.5f, 0.5f));
+        int size = Mathf.Max(1, Mathf.RoundToInt(_pixelsPerUnit));
+
+        for (int x = -1; x <= size; x++)
+        {
+            BlendPixel(pixels, origin.x + x, origin.y - 1, color, strength);
+            BlendPixel(pixels, origin.x + x, origin.y + size, color, strength);
+        }
+        for (int y = 0; y < size; y++)
+        {
+            BlendPixel(pixels, origin.x - 1, origin.y + y, color, strength);
+            BlendPixel(pixels, origin.x + size, origin.y + y, color, strength);
+        }
     }
 
     private void DrawNpcDots()
@@ -265,6 +330,17 @@ public class MinimapController : MonoBehaviour
         if (x < 0 || x >= _texWidth || y < 0 || y >= _texHeight)
             return;
         pixels[y * _texWidth + x] = color;
+    }
+
+    /// <summary>Bounds-safe: blends `color` into the existing pixel by `t` instead of
+    /// overwriting it, so an outline pixel softens against whatever is already there
+    /// (background, ground, an adjacent cell) rather than hard-cutting over it.</summary>
+    private void BlendPixel(Color32[] pixels, int x, int y, Color32 color, float t)
+    {
+        if (x < 0 || x >= _texWidth || y < 0 || y >= _texHeight)
+            return;
+        int index = y * _texWidth + x;
+        pixels[index] = Color32.Lerp(pixels[index], color, t);
     }
 
     // -------------------------------------------------------------------- UI

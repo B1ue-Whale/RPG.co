@@ -75,6 +75,10 @@ public class NpcProgressionController : MonoBehaviour
 
     public bool IsRunning => _running;
     public int CurrentCheckpointIndex => _currentIndex;
+    /// <summary>The ordered checkpoint chain, exposed read-only so systems that care about
+    /// where the NPC is heading (e.g. BugZone's spawn route forecast) can read the upcoming
+    /// anchors without duplicating the chain or driving it.</summary>
+    public IReadOnlyList<ProgressCheckpoint> CheckpointChain => checkpointChain;
     /// <summary>True once the NPC has reached the final checkpoint of the chain.</summary>
     public bool IsChainComplete { get; private set; }
 
@@ -237,9 +241,7 @@ public class NpcProgressionController : MonoBehaviour
         ProgressCheckpoint from = checkpointChain[_currentIndex];
         ProgressCheckpoint to = checkpointChain[_currentIndex + 1];
 
-        List<NpcRecording> candidates = recordingLibrary
-            .Where(r => r != null && r.StartCheckpointId == from.Id && r.EndCheckpointId == to.Id)
-            .ToList();
+        List<NpcRecording> candidates = CollectSegmentRecordings(_currentIndex);
 
         if (candidates.Count == 0)
         {
@@ -270,6 +272,55 @@ public class NpcProgressionController : MonoBehaviour
         playback.PrepareAtCheckpoint(from);
         playback.SetRecording(chosen.Commands);
         playback.Play();
+    }
+
+    /// <summary>
+    /// Every recording that covers the segment starting at checkpoint index
+    /// <paramref name="fromIndex"/>. Empty when the index is out of range or no recording
+    /// matches that checkpoint pair.
+    /// </summary>
+    private List<NpcRecording> CollectSegmentRecordings(int fromIndex)
+    {
+        if (fromIndex < 0 || fromIndex >= checkpointChain.Count - 1)
+        {
+            return new List<NpcRecording>();
+        }
+
+        ProgressCheckpoint from = checkpointChain[fromIndex];
+        ProgressCheckpoint to = checkpointChain[fromIndex + 1];
+
+        if (from == null || to == null)
+        {
+            return new List<NpcRecording>();
+        }
+
+        return recordingLibrary
+            .Where(r => r != null && r.StartCheckpointId == from.Id && r.EndCheckpointId == to.Id)
+            .ToList();
+    }
+
+    /// <summary>
+    /// Rough duration of the segment starting at checkpoint index
+    /// <paramref name="fromIndex"/>, as the average length of the recordings available for
+    /// it. Which variant actually gets picked is decided later and at random, so this is an
+    /// estimate by design - good enough to order future checkpoints in time, not something
+    /// to schedule against. Returns 0 when the segment has no recordings.
+    /// </summary>
+    public float EstimateSegmentSeconds(int fromIndex)
+    {
+        List<NpcRecording> recordings = CollectSegmentRecordings(fromIndex);
+        if (recordings.Count == 0)
+        {
+            return 0f;
+        }
+
+        long totalTicks = 0;
+        for (int i = 0; i < recordings.Count; i++)
+        {
+            totalTicks += recordings[i].Commands.Count;
+        }
+
+        return (float)totalTicks / recordings.Count * Time.fixedDeltaTime;
     }
 
     // Does not decide pass/fail itself - CharacterMotor2D.IsGrounded can still be one

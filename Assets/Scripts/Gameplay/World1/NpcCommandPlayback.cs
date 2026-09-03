@@ -54,6 +54,12 @@ public class NpcCommandPlayback : MonoBehaviour
     public Rigidbody2D Body => body;
     /// <summary>How many commands have been consumed so far (or in total, once stopped).</summary>
     public int ConsumedTickCount => _tickIndex;
+    /// <summary>Length of the recording currently loaded, in physics ticks.</summary>
+    public int TotalTickCount => _commands.Count;
+    /// <summary>Commands still to be consumed. Multiplied by Time.fixedDeltaTime this is
+    /// how much longer the current segment has left to play - used by BugZone's route
+    /// forecast to estimate when the NPC reaches its next checkpoint.</summary>
+    public int RemainingTickCount => Mathf.Max(0, _commands.Count - _tickIndex);
 
     /// <summary>
     /// Raised when playback runs out of commands on its own (end of the recording).

@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Pure perception component: reports whether the real Player or a visible Bug/BW
-/// tile currently falls within this NPC's facing-relative field of view, distance,
-/// and unobstructed line of sight. Knows nothing about NPC state, awareness, or
-/// playback - NpcSuspicionController drives it and decides what to do with the
-/// result. Call <see cref="Sense"/> once per tick from that controller.
+/// Pure perception component: reports whether the real Player currently falls
+/// within this NPC's facing-relative field of view, distance, and unobstructed
+/// line of sight. Knows nothing about NPC state, awareness, or playback -
+/// NpcSuspicionController drives it and decides what to do with the result. Call
+/// <see cref="Sense"/> once per tick from that controller.
 /// </summary>
 public class NpcVisionSensor : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class NpcVisionSensor : MonoBehaviour
     [SerializeField] private float visionDistance = 8f;
     [Tooltip("Full field-of-view angle in degrees, centered on facing direction.")]
     [SerializeField, Range(0f, 360f)] private float visionAngle = 100f;
-    [Tooltip("Layers that block line of sight to the Player (level geometry/walls). Must not include the Player or NPC layers themselves. Not applied to Bug/BW tiles - see CanSee's checkObstruction param.")]
+    [Tooltip("Layers that block line of sight to the Player (level geometry/walls). Must not include the Player or NPC layers themselves.")]
     [SerializeField] private LayerMask obstructionMask;
 
     [Header("Player Target")]
@@ -29,11 +28,14 @@ public class NpcVisionSensor : MonoBehaviour
     [Tooltip("Optional. If assigned, a hidden player is never detected.")]
     [SerializeField] private PlayerHideController playerHideController;
 
-    [Header("Bug/BW Targets")]
-    [Tooltip("BugZones whose infected cells count as visible Bug/BW targets.")]
-    [SerializeField] private List<BugZone> bugZones = new List<BugZone>();
-
     public VisionDetection CurrentDetection { get; private set; } = VisionDetection.None;
+
+    /// <summary>Maximum distance this sensor can see. Exposed so awareness scaling can use
+    /// the edge of vision as its "far" reference without a second, duplicated field.</summary>
+    public float VisionDistance => visionDistance;
+
+    /// <summary>Origin of vision checks, in world space - the point distances are measured from.</summary>
+    public Vector3 EyeWorldPosition => EyePosition;
 
     private Vector3 EyePosition => eye != null ? eye.position : transform.position;
 
@@ -46,16 +48,11 @@ public class NpcVisionSensor : MonoBehaviour
     }
 
     /// <summary>
-    /// Re-evaluates what is currently visible and returns it. Player takes priority
-    /// over Bug/BW when both are visible.
+    /// Re-evaluates what is currently visible and returns it.
     /// </summary>
     public VisionDetection Sense()
     {
         VisionDetection detection = TrySensePlayer();
-        if (detection.Kind == VisionTargetKind.None)
-        {
-            detection = TrySenseBug();
-        }
 
         CurrentDetection = detection;
         return detection;
@@ -71,33 +68,6 @@ public class NpcVisionSensor : MonoBehaviour
         return CanSee(player.position, checkObstruction: true)
             ? new VisionDetection(VisionTargetKind.Player, player.position)
             : VisionDetection.None;
-    }
-
-    private VisionDetection TrySenseBug()
-    {
-        for (int i = 0; i < bugZones.Count; i++)
-        {
-            BugZone zone = bugZones[i];
-            if (zone == null)
-            {
-                continue;
-            }
-
-            IReadOnlyList<Vector3Int> cells = zone.InfectedCells;
-            for (int c = 0; c < cells.Count; c++)
-            {
-                Vector3 world = zone.GetCellWorldCenter(cells[c]);
-                // Bug/BW tiles are marked on the same tilemap used as ground/wall
-                // geometry, so their own cell is inevitably obstruction geometry - a
-                // wall raycast to it would just clip itself. Distance/FOV still apply.
-                if (CanSee(world, checkObstruction: false))
-                {
-                    return new VisionDetection(VisionTargetKind.Bug, world);
-                }
-            }
-        }
-
-        return VisionDetection.None;
     }
 
     private bool CanSee(Vector3 targetPosition, bool checkObstruction)

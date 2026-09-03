@@ -38,7 +38,9 @@ public class FPS_Gadget : GadgetBase
 
         Vector3 center = player != null ? player.position : transform.position;
         Debug.Log("FPS Used!");
-        bugZone.ClearInfectionInRange(center, range);
+        // Deliberate player action, same as hand-cleaning: arms the recently-cleaned
+        // cooldown on every tile it removes, and can earn Relief if it empties the NPC area.
+        bugZone.ClearInfectionInRange(center, range, InfectionClearCause.Player);
         return true;
     }
 }
