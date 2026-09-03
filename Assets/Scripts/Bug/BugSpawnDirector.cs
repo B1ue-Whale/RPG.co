@@ -12,7 +12,7 @@ using UnityEngine;
 /// selection logic stays out of BugZone.cs.
 ///
 /// Final weight of a surviving candidate:
-///     npcRelevance * playerModifier * spacingModifier * recentSpawnModifier * reliefModifier
+///     npcRelevance * playerModifier * sameBatchSpacingModifier * reliefModifier
 /// npcRelevance spans roughly 0.05..1.0 while the player modifier is bounded around 1.0
 /// (~0.8..1.1), so NPC route relevance always dominates and player distance can only
 /// reorder near-ties - which is the intended design.
@@ -35,8 +35,6 @@ public class BugSpawnDirector
     [SerializeField] private float playerExclusionRadius = 2.5f;
     [Tooltip("Seconds after the PLAYER cleans a cell during which that cell cannot be re-infected. Hard exclusion, never relaxed - a batch spawns fewer bugs rather than immediately re-infecting what was just cleaned.")]
     [SerializeField] private float recentCleanCooldown = 20f;
-    [Tooltip("Cells within this many cells (Chebyshev distance) of an existing infection, or of a cell already chosen earlier in the same batch, are rejected. 0 = allow direct adjacency. This is the ONLY filter relaxed when a batch would otherwise find nothing.")]
-    [SerializeField] private int adjacencyExclusionCells = 1;
 
     [Header("NPC Relevance (primary weight)")]
     [Tooltip("Weight by estimated seconds until the NPC's route reaches this area. Default: immediate = low (the player needs reaction time), a few seconds out = peak, far future = moderate.")]
@@ -66,21 +64,19 @@ public class BugSpawnDirector
     [Range(0f, 1f)]
     [SerializeField] private float playerWeightInfluence = 1f;
 
-    [Header("Infection Spacing")]
-    [Tooltip("World radius used to count nearby existing infections (and cells already chosen this batch).")]
+    [Header("Same-Batch Spacing")]
+    // Deliberately scoped to the current batch only. Existing infections do NOT push
+    // spawns away - clusters around the NPC's route are allowed to build up, and NPC
+    // relevance is never weakened just because that area is already infected. This only
+    // stops the 2-3 bugs of a single batch from landing on top of each other.
+    [Tooltip("Cells within this many cells (Chebyshev distance) of a cell already chosen earlier in the SAME batch are rejected. 0 = allow direct adjacency within a batch. This is the ONLY filter relaxed when a batch would otherwise find nothing.")]
+    [SerializeField] private int adjacencyExclusionCells = 1;
+    [Tooltip("World radius used to count cells already chosen in this batch.")]
     [SerializeField] private float spacingRadius = 3f;
-    [Tooltip("Multiplier applied once per nearby infection. 0.5 halves the weight for each neighbour.")]
+    [Tooltip("Multiplier applied once per cell already chosen nearby in this batch. 0.5 halves the weight for each one.")]
     [SerializeField] private float spacingPenaltyPerNeighbor = 0.5f;
-    [Tooltip("Lower bound of the spacing penalty. Keeping this above 0 is what still allows small local problem areas to form instead of forcing perfectly even spread.")]
+    [Tooltip("Lower bound of the same-batch spacing penalty, so the effect stays mild rather than hard-forbidding a second bug in the same region.")]
     [SerializeField] private float spacingModifierFloor = 0.2f;
-
-    [Header("Recent Spawn History")]
-    [Tooltip("How many recent spawn positions to remember.")]
-    [SerializeField] private int recentSpawnHistorySize = 6;
-    [Tooltip("World radius around a remembered spawn position that gets the penalty.")]
-    [SerializeField] private float recentSpawnRadius = 4f;
-    [Tooltip("Mild multiplier applied to cells near a recently used spawn position.")]
-    [SerializeField] private float recentSpawnPenalty = 0.6f;
 
     [Header("Relief")]
     [Tooltip("Multiplier applied for ONE batch after the player fully cleans the NPC pressure area, to candidates that are immediately around the NPC (see reliefEtaThreshold and BugZone.npcPressureRadius). Farther future-route candidates keep their normal weight, so the batch still follows the NPC's route - it just lands further ahead.")]
@@ -91,6 +87,8 @@ public class BugSpawnDirector
     [Header("Debug")]
     [Tooltip("Draw the last evaluated candidate weights as gizmos while the BugZone is selected. Blue = low weight, red = high, white wire cubes = the cells actually chosen. Play mode only - the weights depend on live NPC/player positions.")]
     [SerializeField] private bool drawSpawnWeightGizmos = false;
+    [Tooltip("Re-evaluate the weights every frame instead of showing the snapshot from the last batch, so the gizmos follow the NPC and player live while tuning. Display only - it never spawns anything or consumes the Relief latch. Costs a full candidate scan per frame, so leave it off outside of tuning.")]
+    [SerializeField] private bool liveGizmoPreview = false;
     [Tooltip("Size multiplier for the weight gizmo cubes.")]
     [SerializeField] private float gizmoWeightScale = 0.9f;
 
@@ -99,7 +97,6 @@ public class BugSpawnDirector
     public float RecentCleanCooldown => Mathf.Max(0f, recentCleanCooldown);
 
     private readonly List<NpcRouteForecast> _forecasts = new List<NpcRouteForecast>();
-    private readonly List<Vector3> _recentSpawns = new List<Vector3>();
 
     // Reused per pick so selection does not allocate every batch.
     private readonly List<Vector3Int> _candidates = new List<Vector3Int>();
@@ -107,6 +104,9 @@ public class BugSpawnDirector
     private readonly List<Vector3Int> _occupiedCells = new List<Vector3Int>();
     private readonly List<Vector2> _occupiedCenters = new List<Vector2>();
     private readonly List<Vector3Int> _lastChosen = new List<Vector3Int>();
+    // Stands in for "no cells chosen yet" while previewing, so the preview shows the state
+    // a batch's first pick would see.
+    private readonly List<Vector3Int> _previewEmptyBatch = new List<Vector3Int>();
 
     /// <summary>
     /// Picks a whole batch. Each cell is selected sequentially and the weights are
@@ -144,7 +144,6 @@ public class BugSpawnDirector
 
             results.Add(cell);
             _lastChosen.Add(cell);
-            PushRecentSpawn(zone.GetCellWorldCenter(cell));
         }
     }
 
@@ -244,19 +243,16 @@ public class BugSpawnDirector
         return true;
     }
 
-    /// <summary>Existing infections plus the cells already chosen in this batch - both
-    /// block adjacency and both count toward the spacing penalty.</summary>
+    /// <summary>
+    /// Only the cells already chosen in this batch. Existing infections are deliberately
+    /// NOT included: an already-infected cell is still an invalid spawn target (the
+    /// isInfected filter handles that), but it neither blocks its neighbours nor reduces
+    /// their weight, so bugs may freely accumulate around wherever the NPC is going.
+    /// </summary>
     private void CollectOccupied(BugZone zone, List<Vector3Int> batchSoFar)
     {
         _occupiedCells.Clear();
         _occupiedCenters.Clear();
-
-        IReadOnlyList<Vector3Int> infected = zone.InfectedCells;
-        for (int i = 0; i < infected.Count; i++)
-        {
-            _occupiedCells.Add(infected[i]);
-            _occupiedCenters.Add(zone.GetCellWorldCenter(infected[i]));
-        }
 
         for (int i = 0; i < batchSoFar.Count; i++)
         {
@@ -298,7 +294,6 @@ public class BugSpawnDirector
             float weight = npcRelevance
                 * EvaluatePlayerModifier(center, hasPlayer, playerPosition)
                 * spacingModifier
-                * EvaluateRecentSpawnModifier(center)
                 * EvaluateReliefModifier(zone, reliefPending, center, eta);
 
             if (weight <= 0f)
@@ -310,8 +305,9 @@ public class BugSpawnDirector
     }
 
     /// <summary>
-    /// Combined adjacency exclusion (hard, unless relaxed) and neighbour-count spacing
-    /// penalty (soft), in one pass over the occupied cells.
+    /// Combined same-batch adjacency exclusion (hard, unless relaxed) and same-batch
+    /// neighbour-count penalty (soft), in one pass. Always passes for the first pick of a
+    /// batch, since nothing has been chosen yet.
     /// </summary>
     private bool TryGetSpacingModifier(Vector3Int cell, Vector2 center, bool allowAdjacent, out float modifier)
     {
@@ -402,21 +398,6 @@ public class BugSpawnDirector
         return Mathf.Lerp(1f, raw, playerWeightInfluence);
     }
 
-    private float EvaluateRecentSpawnModifier(Vector2 center)
-    {
-        float sqrRadius = recentSpawnRadius * recentSpawnRadius;
-
-        for (int i = 0; i < _recentSpawns.Count; i++)
-        {
-            if (((Vector2)_recentSpawns[i] - center).sqrMagnitude <= sqrRadius)
-            {
-                return Mathf.Clamp01(recentSpawnPenalty);
-            }
-        }
-
-        return 1f;
-    }
-
     /// <summary>
     /// Relief option A: only the candidates immediately around the NPC are damped - by
     /// ETA, or by sitting inside the pressure radius the player just cleaned. Everything
@@ -434,28 +415,45 @@ public class BugSpawnDirector
         return immediate ? Mathf.Max(0f, reliefModifier) : 1f;
     }
 
-    private void PushRecentSpawn(Vector3 worldPosition)
+    /// <summary>
+    /// Recomputes the candidate weights purely for visualization, as if a fresh batch were
+    /// about to pick its first cell. Deliberately read-only with respect to game state: it
+    /// does not spawn anything or consume Relief - the Relief latch is only read, exactly
+    /// as a real pick would read it.
+    /// </summary>
+    private void RefreshPreview(BugZone zone)
     {
-        if (recentSpawnHistorySize <= 0)
-        {
-            _recentSpawns.Clear();
-            return;
-        }
+        EnsureCurves();
+        RebuildForecasts(zone);
 
-        _recentSpawns.Add(worldPosition);
-        while (_recentSpawns.Count > recentSpawnHistorySize)
+        _previewEmptyBatch.Clear();
+        CollectOccupied(zone, _previewEmptyBatch);
+
+        BuildCandidates(zone, allowAdjacent: false);
+        if (_candidates.Count == 0)
         {
-            _recentSpawns.RemoveAt(0);
+            BuildCandidates(zone, allowAdjacent: true);
         }
     }
 
     /// <summary>
-    /// Draws the candidate weights from the most recent pick. Blue = low, red = high;
-    /// white wire cubes mark the cells that were actually chosen.
+    /// Draws the candidate weights - the snapshot from the most recent pick, or a live
+    /// re-evaluation when liveGizmoPreview is on. Blue = low, red = high; white wire cubes
+    /// mark the cells the last batch actually chose.
     /// </summary>
     public void DrawGizmos(BugZone zone)
     {
-        if (!drawSpawnWeightGizmos || zone == null || _candidates.Count == 0)
+        if (!drawSpawnWeightGizmos || zone == null)
+        {
+            return;
+        }
+
+        if (liveGizmoPreview && Application.isPlaying)
+        {
+            RefreshPreview(zone);
+        }
+
+        if (_candidates.Count == 0)
         {
             return;
         }

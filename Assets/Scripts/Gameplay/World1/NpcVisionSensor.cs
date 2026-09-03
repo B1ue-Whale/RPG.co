@@ -30,6 +30,13 @@ public class NpcVisionSensor : MonoBehaviour
 
     public VisionDetection CurrentDetection { get; private set; } = VisionDetection.None;
 
+    /// <summary>Maximum distance this sensor can see. Exposed so awareness scaling can use
+    /// the edge of vision as its "far" reference without a second, duplicated field.</summary>
+    public float VisionDistance => visionDistance;
+
+    /// <summary>Origin of vision checks, in world space - the point distances are measured from.</summary>
+    public Vector3 EyeWorldPosition => EyePosition;
+
     private Vector3 EyePosition => eye != null ? eye.position : transform.position;
 
     private void Awake()

@@ -19584,8 +19584,10 @@ MonoBehaviour:
   vision: {fileID: 1472330310}
   playback: {fileID: 1472330302}
   motor: {fileID: 1472330303}
-  awarenessGainRate: 0.8
+  awarenessGainRate: 0.83
   awarenessDecayRate: 0.5
+  awarenessCloseMultiplier: 2
+  awarenessCloseDistance: 3
   suspiciousEnterThreshold: 0.15
   suspiciousExitThreshold: 0
   suspicionBarOffset: {x: 0, y: 1.5, z: 0}
@@ -22943,7 +22945,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 69240101}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: npcPressureRadius
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: npcNearbyCrashRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: reliefInfectionThreshold
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
@@ -22951,8 +22961,20 @@ PrefabInstance:
       value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: spawnDirector.liveGizmoPreview
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: spawnDirector.drawSpawnWeightGizmos
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: spawnDirector.etaWeightCurve.m_Curve.Array.data[1].time
+      value: 2.865673
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: spawnDirector.etaWeightCurve.m_Curve.Array.data[1].value
+      value: 1.5084229
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

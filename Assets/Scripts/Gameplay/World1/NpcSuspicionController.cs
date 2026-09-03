@@ -40,6 +40,10 @@ public class NpcSuspicionController : MonoBehaviour
     [SerializeField] private float awarenessGainRate = 1f;
     [Tooltip("Awareness lost per second while nothing is visible.")]
     [SerializeField] private float awarenessDecayRate = 0.5f;
+    [Tooltip("Multiplier on the gain rate when the target is at (or inside) awarenessCloseDistance. Scales linearly down to 1x at the edge of vision, so a close target is noticed faster than one barely in range. Only affects gain - decay is unchanged.")]
+    [SerializeField] private float awarenessCloseMultiplier = 2f;
+    [Tooltip("Distance in world units (1 tile = 1 unit) at or below which the full awarenessCloseMultiplier applies.")]
+    [SerializeField] private float awarenessCloseDistance = 3f;
     [Tooltip("Awareness (0..1) at which Progressing enters Suspicious.")]
     [SerializeField, Range(0f, 1f)] private float suspiciousEnterThreshold = 0.75f;
     [Tooltip("Awareness (0..1) at which Suspicious returns to Progressing. Keep below the enter threshold to avoid flickering between states.")]
@@ -100,7 +104,9 @@ public class NpcSuspicionController : MonoBehaviour
         VisionDetection detection = vision.Sense();
         bool hasTarget = detection.Kind != VisionTargetKind.None;
 
-        float rate = hasTarget ? awarenessGainRate : -awarenessDecayRate;
+        float rate = hasTarget
+            ? awarenessGainRate * GetProximityGainMultiplier(detection.Position)
+            : -awarenessDecayRate;
         Awareness = Mathf.Clamp01(Awareness + rate * Time.fixedDeltaTime);
 
         _suspicionBar.SetVisible(Awareness > 0f);
@@ -139,6 +145,29 @@ public class NpcSuspicionController : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    /// <summary>
+    /// 1x at the edge of the vision cone, ramping linearly up to awarenessCloseMultiplier
+    /// at awarenessCloseDistance and staying there for anything nearer. Measured from the
+    /// sensor's eye, the same origin the vision checks themselves use, and bounded by the
+    /// sensor's own vision distance so the two can never drift apart.
+    /// </summary>
+    private float GetProximityGainMultiplier(Vector3 targetPosition)
+    {
+        float far = vision.VisionDistance;
+        float near = Mathf.Max(0f, awarenessCloseDistance);
+
+        if (far <= near)
+        {
+            // The whole cone is within "close" range - no meaningful ramp to draw.
+            return awarenessCloseMultiplier;
+        }
+
+        float distance = Vector2.Distance(vision.EyeWorldPosition, targetPosition);
+        float closeness = Mathf.InverseLerp(far, near, distance);
+
+        return Mathf.Lerp(1f, awarenessCloseMultiplier, closeness);
     }
 
     private State EnterSuspicious(VisionDetection detection)

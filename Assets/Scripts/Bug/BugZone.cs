@@ -44,6 +44,8 @@ public class BugZone : MonoBehaviour
     [SerializeField] private float npcPressureRadius = 7f;
     [Tooltip("How many infections must have built up inside the pressure area before clearing it counts as a real achievement. Below this, cleaning the area does not grant Relief.")]
     [SerializeField] private int reliefInfectionThreshold = 3;
+    [Tooltip("Log to the console when Relief is earned, when it is consumed by a batch, and when the player clears the pressure area but the peak was below the threshold. Tuning aid - turn off for a quiet console.")]
+    [SerializeField] private bool logReliefEvents = true;
 
     [Header("Crash Gauge")]
     [Tooltip("Crash Gauge manager to feed. Found automatically if left unassigned.")]
@@ -245,6 +247,8 @@ public class BugZone : MonoBehaviour
 
         PrunePlayerCleanTimes();
 
+        bool spawnedUnderRelief = ReliefPending;
+
         spawnDirector.SelectBatch(this, batchBuffer, headroom);
 
         for (int i = 0; i < batchBuffer.Count; i++)
@@ -255,6 +259,11 @@ public class BugZone : MonoBehaviour
         if (batchBuffer.Count > 0)
         {
             ReliefPending = false;
+
+            if (spawnedUnderRelief && logReliefEvents)
+            {
+                Debug.Log($"[{nameof(BugZone)}] Relief consumed: batch of {batchBuffer.Count} spawned with near-NPC candidates damped. Back to normal weighting.", this);
+            }
         }
     }
 
@@ -419,11 +428,28 @@ public class BugZone : MonoBehaviour
     /// </summary>
     private void TryTriggerRelief()
     {
-        if (pressurePeak < reliefInfectionThreshold)
+        int remaining = CountPressureInfections();
+
+        // Not the last one - the area is not clear yet, so there is nothing to report.
+        if (remaining > 0)
             return;
 
-        if (CountPressureInfections() > 0)
+        if (pressurePeak < reliefInfectionThreshold)
+        {
+            // The area is clear but never got bad enough to count. Worth logging: this is
+            // the case that looks like "Relief should have fired but didn't".
+            if (logReliefEvents)
+            {
+                Debug.Log($"[{nameof(BugZone)}] NPC pressure area cleared by the player, but no Relief: peak was {pressurePeak} infection(s), threshold is {reliefInfectionThreshold}.", this);
+            }
+
             return;
+        }
+
+        if (logReliefEvents)
+        {
+            Debug.Log($"[{nameof(BugZone)}] Relief earned: player cleared the NPC pressure area (peak {pressurePeak} infection(s) >= threshold {reliefInfectionThreshold}). The next batch that spawns will damp near-NPC candidates.", this);
+        }
 
         ReliefPending = true;
         pressurePeak = 0;
