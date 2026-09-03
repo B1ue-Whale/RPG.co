@@ -4,6 +4,7 @@ public class BugClean : MonoBehaviour
 {
     [SerializeField] private BugZone bugZone;
     [SerializeField] private PlayerHideController playerHideController;
+    [SerializeField] private StatusEffectController statusEffects;
     [SerializeField] private float cleanseTime = 3f;
 
     [Header("Progress Bar")]
@@ -19,6 +20,10 @@ public class BugClean : MonoBehaviour
     private void Awake()
     {
         progressBar = WorldSpaceProgressBar.Create(playerHideController.transform, progressBarOffset, progressBarSize, progressBarBackground, progressBarFill);
+        if (statusEffects == null && playerHideController != null)
+        {
+            statusEffects = playerHideController.GetComponent<StatusEffectController>();
+        }
     }
 
     private void Update()
@@ -44,9 +49,10 @@ public class BugClean : MonoBehaviour
 
         timer += Time.deltaTime;
         progressBar.SetVisible(true);
-        progressBar.SetFill(timer / cleanseTime);
+        float effectiveCleanseTime = GetEffectiveCleanseTime();
+        progressBar.SetFill(timer / effectiveCleanseTime);
 
-        if (timer>= cleanseTime)
+        if (timer >= effectiveCleanseTime)
         {
             bugZone.ClearInfection(currentCell);
 
@@ -54,5 +60,14 @@ public class BugClean : MonoBehaviour
             progressBar.SetVisible(false);
         }
         // cleanseTime 이상이면 ClearInfection()
+    }
+
+    private float GetEffectiveCleanseTime()
+    {
+        float reduction = statusEffects != null
+            ? statusEffects.GetValue(StatusEffectType.BugCooldown)
+            : 0f;
+
+        return Mathf.Max(0.1f, cleanseTime - reduction);
     }
 }
