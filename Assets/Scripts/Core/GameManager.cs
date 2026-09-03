@@ -3,23 +3,36 @@ using System.Collections;
 using System;
 
 /// <summary>
-/// °ÔÀÓÀÇ ÀüÃ¼ »óÅÂ(·Îºñ, ÀÎ°ÔÀÓ, ÀÏ½ÃÁ¤Áö) °ü¸®
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½(ï¿½Îºï¿½, ï¿½Î°ï¿½ï¿½ï¿½, ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½ï¿½
 /// 
-/// ÅÏÀÇ »óÅÂ °ü¸®(movestate, tag, attack....)
-/// <para>°ÔÀÓ ÀüÃ¼ Àü¿ª ½Ì±ÛÅæ</para>
+/// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(movestate, tag, attack....)
+/// <para>ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½ï¿½ï¿½</para>
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
     public Enums.GameState CurrentState { get; private set; } = Enums.GameState.Main;
 
+    public event Action<Enums.GameState> StateChanged;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        CurrentState = Enums.GameState.Main;
+    }
+
     public void ChangeState(Enums.GameState newState)
     {
-        CurrentState = newState;
+        if (CurrentState == newState)
+            return;
 
-        // »óÅÂ º¯°æ¿¡ µû¸¥ ·ÎÁ÷
+        CurrentState = newState;
+        StateChanged?.Invoke(newState);
 
         Debug.Log($"Game State changed to: {CurrentState}");
     }
 
-    // Ãß°¡ÀûÀÎ °ÔÀÓ °ü¸® ±â´Éµé
+    public bool IsState(Enums.GameState state)
+    {
+        return CurrentState == state;
+    }
 }
