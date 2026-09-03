@@ -4,8 +4,7 @@ using UnityEngine;
 public enum VisionTargetKind
 {
     None,
-    Player,
-    Bug
+    Player
 }
 
 /// <summary>
