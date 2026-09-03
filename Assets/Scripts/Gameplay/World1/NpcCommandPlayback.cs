@@ -107,6 +107,14 @@ public class NpcCommandPlayback : MonoBehaviour
     {
         IsPlaying = false;
         IsPaused = false;
+        // A hard Stop() is "abandon whatever was happening" (e.g. NpcProgressionController.Die()
+        // resetting the whole chain). If an external controller (e.g. a monster-avoidance
+        // reaction jump) had control at that exact moment, it never gets to call
+        // EndExternalControl() - clear the flag here instead, otherwise FixedUpdate keeps
+        // refusing to consume commands forever and the NPC never leaves its next Play().
+        // The external controller itself may still think it is "reacting" - callers that
+        // can trigger a mid-reaction Stop() should also reset that controller's own state.
+        IsExternallyControlled = false;
         UnfreezeBody(restoreVelocity: false);
         // Otherwise the NPC keeps drifting on whatever moveInput was last applied,
         // and leftover jump-hold would turn the next jump into a full-height hop.

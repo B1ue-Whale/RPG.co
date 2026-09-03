@@ -479,6 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b4d32e0ac819cb4baca6fe65f7fbb5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrashGaugeManager
+  decayRate: 1
 --- !u!1 &76408920
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,6 +1270,54 @@ MonoBehaviour:
     MaxWindowSize: 0
     Padding: 0
   m_LegacyMaxWindowSize: -2
+--- !u!1 &402617069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 402617071}
+  - component: {fileID: 402617070}
+  m_Layer: 0
+  m_Name: FPS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &402617070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402617069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a06a8b7a00f8be459dadf12ef451015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FPS_Gadget
+  cooldown: 5
+  range: 3
+  bugZone: {fileID: 1301147711}
+  player: {fileID: 2130377330}
+--- !u!4 &402617071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402617069}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.39998, y: -23.24163, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &449978266
 GameObject:
   m_ObjectHideFlags: 0
@@ -2879,6 +2928,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3328540711285553970, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
   m_PrefabInstance: {fileID: 1049075619885252190}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1301147711 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+  m_PrefabInstance: {fileID: 1049075619885252190}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb939f77be227f14589ec821cac8ab03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BugZone
 --- !u!1 &1315437645
 GameObject:
   m_ObjectHideFlags: 0
@@ -22859,7 +22919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecdce5c5e803b5d4ea9849a9d2b21e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGadgetController
-  gadget: {fileID: 0}
+  gadget: {fileID: 402617070}
 --- !u!1001 &1049075619885252190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22870,7 +22930,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: cleanseTime
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 206474729391243254, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: playerHideController
@@ -22934,7 +22994,7 @@ PrefabInstance:
       objectReference: {fileID: 1603556872}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: agedBugCrashRate
-      value: 0.2
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: infectionTilemap
@@ -22970,11 +23030,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: spawnDirector.etaWeightCurve.m_Curve.Array.data[1].time
-      value: 2.865673
+      value: 2.6888084
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: spawnDirector.etaWeightCurve.m_Curve.Array.data[1].value
-      value: 1.5084229
+      value: 1.1927338
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23076,3 +23136,4 @@ SceneRoots:
   - {fileID: 1530111412}
   - {fileID: 1426254949}
   - {fileID: 666887997}
+  - {fileID: 402617071}

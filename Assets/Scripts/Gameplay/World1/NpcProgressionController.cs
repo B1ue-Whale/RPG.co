@@ -1,6 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
 /// Drives an NPC through an ordered checkpoint chain (CP0 -> CP1 -> CP2 -> ...),
@@ -66,12 +69,33 @@ public class NpcProgressionController : MonoBehaviour
     private float _segmentTimeoutSeconds;
     private float _recoveryElapsedTime;
     private NpcSuspicionController _suspicion;
+    private NpcMonsterJumpReaction _jumpReaction;
 
     // Last recording played per segment index. On the next visit to the same segment
     // (e.g. after dying and restarting from the first checkpoint) that recording is
     // excluded from the random pick when alternatives exist, so each retry takes
     // different routes instead of repeating the exact run that just failed.
     private readonly Dictionary<int, NpcRecording> _lastPlayedBySegment = new Dictionary<int, NpcRecording>();
+
+    // Konami code easter egg. Deliberately tucked in here rather than its own
+    // component so it doesn't show up as a discoverable script/GameObject on its
+    // own - no Inspector fields, no scene wiring, just a key sequence listener that
+    // rides along on whichever NPC happens to own this controller.
+    private static readonly Key[] KonamiSequence =
+    {
+        Key.UpArrow, Key.UpArrow, Key.DownArrow, Key.DownArrow,
+        Key.LeftArrow, Key.RightArrow, Key.LeftArrow, Key.RightArrow,
+        Key.B, Key.A
+    };
+    private const string KonamiSpriteResourceName = "dothede";
+    private const string KonamiSfxResourceName = "FreddyJumpscare";
+    private const float KonamiDisplaySeconds = 1f;
+    private const float KonamiSpriteScreenFraction = 1.2f;
+
+    private int _konamiProgress;
+    private Sprite _konamiSprite;
+    private AudioClip _konamiSfx;
+    private Coroutine _konamiRoutine;
 
     public bool IsRunning => _running;
     public int CurrentCheckpointIndex => _currentIndex;
@@ -101,6 +125,7 @@ public class NpcProgressionController : MonoBehaviour
         IgnoreDynamicObstacles();
 
         _suspicion = GetComponent<NpcSuspicionController>();
+        _jumpReaction = GetComponent<NpcMonsterJumpReaction>();
     }
 
     /// <summary>
@@ -190,6 +215,15 @@ public class NpcProgressionController : MonoBehaviour
         Debug.Log($"[{nameof(NpcProgressionController)}] NPC died. Resetting to '{(checkpointChain.Count > 0 ? checkpointChain[0].Id : "?")}' and restarting chain.");
 
         _phase = SegmentPhase.Playback;
+
+        // Order matters: cancel the reaction BEFORE Stop(). CancelReaction() only clears
+        // this component's own _reacting/_hasLeftGround bookkeeping - Stop() is what
+        // actually clears NpcCommandPlayback.IsExternallyControlled. If the NPC died
+        // mid-reaction-jump, skipping either half leaves the two disagreeing: playback
+        // would resume consuming commands while the reaction keeps zeroing moveInput every
+        // tick (or vice versa), and the NPC sits frozen at the checkpoint it just
+        // respawned at instead of actually playing its next segment.
+        _jumpReaction?.CancelReaction();
         playback?.Stop();
 
         // Otherwise the NPC could respawn still flagged Suspicious from before it died.
@@ -538,5 +572,121 @@ public class NpcProgressionController : MonoBehaviour
         Debug.LogWarning(
             $"[{nameof(NpcProgressionController)}] Segment ended but NPC did not reach expected checkpoint '{expected.Id}' within {arrivalGracePeriod:F2}s grace window. " +
             $"position={position} velocity={velocity} grounded={grounded} offsetFromAnchor={offset} (arrivalHalfExtents={tolerance}). Entering recovery.");
+    }
+
+    private void Update()
+    {
+        TickKonamiListener();
+    }
+
+    /// <summary>
+    /// Advances (or resets) progress through KonamiSequence based on whichever key was
+    /// pressed this frame. Uses wasPressedThisFrame, not isPressed, so holding a key down
+    /// cannot rack up repeated matches on the same press.
+    /// </summary>
+    private void TickKonamiListener()
+    {
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null)
+        {
+            return;
+        }
+
+        Key expected = KonamiSequence[_konamiProgress];
+        if (keyboard[expected].wasPressedThisFrame)
+        {
+            _konamiProgress++;
+            if (_konamiProgress >= KonamiSequence.Length)
+            {
+                _konamiProgress = 0;
+                TriggerKonamiEasterEgg();
+            }
+
+            return;
+        }
+
+        // Any other key press breaks the streak, except when it happens to be the
+        // correct first key of a fresh attempt - otherwise a mistyped code could never
+        // be immediately retried without an unrelated key in between.
+        for (int i = 0; i < keyboard.allKeys.Count; i++)
+        {
+            if (keyboard.allKeys[i].wasPressedThisFrame)
+            {
+                _konamiProgress = keyboard.allKeys[i].keyCode == KonamiSequence[0] ? 1 : 0;
+                break;
+            }
+        }
+    }
+
+    private void TriggerKonamiEasterEgg()
+    {
+        if (_konamiRoutine != null)
+        {
+            // Already showing (or about to) - let the current one finish rather than
+            // stacking a second popup on top of it.
+            return;
+        }
+
+        _konamiRoutine = StartCoroutine(ShowKonamiEasterEgg());
+    }
+
+    private IEnumerator ShowKonamiEasterEgg()
+    {
+        if (_konamiSprite == null)
+        {
+            Texture2D texture = Resources.Load<Texture2D>(KonamiSpriteResourceName);
+            if (texture == null)
+            {
+                Debug.LogWarning($"[{nameof(NpcProgressionController)}] Konami easter egg triggered but '{KonamiSpriteResourceName}' was not found under a Resources folder.");
+                _konamiRoutine = null;
+                yield break;
+            }
+
+            _konamiSprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        }
+
+        if (_konamiSfx == null)
+        {
+            _konamiSfx = Resources.Load<AudioClip>(KonamiSfxResourceName);
+            if (_konamiSfx == null)
+            {
+                Debug.LogWarning($"[{nameof(NpcProgressionController)}] Konami easter egg triggered but '{KonamiSfxResourceName}' was not found under a Resources folder.");
+            }
+        }
+
+        GameObject canvasObject = new GameObject("KonamiEasterEggCanvas");
+        Canvas canvas = canvasObject.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = short.MaxValue;
+        canvasObject.AddComponent<CanvasScaler>();
+
+        GameObject imageObject = new GameObject("Dothede");
+        imageObject.transform.SetParent(canvasObject.transform, false);
+        Image image = imageObject.AddComponent<Image>();
+        image.sprite = _konamiSprite;
+        image.raycastTarget = false;
+        image.preserveAspect = true;
+
+        RectTransform rect = image.rectTransform;
+        rect.anchorMin = new Vector2(0.5f, 0.5f);
+        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        float size = Mathf.Min(Screen.width, Screen.height) * KonamiSpriteScreenFraction;
+        rect.sizeDelta = new Vector2(size, size);
+
+        if (_konamiSfx != null)
+        {
+            // Parented to the same object the sprite lives on, so destroying it below
+            // cuts the sfx off too if the clip happens to outlast the display window -
+            // "while visible" means the sound should not survive the sprite.
+            AudioSource audioSource = canvasObject.AddComponent<AudioSource>();
+            audioSource.clip = _konamiSfx;
+            audioSource.Play();
+        }
+
+        yield return new WaitForSeconds(KonamiDisplaySeconds);
+
+        Destroy(canvasObject);
+        _konamiRoutine = null;
     }
 }

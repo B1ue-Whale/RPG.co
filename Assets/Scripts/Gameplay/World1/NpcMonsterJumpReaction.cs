@@ -217,6 +217,30 @@ public class NpcMonsterJumpReaction : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Hard-abandons an in-progress reaction without waiting for a landing. For when the
+    /// NPC dies mid-reaction (e.g. a KillBorder trigger during the jump, before
+    /// _hasLeftGround has flipped true): TickReaction's landing check requires an actual
+    /// airborne tick to have happened first, so if death and respawn happen before that -
+    /// the NPC is teleported straight onto solid ground, reads grounded every tick from
+    /// the start, and _hasLeftGround would never become true - EndReaction() would never
+    /// fire on its own and this component would keep calling SetMoveInput(0) forever,
+    /// permanently overriding the recording that just restarted. Callers that force-reset
+    /// playback out from under a reaction (see NpcCommandPlayback.Stop()) must call this
+    /// too so this component's own state doesn't disagree with playback's afterward.
+    /// </summary>
+    public void CancelReaction()
+    {
+        if (!_reacting)
+        {
+            return;
+        }
+
+        motor?.SetJumpHeld(false);
+        _reacting = false;
+        _hasLeftGround = false;
+    }
+
     private void EndReaction()
     {
         // The jump buffer/coyote timers are already clean by this point - consumed
