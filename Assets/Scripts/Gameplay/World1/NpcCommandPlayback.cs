@@ -153,6 +153,28 @@ public class NpcCommandPlayback : MonoBehaviour
     }
 
     /// <summary>
+    /// Unconditionally freezes the body in place, ignoring IsPlaying/IsPaused/
+    /// IsExternallyControlled - unlike <see cref="Pause"/>, this always takes effect,
+    /// even mid-reaction (e.g. a monster-avoidance jump). Intended for external
+    /// hard-stop effects (e.g. a gadget) that must win regardless of what the NPC is
+    /// currently doing. Does not touch IsPaused, so it does not interact with
+    /// Pause()/Resume() bookkeeping - pair with <see cref="ForceUnfreeze"/>.
+    /// </summary>
+    public void ForceFreeze()
+    {
+        FreezeBody();
+    }
+
+    /// <summary>
+    /// Unconditionally lifts a freeze applied via <see cref="ForceFreeze"/>. No-op if
+    /// not currently frozen.
+    /// </summary>
+    public void ForceUnfreeze()
+    {
+        UnfreezeBody(restoreVelocity: true);
+    }
+
+    /// <summary>
     /// Hands motor control to an external caller for the duration of some override
     /// behavior (e.g. a reaction jump): command consumption stops - no SetMoveInput,
     /// RequestJump, or SetJumpHeld calls from the recording. If currently Paused

@@ -19248,7 +19248,7 @@ MonoBehaviour:
   reactionLeadTime: 0.35
   reactionCooldown: 0.5
   ignoreChance: 0.1
-  showDetectionGizmos: 1
+  showDetectionGizmos: 0
   detectionRadiusColor: {r: 1, g: 0.92, b: 0.016, a: 0.5}
   worstCaseRadiusColor: {r: 1, g: 0.15, b: 0.15, a: 0.8}
 --- !u!1 &1597102881
@@ -22025,6 +22025,8 @@ GameObject:
   - component: {fileID: 2130377337}
   - component: {fileID: 2130377340}
   - component: {fileID: 2130377339}
+  - component: {fileID: 2130377342}
+  - component: {fileID: 2130377341}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -22293,6 +22295,31 @@ MonoBehaviour:
   controller: {fileID: 2130377339}
   prepareKey: 28
   beginRecordingKey: 27
+--- !u!114 &2130377341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130377327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35c7702ae5135e5418e562c81db4c00c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatusEffectController
+--- !u!114 &2130377342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2130377327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecdce5c5e803b5d4ea9849a9d2b21e99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGadgetController
+  gadget: {fileID: 0}
 --- !u!1001 &1049075619885252190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22355,7 +22382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: npcSafeRadius
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: targetTilemap
