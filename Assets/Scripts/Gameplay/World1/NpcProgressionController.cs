@@ -44,6 +44,10 @@ public class NpcProgressionController : MonoBehaviour
     [Tooltip("How far ahead to check for a wall while recovering.")]
     [SerializeField] private float recoveryWallCheckDistance = 0.15f;
 
+    [Header("Death")]
+    [Tooltip("Seconds the NPC stays hidden after the death clip finishes, before respawning at the first checkpoint.")]
+    [SerializeField] private float respawnDelay = 4f;
+
     [Header("Collision")]
     [Tooltip("If both are assigned, collision between the player and this NPC is disabled - otherwise the player's body can physically bump the NPC off its recorded path, causing arrival checks to fail just short of the checkpoint.")]
     [SerializeField] private Collider2D playerCollider;
@@ -69,6 +73,7 @@ public class NpcProgressionController : MonoBehaviour
     private float _segmentTimeoutSeconds;
     private float _recoveryElapsedTime;
     private NpcSuspicionController _suspicion;
+    private PlayerAnimator _visualAnimator;
     private NpcMonsterJumpReaction _jumpReaction;
 
     // Last recording played per segment index. On the next visit to the same segment
@@ -105,6 +110,8 @@ public class NpcProgressionController : MonoBehaviour
     public IReadOnlyList<ProgressCheckpoint> CheckpointChain => checkpointChain;
     /// <summary>True once the NPC has reached the final checkpoint of the chain.</summary>
     public bool IsChainComplete { get; private set; }
+    /// <summary>True while the death clip is playing and respawn has not started yet.</summary>
+    public bool IsDying { get; private set; }
 
     /// <summary>Raised once when the NPC reaches the final checkpoint of the chain
     /// (the level goal). Not raised on arrival failure or external Stop().</summary>
@@ -125,6 +132,7 @@ public class NpcProgressionController : MonoBehaviour
         IgnoreDynamicObstacles();
 
         _suspicion = GetComponent<NpcSuspicionController>();
+        _visualAnimator = GetComponent<PlayerAnimator>();
         _jumpReaction = GetComponent<NpcMonsterJumpReaction>();
     }
 
@@ -205,36 +213,68 @@ public class NpcProgressionController : MonoBehaviour
     }
 
     /// <summary>
-    /// Kills the NPC (e.g. it fell into a KillBorder): abandons the current segment,
-    /// resets back to the first checkpoint, and restarts the whole chain. Route
-    /// selection re-rolls on the way back up, avoiding each segment's previous pick
-    /// where alternatives exist.
+    /// Kills the NPC (e.g. it fell into a KillBorder or was hit by a monster):
+    /// plays the death clip in place, hides the sprite, waits, then resets back to
+    /// the first checkpoint and restarts the whole chain. Route selection re-rolls
+    /// on the way back up, avoiding each segment's previous pick where alternatives exist.
     /// </summary>
     public void Die()
     {
-        Debug.Log($"[{nameof(NpcProgressionController)}] NPC died. Resetting to '{(checkpointChain.Count > 0 ? checkpointChain[0].Id : "?")}' and restarting chain.");
+        if (IsDying)
+        {
+            return;
+        }
 
+        StartCoroutine(DieRoutine());
+    }
+
+    private IEnumerator DieRoutine()
+    {
+        IsDying = true;
+        _running = false;
         _phase = SegmentPhase.Playback;
 
-        // Order matters: cancel the reaction BEFORE Stop(). CancelReaction() only clears
-        // this component's own _reacting/_hasLeftGround bookkeeping - Stop() is what
-        // actually clears NpcCommandPlayback.IsExternallyControlled. If the NPC died
-        // mid-reaction-jump, skipping either half leaves the two disagreeing: playback
-        // would resume consuming commands while the reaction keeps zeroing moveInput every
-        // tick (or vice versa), and the NPC sits frozen at the checkpoint it just
-        // respawned at instead of actually playing its next segment.
-        _jumpReaction?.CancelReaction();
+        // Cancel any in-progress reaction jump BEFORE Stop(). If the NPC dies
+        // mid-reaction, NpcMonsterJumpReaction._reacting/_hasLeftGround must be reset
+        // here too, not just NpcCommandPlayback.IsExternallyControlled (which Stop()
+        // clears) - otherwise the reaction component keeps zeroing moveInput every tick
+        // forever, even after playback itself is free to move again.
+        _jumpReaction?.Cancel();
         playback?.Stop();
+        playback?.ForceFreeze();
 
-        // Otherwise the NPC could respawn still flagged Suspicious from before it died.
+        if (npcCollider != null)
+        {
+            npcCollider.enabled = false;
+        }
+
+        // Hide the suspicion bar immediately so it doesn't linger over the corpse.
         if (_suspicion != null)
         {
             _suspicion.ResetSuspicion();
         }
 
+        _visualAnimator?.SetDead(true);
+
+        float clipLength = _visualAnimator != null ? _visualAnimator.DeathClipLength : 0.875f;
+        Debug.Log($"[{nameof(NpcProgressionController)}] NPC died. Playing death animation ({clipLength:F2}s), then hidden for {respawnDelay:F2}s before resetting to '{(checkpointChain.Count > 0 ? checkpointChain[0].Id : "?")}'.");
+        yield return new WaitForSeconds(clipLength);
+
+        _visualAnimator?.SetVisible(false);
+        yield return new WaitForSeconds(respawnDelay);
+
         ReviveStompedMonsters();
 
+        _visualAnimator?.SetDead(false);
+
+        if (npcCollider != null)
+        {
+            npcCollider.enabled = true;
+        }
+
+        IsDying = false;
         BeginChain();
+        _visualAnimator?.SetVisible(true);
     }
 
     /// <summary>

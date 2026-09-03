@@ -49,6 +49,7 @@ public class NpcMonsterJumpReaction : MonoBehaviour
     private bool _reacting;
     private bool _hasLeftGround;
     private float _cooldownRemaining;
+    private NpcProgressionController _progression;
 
     private void Awake()
     {
@@ -61,12 +62,34 @@ public class NpcMonsterJumpReaction : MonoBehaviour
         {
             playback = GetComponent<NpcCommandPlayback>();
         }
+
+        _progression = GetComponent<NpcProgressionController>();
+    }
+
+    /// <summary>
+    /// Aborts an in-progress reaction jump and hands the motor back. Used when
+    /// death interrupts the hop so the recording is not left in external-control.
+    /// </summary>
+    public void Cancel()
+    {
+        if (!_reacting)
+        {
+            return;
+        }
+
+        EndReaction();
     }
 
     private void FixedUpdate()
     {
         if (motor == null || playback == null)
         {
+            return;
+        }
+
+        if (_progression != null && _progression.IsDying)
+        {
+            Cancel();
             return;
         }
 
@@ -215,30 +238,6 @@ public class NpcMonsterJumpReaction : MonoBehaviour
         {
             EndReaction();
         }
-    }
-
-    /// <summary>
-    /// Hard-abandons an in-progress reaction without waiting for a landing. For when the
-    /// NPC dies mid-reaction (e.g. a KillBorder trigger during the jump, before
-    /// _hasLeftGround has flipped true): TickReaction's landing check requires an actual
-    /// airborne tick to have happened first, so if death and respawn happen before that -
-    /// the NPC is teleported straight onto solid ground, reads grounded every tick from
-    /// the start, and _hasLeftGround would never become true - EndReaction() would never
-    /// fire on its own and this component would keep calling SetMoveInput(0) forever,
-    /// permanently overriding the recording that just restarted. Callers that force-reset
-    /// playback out from under a reaction (see NpcCommandPlayback.Stop()) must call this
-    /// too so this component's own state doesn't disagree with playback's afterward.
-    /// </summary>
-    public void CancelReaction()
-    {
-        if (!_reacting)
-        {
-            return;
-        }
-
-        motor?.SetJumpHeld(false);
-        _reacting = false;
-        _hasLeftGround = false;
     }
 
     private void EndReaction()

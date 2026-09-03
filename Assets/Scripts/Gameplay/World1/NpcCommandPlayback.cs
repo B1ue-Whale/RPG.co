@@ -113,7 +113,8 @@ public class NpcCommandPlayback : MonoBehaviour
         // EndExternalControl() - clear the flag here instead, otherwise FixedUpdate keeps
         // refusing to consume commands forever and the NPC never leaves its next Play().
         // The external controller itself may still think it is "reacting" - callers that
-        // can trigger a mid-reaction Stop() should also reset that controller's own state.
+        // can trigger a mid-reaction Stop() should also reset that controller's own state
+        // (see NpcMonsterJumpReaction.Cancel()).
         IsExternallyControlled = false;
         UnfreezeBody(restoreVelocity: false);
         // Otherwise the NPC keeps drifting on whatever moveInput was last applied,

@@ -125,9 +125,9 @@ public class MonsterPatrolController : MonoBehaviour
     private void TryKillFromCollision(Collision2D collision)
     {
         NpcProgressionController npc = ResolveNpc(collision);
-        if (npc == null)
+        if (npc == null || npc.IsDying)
         {
-            // Ordinary ground/wall contact, not the NPC - nothing to resolve.
+            // Ordinary ground/wall contact, or the NPC is already in its death clip.
             return;
         }
 
