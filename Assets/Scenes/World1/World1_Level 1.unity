@@ -465,8 +465,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602a406dc30dc3744b232e2ac154df01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelClearCondition
-  portal: {fileID: 0}
-  npcProgression: {fileID: 0}
 --- !u!114 &69240101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19613,6 +19611,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   recoveryWallCheckDistance: 0.15
+  respawnDelay: 4
   playerCollider: {fileID: 2130377328}
   npcCollider: {fileID: 1472330304}
 --- !u!114 &1472330308
@@ -22986,7 +22985,7 @@ PrefabInstance:
       objectReference: {fileID: 2130377330}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: npcSafeRadius
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: targetTilemap
@@ -22994,7 +22993,7 @@ PrefabInstance:
       objectReference: {fileID: 1603556872}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: agedBugCrashRate
-      value: 0.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: infectionTilemap
@@ -23010,7 +23009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: npcNearbyCrashRate
-      value: 2
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: reliefInfectionThreshold
@@ -23018,7 +23017,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: spawnDirector.batchInterval
-      value: 13
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: spawnDirector.maxBugsPerBatch
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: spawnDirector.minBugsPerBatch
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: spawnDirector.liveGizmoPreview
