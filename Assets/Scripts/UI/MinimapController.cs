@@ -103,7 +103,7 @@ public class MinimapController : MonoBehaviour
 
         if (layoutTilemaps == null || layoutTilemaps.Length == 0)
         {
-            var colliders = FindObjectsByType<TilemapCollider2D>(FindObjectsSortMode.None);
+            var colliders = FindObjectsByType<TilemapCollider2D>();
             var maps = new List<Tilemap>();
             foreach (TilemapCollider2D collider in colliders)
             {
@@ -114,7 +114,7 @@ public class MinimapController : MonoBehaviour
             layoutTilemaps = maps.ToArray();
         }
 
-        _npcs = FindObjectsByType<NpcCommandPlayback>(FindObjectsSortMode.None);
+        _npcs = FindObjectsByType<NpcCommandPlayback>();
     }
 
     // ---------------------------------------------------------------- baking

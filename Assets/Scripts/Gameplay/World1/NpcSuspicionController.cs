@@ -57,9 +57,17 @@ public class NpcSuspicionController : MonoBehaviour
 
     private State _state = State.Progressing;
     private WorldSpaceProgressBar _suspicionBar;
+    private bool _suspicionMaxed;
 
     public float Awareness { get; private set; }
     public bool IsSuspicious => _state == State.Suspicious;
+
+    /// <summary>
+    /// Raised exactly once, the first time Awareness reaches 1 (the meter is full).
+    /// Listeners (e.g. the level lose condition) treat this as "the NPC has fully
+    /// noticed something is wrong". Re-armed by <see cref="ResetSuspicion"/>.
+    /// </summary>
+    public event System.Action SuspicionMaxed;
 
     /// <summary>
     /// Clears all suspicion state (awareness, Suspicious/pending state, bar). Called
@@ -69,6 +77,7 @@ public class NpcSuspicionController : MonoBehaviour
     {
         Awareness = 0f;
         _state = State.Progressing;
+        _suspicionMaxed = false;
         if (_suspicionBar != null)
         {
             _suspicionBar.SetFill(0f);
@@ -111,6 +120,12 @@ public class NpcSuspicionController : MonoBehaviour
 
         _suspicionBar.SetVisible(Awareness > 0f);
         _suspicionBar.SetFill(Awareness);
+
+        if (!_suspicionMaxed && Awareness >= 1f)
+        {
+            _suspicionMaxed = true;
+            SuspicionMaxed?.Invoke();
+        }
 
         switch (_state)
         {
