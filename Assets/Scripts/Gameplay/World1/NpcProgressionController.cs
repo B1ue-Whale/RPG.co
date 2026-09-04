@@ -420,13 +420,15 @@ public class NpcProgressionController : MonoBehaviour
             return;
         }
 
-        // True while nothing is intentionally holding things up - not Suspicious
-        // (structurally can't happen past Playback anyway, since NpcSuspicionController
-        // requires playback.IsPlaying) and not a reaction (e.g. monster-avoidance jump)
-        // currently driving the motor directly. Used to keep both the outer watchdog
-        // and the arrival-grace/recovery timers from burning down while something else
-        // legitimately has control for a moment.
-        bool activelyProgressing = playback != null && !playback.IsPaused && !playback.IsExternallyControlled;
+        // True while nothing is intentionally holding things up - not Suspicious,
+        // not a reaction (e.g. monster-avoidance jump) currently driving the motor,
+        // and not a gadget freeze (e.g. Garry's Gun). Used to keep both the outer
+        // watchdog and the arrival-grace/recovery timers from burning down while
+        // something else legitimately has control for a moment.
+        bool activelyProgressing = playback != null
+            && !playback.IsPaused
+            && !playback.IsExternallyControlled
+            && !playback.IsForceFrozen;
 
         // Outer safety net for Playback + ArrivalGrace only - guards against playback
         // itself somehow never completing. Deliberately stops advancing (and stops

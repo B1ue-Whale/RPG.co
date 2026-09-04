@@ -19,6 +19,7 @@ public class PlayerAnimator : MonoBehaviour
     private static readonly int IsGroundedParam = Animator.StringToHash("IsGrounded");
     private static readonly int VerticalVelocityParam = Animator.StringToHash("VerticalVelocity");
     private static readonly int IsDeadParam = Animator.StringToHash("IsDead");
+    private static readonly Color FreezeTint = new Color(1f, 0.5f, 0.08f, 1f);
 
     [Tooltip("Motor whose state is mirrored into the Animator.")]
     [SerializeField] private CharacterMotor2D motor;
@@ -37,6 +38,10 @@ public class PlayerAnimator : MonoBehaviour
 
     /// <summary>True while a death animation is playing. Cleared by <see cref="SetDead"/>.</summary>
     public bool IsDead { get; private set; }
+
+    private bool _playbackFrozen;
+    private Color _spriteColorBeforeFreeze;
+    private bool _hasSpriteColorBeforeFreeze;
 
     /// <summary>
     /// Length of the Death_NPC clip if this animator has one, otherwise a fallback
@@ -102,9 +107,58 @@ public class PlayerAnimator : MonoBehaviour
     public void SetDead(bool dead)
     {
         IsDead = dead;
+        if (dead)
+        {
+            SetPlaybackFrozen(false);
+        }
+
         if (_hasIsDead)
         {
             animator.SetBool(IsDeadParam, dead);
+        }
+    }
+
+    /// <summary>
+    /// Holds the current animation pose (used by gadgets such as Garry's Gun).
+    /// Motor state is not mirrored while frozen, so walk/idle cannot overwrite the pose.
+    /// Applies an orange tint for the duration of the freeze.
+    /// </summary>
+    public void SetPlaybackFrozen(bool frozen)
+    {
+        _playbackFrozen = frozen;
+        if (animator != null)
+        {
+            animator.speed = frozen ? 0f : 1f;
+        }
+
+        ApplyFreezeTint(frozen);
+    }
+
+    private void ApplyFreezeTint(bool frozen)
+    {
+        if (spriteRenderer == null)
+        {
+            return;
+        }
+
+        if (frozen)
+        {
+            if (!_hasSpriteColorBeforeFreeze)
+            {
+                _spriteColorBeforeFreeze = spriteRenderer.color;
+                _hasSpriteColorBeforeFreeze = true;
+            }
+
+            Color tint = FreezeTint;
+            tint.a = _spriteColorBeforeFreeze.a;
+            spriteRenderer.color = tint;
+            return;
+        }
+
+        if (_hasSpriteColorBeforeFreeze)
+        {
+            spriteRenderer.color = _spriteColorBeforeFreeze;
+            _hasSpriteColorBeforeFreeze = false;
         }
     }
 
@@ -119,7 +173,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Update()
     {
-        if (IsDead)
+        if (IsDead || _playbackFrozen)
         {
             return;
         }
