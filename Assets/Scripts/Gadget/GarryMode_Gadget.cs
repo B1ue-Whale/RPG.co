@@ -8,6 +8,10 @@ public class GarryMode_Gadget : GadgetBase
     [SerializeField] private float duration = 3f;
     [SerializeField] private Transform player;
 
+    private Coroutine freezeRoutine;
+    private NpcCommandPlayback frozenNpc;
+    private PlayerAnimator frozenVisual;
+
     private void Awake()
     {
         if (player == null)
@@ -29,19 +33,55 @@ public class GarryMode_Gadget : GadgetBase
             return false;
         }
 
-        StartCoroutine(FreezeNpc(target, duration));
+        if (freezeRoutine != null)
+        {
+            StopCoroutine(freezeRoutine);
+            ReleaseFreeze();
+        }
+
+        freezeRoutine = StartCoroutine(FreezeNpc(target, duration));
         Debug.Log("Garrys gun Used!");
         return true;
     }
 
     private IEnumerator FreezeNpc(NpcCommandPlayback target, float freezeDuration)
     {
-        target.ForceFreeze();
+        ApplyFreeze(target);
         yield return new WaitForSeconds(freezeDuration);
-        if (target != null)
+        if (frozenNpc == target)
         {
-            target.ForceUnfreeze();
+            ReleaseFreeze();
         }
+
+        freezeRoutine = null;
+    }
+
+    private void ApplyFreeze(NpcCommandPlayback target)
+    {
+        frozenNpc = target;
+        frozenVisual = target.GetComponent<PlayerAnimator>();
+        target.GetComponent<NpcMonsterJumpReaction>()?.Cancel();
+        frozenVisual?.SetPlaybackFrozen(true);
+        target.ForceFreeze();
+    }
+
+    private void ReleaseFreeze()
+    {
+        if (frozenVisual != null)
+        {
+            frozenVisual.SetPlaybackFrozen(false);
+        }
+
+        NpcProgressionController progression = frozenNpc != null
+            ? frozenNpc.GetComponent<NpcProgressionController>()
+            : null;
+        if (frozenNpc != null && (progression == null || !progression.IsDying))
+        {
+            frozenNpc.ForceUnfreeze();
+        }
+
+        frozenNpc = null;
+        frozenVisual = null;
     }
 
     private NpcCommandPlayback FindNearestNpcInRange()

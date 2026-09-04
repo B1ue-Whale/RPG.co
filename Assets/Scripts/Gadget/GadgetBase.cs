@@ -2,15 +2,25 @@ using UnityEngine;
 
 public abstract class GadgetBase : MonoBehaviour
 {
+    [SerializeField] private Sprite icon;
+    [SerializeField] private string displayName;
+
+    public Sprite Icon => icon; 
+    public string DisplayName => displayName;
+
     [SerializeField]
     private float cooldown = 5f;
 
     private float lastUsedTime = -Mathf.Infinity;
 
-    private float Cooldown => cooldown;
+    
     public float RemainingCooldown =>
        Mathf.Max(0f, cooldown - (Time.time - lastUsedTime));
     public bool CanUse => RemainingCooldown <= 0;
+
+    public float CooldownDuration => cooldown;
+    public float CooldownRatio => cooldown <= 0f ? 0f : RemainingCooldown / cooldown;
+    // UI 용 
     public bool TryUse()
     {
         if (!CanUse)

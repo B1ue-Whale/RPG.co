@@ -105,7 +105,7 @@ public class NpcSuspicionController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (vision == null || playback == null || motor == null || !playback.IsPlaying)
+        if (vision == null || playback == null || motor == null || !playback.IsPlaying || playback.IsForceFrozen)
         {
             return;
         }

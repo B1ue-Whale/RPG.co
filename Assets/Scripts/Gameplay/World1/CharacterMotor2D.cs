@@ -40,6 +40,10 @@ public class CharacterMotor2D : MonoBehaviour
     [Tooltip("Layers that count as ground.")]
     [SerializeField] private LayerMask groundLayer;
 
+    [Header("Status Effects")]
+    [Tooltip("Optional. When assigned (or found on this object), MoveSpeed effects from gadgets are added to horizontal speed immediately.")]
+    [SerializeField] private StatusEffectController statusEffects;
+
     private Rigidbody2D _rigidbody;
 
     // Current movement intention, clamped to [-1, 1].
@@ -78,8 +82,21 @@ public class CharacterMotor2D : MonoBehaviour
     /// <summary>Current rigidbody velocity (read-only mirror).</summary>
     public Vector2 Velocity => _rigidbody != null ? _rigidbody.linearVelocity : Vector2.zero;
 
-    /// <summary>Configured maximum horizontal move speed (units/second).</summary>
-    public float MoveSpeed => moveSpeed;
+    /// <summary>
+    /// Current maximum horizontal move speed, including active MoveSpeed status effects.
+    /// </summary>
+    public float MoveSpeed => EffectiveMoveSpeed;
+
+    private float EffectiveMoveSpeed
+    {
+        get
+        {
+            float bonus = statusEffects != null
+                ? statusEffects.GetValue(StatusEffectType.MoveSpeed)
+                : 0f;
+            return Mathf.Max(0f, moveSpeed + bonus);
+        }
+    }
 
     /// <summary>-1 when facing left, +1 when facing right.</summary>
     public int FacingDirection => _facing;
@@ -106,6 +123,10 @@ public class CharacterMotor2D : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        if (statusEffects == null)
+        {
+            statusEffects = GetComponent<StatusEffectController>();
+        }
 
         if (_rigidbody == null)
         {
@@ -318,18 +339,19 @@ public class CharacterMotor2D : MonoBehaviour
     {
         // Preserve vertical velocity; only drive the horizontal component.
         Vector2 velocity = _rigidbody.linearVelocity;
+        float speed = EffectiveMoveSpeed;
 
         if (Mathf.Abs(_moveInput) < 0.01f)
         {
             // No input: brake quickly so releasing a direction does not slide.
             _accelTimer = 0f;
-            velocity.x = MoveTowardsSpeed(velocity.x, 0f, decelerationTime);
+            velocity.x = MoveTowardsSpeed(velocity.x, 0f, decelerationTime, speed);
         }
         else if (Mathf.Abs(velocity.x) > 0.01f && velocity.x * _moveInput < 0f)
         {
             // Opposite input: kill leftover speed, then a fresh run-up can start.
             _accelTimer = 0f;
-            velocity.x = MoveTowardsSpeed(velocity.x, 0f, turnaroundTime);
+            velocity.x = MoveTowardsSpeed(velocity.x, 0f, turnaroundTime, speed);
         }
         else
         {
@@ -338,7 +360,7 @@ public class CharacterMotor2D : MonoBehaviour
             float startup = accelerationTime <= 0f
                 ? 1f
                 : Mathf.Clamp01(_accelTimer / accelerationTime);
-            velocity.x = _moveInput * moveSpeed * startup;
+            velocity.x = _moveInput * speed * startup;
         }
 
         _rigidbody.linearVelocity = velocity;
@@ -355,14 +377,14 @@ public class CharacterMotor2D : MonoBehaviour
 
     /// <summary>
     /// Moves <paramref name="current"/> toward <paramref name="target"/> so that
-    /// covering <see cref="moveSpeed"/> takes <paramref name="time"/> seconds.
+    /// covering <paramref name="speed"/> takes <paramref name="time"/> seconds.
     /// A time of 0 or less is treated as instant.
     /// </summary>
-    private float MoveTowardsSpeed(float current, float target, float time)
+    private float MoveTowardsSpeed(float current, float target, float time, float speed)
     {
         float maxDelta = time <= 0f
             ? float.PositiveInfinity
-            : (moveSpeed / time) * Time.fixedDeltaTime;
+            : (speed / time) * Time.fixedDeltaTime;
 
         return Mathf.MoveTowards(current, target, maxDelta);
     }

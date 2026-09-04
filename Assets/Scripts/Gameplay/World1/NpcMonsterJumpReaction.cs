@@ -139,6 +139,12 @@ public class NpcMonsterJumpReaction : MonoBehaviour
             return;
         }
 
+        if (playback.IsForceFrozen)
+        {
+            Cancel();
+            return;
+        }
+
         if (_cooldownRemaining > 0f)
         {
             _cooldownRemaining -= Time.fixedDeltaTime;
