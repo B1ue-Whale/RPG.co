@@ -11,6 +11,9 @@ public class FPS_Gadget : GadgetBase
     [SerializeField]
     private Transform player;
 
+    [SerializeField]
+    private GrenadeExplosionVfx explosionVfxPrefab;
+
     private void Awake()
     {
         if (bugZone == null)
@@ -37,10 +40,21 @@ public class FPS_Gadget : GadgetBase
         }
 
         Vector3 center = player != null ? player.position : transform.position;
-        Debug.Log("FPS Used!");
+        PlayExplosion(center);
         // Deliberate player action, same as hand-cleaning: arms the recently-cleaned
         // cooldown on every tile it removes, and can earn Relief if it empties the NPC area.
         bugZone.ClearInfectionInRange(center, range, InfectionClearCause.Player);
         return true;
+    }
+
+    private void PlayExplosion(Vector3 center)
+    {
+        if (explosionVfxPrefab == null)
+        {
+            return;
+        }
+
+        GrenadeExplosionVfx vfx = Instantiate(explosionVfxPrefab, center, Quaternion.identity);
+        vfx.Play(range);
     }
 }

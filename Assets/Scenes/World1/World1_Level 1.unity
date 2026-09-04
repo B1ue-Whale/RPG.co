@@ -1383,6 +1383,7 @@ MonoBehaviour:
   range: 3
   bugZone: {fileID: 1301147711}
   player: {fileID: 2130377330}
+  explosionVfxPrefab: {fileID: 1004, guid: 7c4a1e8b9d2f40c6a5b3e1f0827469ad, type: 3}
 --- !u!4 &402617071
 Transform:
   m_ObjectHideFlags: 0
@@ -23175,8 +23176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGadgetController
   gadgets:
-  - {fileID: 126317098}
-  - {fileID: 511104159}
+  - {fileID: 402617070}
+  - {fileID: 2008735689}
   selectedIndex: 0
 --- !u!1 &7001000000
 GameObject:
