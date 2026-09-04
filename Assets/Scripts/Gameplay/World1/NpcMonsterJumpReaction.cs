@@ -49,6 +49,7 @@ public class NpcMonsterJumpReaction : MonoBehaviour
     private bool _reacting;
     private bool _hasLeftGround;
     private float _cooldownRemaining;
+    private NpcProgressionController _progression;
 
     private void Awake()
     {
@@ -61,12 +62,40 @@ public class NpcMonsterJumpReaction : MonoBehaviour
         {
             playback = GetComponent<NpcCommandPlayback>();
         }
+
+        _progression = GetComponent<NpcProgressionController>();
+    }
+
+    /// <summary>
+    /// Aborts an in-progress reaction jump and hands the motor back. Used when
+    /// death interrupts the hop so the recording is not left in external-control.
+    /// </summary>
+    public void Cancel()
+    {
+        if (!_reacting)
+        {
+            return;
+        }
+
+        EndReaction();
     }
 
     private void FixedUpdate()
     {
         if (motor == null || playback == null)
         {
+            return;
+        }
+
+        if (_progression != null && _progression.IsDying)
+        {
+            Cancel();
+            return;
+        }
+
+        if (playback.IsForceFrozen)
+        {
+            Cancel();
             return;
         }
 

@@ -1,6 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /// <summary>
 /// Drives an NPC through an ordered checkpoint chain (CP0 -> CP1 -> CP2 -> ...),
@@ -41,6 +44,10 @@ public class NpcProgressionController : MonoBehaviour
     [Tooltip("How far ahead to check for a wall while recovering.")]
     [SerializeField] private float recoveryWallCheckDistance = 0.15f;
 
+    [Header("Death")]
+    [Tooltip("Seconds the NPC stays hidden after the death clip finishes, before respawning at the first checkpoint.")]
+    [SerializeField] private float respawnDelay = 4f;
+
     [Header("Collision")]
     [Tooltip("If both are assigned, collision between the player and this NPC is disabled - otherwise the player's body can physically bump the NPC off its recorded path, causing arrival checks to fail just short of the checkpoint.")]
     [SerializeField] private Collider2D playerCollider;
@@ -66,12 +73,34 @@ public class NpcProgressionController : MonoBehaviour
     private float _segmentTimeoutSeconds;
     private float _recoveryElapsedTime;
     private NpcSuspicionController _suspicion;
+    private PlayerAnimator _visualAnimator;
+    private NpcMonsterJumpReaction _jumpReaction;
 
     // Last recording played per segment index. On the next visit to the same segment
     // (e.g. after dying and restarting from the first checkpoint) that recording is
     // excluded from the random pick when alternatives exist, so each retry takes
     // different routes instead of repeating the exact run that just failed.
     private readonly Dictionary<int, NpcRecording> _lastPlayedBySegment = new Dictionary<int, NpcRecording>();
+
+    // Konami code easter egg. Deliberately tucked in here rather than its own
+    // component so it doesn't show up as a discoverable script/GameObject on its
+    // own - no Inspector fields, no scene wiring, just a key sequence listener that
+    // rides along on whichever NPC happens to own this controller.
+    private static readonly Key[] KonamiSequence =
+    {
+        Key.UpArrow, Key.UpArrow, Key.DownArrow, Key.DownArrow,
+        Key.LeftArrow, Key.RightArrow, Key.LeftArrow, Key.RightArrow,
+        Key.B, Key.A
+    };
+    private const string KonamiSpriteResourceName = "dothede";
+    private const string KonamiSfxResourceName = "FreddyJumpscare";
+    private const float KonamiDisplaySeconds = 1f;
+    private const float KonamiSpriteScreenFraction = 1.2f;
+
+    private int _konamiProgress;
+    private Sprite _konamiSprite;
+    private AudioClip _konamiSfx;
+    private Coroutine _konamiRoutine;
 
     public bool IsRunning => _running;
     public int CurrentCheckpointIndex => _currentIndex;
@@ -81,6 +110,8 @@ public class NpcProgressionController : MonoBehaviour
     public IReadOnlyList<ProgressCheckpoint> CheckpointChain => checkpointChain;
     /// <summary>True once the NPC has reached the final checkpoint of the chain.</summary>
     public bool IsChainComplete { get; private set; }
+    /// <summary>True while the death clip is playing and respawn has not started yet.</summary>
+    public bool IsDying { get; private set; }
 
     /// <summary>Raised once when the NPC reaches the final checkpoint of the chain
     /// (the level goal). Not raised on arrival failure or external Stop().</summary>
@@ -101,6 +132,8 @@ public class NpcProgressionController : MonoBehaviour
         IgnoreDynamicObstacles();
 
         _suspicion = GetComponent<NpcSuspicionController>();
+        _visualAnimator = GetComponent<PlayerAnimator>();
+        _jumpReaction = GetComponent<NpcMonsterJumpReaction>();
     }
 
     /// <summary>
@@ -180,27 +213,68 @@ public class NpcProgressionController : MonoBehaviour
     }
 
     /// <summary>
-    /// Kills the NPC (e.g. it fell into a KillBorder): abandons the current segment,
-    /// resets back to the first checkpoint, and restarts the whole chain. Route
-    /// selection re-rolls on the way back up, avoiding each segment's previous pick
-    /// where alternatives exist.
+    /// Kills the NPC (e.g. it fell into a KillBorder or was hit by a monster):
+    /// plays the death clip in place, hides the sprite, waits, then resets back to
+    /// the first checkpoint and restarts the whole chain. Route selection re-rolls
+    /// on the way back up, avoiding each segment's previous pick where alternatives exist.
     /// </summary>
     public void Die()
     {
-        Debug.Log($"[{nameof(NpcProgressionController)}] NPC died. Resetting to '{(checkpointChain.Count > 0 ? checkpointChain[0].Id : "?")}' and restarting chain.");
+        if (IsDying)
+        {
+            return;
+        }
 
+        StartCoroutine(DieRoutine());
+    }
+
+    private IEnumerator DieRoutine()
+    {
+        IsDying = true;
+        _running = false;
         _phase = SegmentPhase.Playback;
-        playback?.Stop();
 
-        // Otherwise the NPC could respawn still flagged Suspicious from before it died.
+        // Cancel any in-progress reaction jump BEFORE Stop(). If the NPC dies
+        // mid-reaction, NpcMonsterJumpReaction._reacting/_hasLeftGround must be reset
+        // here too, not just NpcCommandPlayback.IsExternallyControlled (which Stop()
+        // clears) - otherwise the reaction component keeps zeroing moveInput every tick
+        // forever, even after playback itself is free to move again.
+        _jumpReaction?.Cancel();
+        playback?.Stop();
+        playback?.ForceFreeze();
+
+        if (npcCollider != null)
+        {
+            npcCollider.enabled = false;
+        }
+
+        // Hide the suspicion bar immediately so it doesn't linger over the corpse.
         if (_suspicion != null)
         {
             _suspicion.ResetSuspicion();
         }
 
+        _visualAnimator?.SetDead(true);
+
+        float clipLength = _visualAnimator != null ? _visualAnimator.DeathClipLength : 0.875f;
+        Debug.Log($"[{nameof(NpcProgressionController)}] NPC died. Playing death animation ({clipLength:F2}s), then hidden for {respawnDelay:F2}s before resetting to '{(checkpointChain.Count > 0 ? checkpointChain[0].Id : "?")}'.");
+        yield return new WaitForSeconds(clipLength);
+
+        _visualAnimator?.SetVisible(false);
+        yield return new WaitForSeconds(respawnDelay);
+
         ReviveStompedMonsters();
 
+        _visualAnimator?.SetDead(false);
+
+        if (npcCollider != null)
+        {
+            npcCollider.enabled = true;
+        }
+
+        IsDying = false;
         BeginChain();
+        _visualAnimator?.SetVisible(true);
     }
 
     /// <summary>
@@ -346,13 +420,15 @@ public class NpcProgressionController : MonoBehaviour
             return;
         }
 
-        // True while nothing is intentionally holding things up - not Suspicious
-        // (structurally can't happen past Playback anyway, since NpcSuspicionController
-        // requires playback.IsPlaying) and not a reaction (e.g. monster-avoidance jump)
-        // currently driving the motor directly. Used to keep both the outer watchdog
-        // and the arrival-grace/recovery timers from burning down while something else
-        // legitimately has control for a moment.
-        bool activelyProgressing = playback != null && !playback.IsPaused && !playback.IsExternallyControlled;
+        // True while nothing is intentionally holding things up - not Suspicious,
+        // not a reaction (e.g. monster-avoidance jump) currently driving the motor,
+        // and not a gadget freeze (e.g. Garry's Gun). Used to keep both the outer
+        // watchdog and the arrival-grace/recovery timers from burning down while
+        // something else legitimately has control for a moment.
+        bool activelyProgressing = playback != null
+            && !playback.IsPaused
+            && !playback.IsExternallyControlled
+            && !playback.IsForceFrozen;
 
         // Outer safety net for Playback + ArrivalGrace only - guards against playback
         // itself somehow never completing. Deliberately stops advancing (and stops
@@ -538,5 +614,121 @@ public class NpcProgressionController : MonoBehaviour
         Debug.LogWarning(
             $"[{nameof(NpcProgressionController)}] Segment ended but NPC did not reach expected checkpoint '{expected.Id}' within {arrivalGracePeriod:F2}s grace window. " +
             $"position={position} velocity={velocity} grounded={grounded} offsetFromAnchor={offset} (arrivalHalfExtents={tolerance}). Entering recovery.");
+    }
+
+    private void Update()
+    {
+        TickKonamiListener();
+    }
+
+    /// <summary>
+    /// Advances (or resets) progress through KonamiSequence based on whichever key was
+    /// pressed this frame. Uses wasPressedThisFrame, not isPressed, so holding a key down
+    /// cannot rack up repeated matches on the same press.
+    /// </summary>
+    private void TickKonamiListener()
+    {
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null)
+        {
+            return;
+        }
+
+        Key expected = KonamiSequence[_konamiProgress];
+        if (keyboard[expected].wasPressedThisFrame)
+        {
+            _konamiProgress++;
+            if (_konamiProgress >= KonamiSequence.Length)
+            {
+                _konamiProgress = 0;
+                TriggerKonamiEasterEgg();
+            }
+
+            return;
+        }
+
+        // Any other key press breaks the streak, except when it happens to be the
+        // correct first key of a fresh attempt - otherwise a mistyped code could never
+        // be immediately retried without an unrelated key in between.
+        for (int i = 0; i < keyboard.allKeys.Count; i++)
+        {
+            if (keyboard.allKeys[i].wasPressedThisFrame)
+            {
+                _konamiProgress = keyboard.allKeys[i].keyCode == KonamiSequence[0] ? 1 : 0;
+                break;
+            }
+        }
+    }
+
+    private void TriggerKonamiEasterEgg()
+    {
+        if (_konamiRoutine != null)
+        {
+            // Already showing (or about to) - let the current one finish rather than
+            // stacking a second popup on top of it.
+            return;
+        }
+
+        _konamiRoutine = StartCoroutine(ShowKonamiEasterEgg());
+    }
+
+    private IEnumerator ShowKonamiEasterEgg()
+    {
+        if (_konamiSprite == null)
+        {
+            Texture2D texture = Resources.Load<Texture2D>(KonamiSpriteResourceName);
+            if (texture == null)
+            {
+                Debug.LogWarning($"[{nameof(NpcProgressionController)}] Konami easter egg triggered but '{KonamiSpriteResourceName}' was not found under a Resources folder.");
+                _konamiRoutine = null;
+                yield break;
+            }
+
+            _konamiSprite = Sprite.Create(texture, new Rect(0f, 0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        }
+
+        if (_konamiSfx == null)
+        {
+            _konamiSfx = Resources.Load<AudioClip>(KonamiSfxResourceName);
+            if (_konamiSfx == null)
+            {
+                Debug.LogWarning($"[{nameof(NpcProgressionController)}] Konami easter egg triggered but '{KonamiSfxResourceName}' was not found under a Resources folder.");
+            }
+        }
+
+        GameObject canvasObject = new GameObject("KonamiEasterEggCanvas");
+        Canvas canvas = canvasObject.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = short.MaxValue;
+        canvasObject.AddComponent<CanvasScaler>();
+
+        GameObject imageObject = new GameObject("Dothede");
+        imageObject.transform.SetParent(canvasObject.transform, false);
+        Image image = imageObject.AddComponent<Image>();
+        image.sprite = _konamiSprite;
+        image.raycastTarget = false;
+        image.preserveAspect = true;
+
+        RectTransform rect = image.rectTransform;
+        rect.anchorMin = new Vector2(0.5f, 0.5f);
+        rect.anchorMax = new Vector2(0.5f, 0.5f);
+        rect.pivot = new Vector2(0.5f, 0.5f);
+        float size = Mathf.Min(Screen.width, Screen.height) * KonamiSpriteScreenFraction;
+        rect.sizeDelta = new Vector2(size, size);
+
+        if (_konamiSfx != null)
+        {
+            // Parented to the same object the sprite lives on, so destroying it below
+            // cuts the sfx off too if the clip happens to outlast the display window -
+            // "while visible" means the sound should not survive the sprite.
+            AudioSource audioSource = canvasObject.AddComponent<AudioSource>();
+            audioSource.clip = _konamiSfx;
+            audioSource.Play();
+        }
+
+        yield return new WaitForSeconds(KonamiDisplaySeconds);
+
+        Destroy(canvasObject);
+        _konamiRoutine = null;
     }
 }

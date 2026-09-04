@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(StatusEffectController))]
 public class Racing_Gadget : GadgetBase
 {
     //레이싱게임 : 자동차 - 이속 증가
@@ -12,7 +11,11 @@ public class Racing_Gadget : GadgetBase
     {
         if (statusEffectController == null)
         {
-            statusEffectController = GetComponent<StatusEffectController>();
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
+            {
+                statusEffectController = playerObject.GetComponent<StatusEffectController>();
+            }
         }
     }
 

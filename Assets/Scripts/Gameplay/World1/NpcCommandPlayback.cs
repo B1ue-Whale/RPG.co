@@ -30,6 +30,7 @@ public class NpcCommandPlayback : MonoBehaviour
     // when the stream actually recorded a hold at least once.
     private bool _replayJumpHeld;
     private bool _bodyFrozen;
+    private bool _forceFrozen;
     private Vector2 _pausedVelocity;
     private RigidbodyType2D _pausedBodyType;
 
@@ -50,6 +51,12 @@ public class NpcCommandPlayback : MonoBehaviour
     /// Resumes from the exact same tick once cleared, same as a Pause/Resume cycle.
     /// </summary>
     public bool IsExternallyControlled { get; private set; }
+    /// <summary>
+    /// True while <see cref="ForceFreeze"/> is holding the NPC still (e.g. Garry's Gun).
+    /// Distinct from <see cref="IsPaused"/>: command consumption, recovery, and
+    /// suspicion resume must not fight this freeze.
+    /// </summary>
+    public bool IsForceFrozen => _forceFrozen;
     public CharacterMotor2D Motor => motor;
     public Rigidbody2D Body => body;
     /// <summary>How many commands have been consumed so far (or in total, once stopped).</summary>
@@ -107,6 +114,16 @@ public class NpcCommandPlayback : MonoBehaviour
     {
         IsPlaying = false;
         IsPaused = false;
+        // A hard Stop() is "abandon whatever was happening" (e.g. NpcProgressionController.Die()
+        // resetting the whole chain). If an external controller (e.g. a monster-avoidance
+        // reaction jump) had control at that exact moment, it never gets to call
+        // EndExternalControl() - clear the flag here instead, otherwise FixedUpdate keeps
+        // refusing to consume commands forever and the NPC never leaves its next Play().
+        // The external controller itself may still think it is "reacting" - callers that
+        // can trigger a mid-reaction Stop() should also reset that controller's own state
+        // (see NpcMonsterJumpReaction.Cancel()).
+        IsExternallyControlled = false;
+        _forceFrozen = false;
         UnfreezeBody(restoreVelocity: false);
         // Otherwise the NPC keeps drifting on whatever moveInput was last applied,
         // and leftover jump-hold would turn the next jump into a full-height hop.
@@ -152,7 +169,7 @@ public class NpcCommandPlayback : MonoBehaviour
 
         IsPaused = false;
 
-        if (!IsExternallyControlled)
+        if (!IsExternallyControlled && !_forceFrozen)
         {
             UnfreezeBody(restoreVelocity: true);
         }
@@ -163,20 +180,36 @@ public class NpcCommandPlayback : MonoBehaviour
     /// IsExternallyControlled - unlike <see cref="Pause"/>, this always takes effect,
     /// even mid-reaction (e.g. a monster-avoidance jump). Intended for external
     /// hard-stop effects (e.g. a gadget) that must win regardless of what the NPC is
-    /// currently doing. Does not touch IsPaused, so it does not interact with
-    /// Pause()/Resume() bookkeeping - pair with <see cref="ForceUnfreeze"/>.
+    /// currently doing. Command consumption also stops immediately so the recording
+    /// does not skip ahead while the NPC is held. Does not touch IsPaused, so it does
+    /// not interact with Pause()/Resume() bookkeeping - pair with
+    /// <see cref="ForceUnfreeze"/>.
     /// </summary>
     public void ForceFreeze()
     {
+        _forceFrozen = true;
+        ClearMotorIntent();
         FreezeBody();
     }
 
     /// <summary>
     /// Unconditionally lifts a freeze applied via <see cref="ForceFreeze"/>. No-op if
-    /// not currently frozen.
+    /// not currently force-frozen. Leaves a Suspicion pause in place if one is still
+    /// active.
     /// </summary>
     public void ForceUnfreeze()
     {
+        if (!_forceFrozen)
+        {
+            return;
+        }
+
+        _forceFrozen = false;
+        if (IsPaused && !IsExternallyControlled)
+        {
+            return;
+        }
+
         UnfreezeBody(restoreVelocity: true);
     }
 
@@ -195,6 +228,11 @@ public class NpcCommandPlayback : MonoBehaviour
     public void BeginExternalControl()
     {
         IsExternallyControlled = true;
+
+        if (_forceFrozen)
+        {
+            return;
+        }
 
         if (IsPaused)
         {
@@ -215,7 +253,7 @@ public class NpcCommandPlayback : MonoBehaviour
     {
         IsExternallyControlled = false;
 
-        if (IsPaused)
+        if (IsPaused || _forceFrozen)
         {
             FreezeBody();
         }
@@ -252,7 +290,7 @@ public class NpcCommandPlayback : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsPlaying || IsPaused || IsExternallyControlled || motor == null)
+        if (!IsPlaying || IsPaused || IsExternallyControlled || _forceFrozen || motor == null)
         {
             return;
         }

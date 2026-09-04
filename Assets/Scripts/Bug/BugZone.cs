@@ -32,6 +32,8 @@ public class BugZone : MonoBehaviour
     [SerializeField] private BugSpawnDirector spawnDirector = new BugSpawnDirector();
     [Tooltip("Hard cap on how many infections can exist at once. A batch is trimmed to whatever headroom is left, and skipped entirely at the cap. 0 or less = no cap.")]
     [SerializeField] private int maxActiveInfections = 20;
+    [Tooltip("Infections placed the instant the level starts, uniformly at random over the whole map. Ignores all spawn weighting, the player exclusion radius and spacing - npcSafeRadius is the only rule it respects. 0 = start the level clean.")]
+    [SerializeField] private int initialRandomSpawnCount = 3;
 
     [Header("NPC Avoidance")]
     [Tooltip("Bugs never spawn on a tile whose center is within this world-space radius of an NPC.")]
@@ -112,7 +114,42 @@ public class BugZone : MonoBehaviour
                 player = playerObject.transform;
         }
 
+        SpawnInitialRandomInfections();
+
         spawnTimer = spawnDirector.FirstBatchDelay;
+    }
+
+    /// <summary>
+    /// Seeds the level with a handful of infections the moment it starts, so the player
+    /// has something to do before the first weighted batch arrives. Deliberately dumb:
+    /// uniform random over every spawnable cell, with npcSafeRadius as the only rule.
+    /// None of the director's weighting, player exclusion or spacing applies - this is
+    /// starting scatter, not directed pressure.
+    /// </summary>
+    private void SpawnInitialRandomInfections()
+    {
+        int count = initialRandomSpawnCount;
+        if (maxActiveInfections > 0)
+            count = Mathf.Min(count, maxActiveInfections);
+
+        if (count <= 0)
+            return;
+
+        // Copied so cells can be removed as they are used, which keeps the picks distinct
+        // without re-rolling until a free one turns up.
+        List<Vector3Int> candidates = new List<Vector3Int>();
+        for (int i = 0; i < spawnableCells.Count; i++)
+        {
+            if (!IsWithinRadiusOfAnyNpc(spawnableCells[i], npcSafeRadius))
+                candidates.Add(spawnableCells[i]);
+        }
+
+        for (int i = 0; i < count && candidates.Count > 0; i++)
+        {
+            int index = Random.Range(0, candidates.Count);
+            Infect(candidates[index]);
+            candidates.RemoveAt(index);
+        }
     }
 
     /// <summary>Resolved once, next to each playback, so the route forecast never has to
