@@ -13,7 +13,10 @@ public static class Enums
         LevelSelection,
         Level,
         Paused,
-        Story
+        Story,
+        // A level has ended (win or lose) and the result screen is up. Blocks the
+        // pause menu (PauseMenuController only toggles while in Level state).
+        Result
     }
 
 }
