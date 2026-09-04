@@ -47,11 +47,19 @@ public static class LevelTransition
 
     public static void GoToLevelSelection()
     {
+        GoToLevelSelection("LevelSelectScene");
+    }
+
+    public static void GoToLevelSelection(string sceneName)
+    {
+        if (string.IsNullOrWhiteSpace(sceneName))
+            sceneName = "LevelSelectScene";
+
         if (GameManager.Instance != null)
             GameManager.Instance.ChangeState(Enums.GameState.LevelSelection);
 
         RestoreGameplayInput();
-        SceneManager.LoadScene("LevelSelectScene");
+        SceneManager.LoadScene(sceneName);
     }
 
     public static void RestartCurrentScene()
@@ -75,7 +83,7 @@ public static class LevelTransition
 
         EnablePlayerMap(InputSystem.actions);
 
-        PlayerInput[] playerInputs = Object.FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
+        PlayerInput[] playerInputs = Object.FindObjectsByType<PlayerInput>();
         for (int i = 0; i < playerInputs.Length; i++)
         {
             PlayerInput playerInput = playerInputs[i];

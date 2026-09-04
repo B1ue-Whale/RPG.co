@@ -98,7 +98,7 @@ public class BugZone : MonoBehaviour
         CollectSpawnableCells();
 
         if (npcs == null || npcs.Length == 0)
-            npcs = FindObjectsByType<NpcCommandPlayback>(FindObjectsSortMode.None);
+            npcs = FindObjectsByType<NpcCommandPlayback>();
 
         CacheNpcProgressions();
 

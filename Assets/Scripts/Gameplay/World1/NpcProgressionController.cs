@@ -116,7 +116,7 @@ public class NpcProgressionController : MonoBehaviour
             return;
         }
 
-        CharacterMotor2D[] motors = FindObjectsByType<CharacterMotor2D>(FindObjectsSortMode.None);
+        CharacterMotor2D[] motors = FindObjectsByType<CharacterMotor2D>();
         for (int i = 0; i < motors.Length; i++)
         {
             CharacterMotor2D otherMotor = motors[i];

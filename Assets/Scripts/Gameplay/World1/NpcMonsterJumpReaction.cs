@@ -269,7 +269,7 @@ public class NpcMonsterJumpReaction : MonoBehaviour
         float npcSpeed = motor != null ? motor.MoveSpeed : 0f;
 
         float maxMonsterSpeed = 0f;
-        MonsterPatrolController[] monsters = FindObjectsByType<MonsterPatrolController>(FindObjectsSortMode.None);
+        MonsterPatrolController[] monsters = FindObjectsByType<MonsterPatrolController>();
         for (int i = 0; i < monsters.Length; i++)
         {
             CharacterMotor2D monsterMotor = monsters[i] != null ? monsters[i].GetComponent<CharacterMotor2D>() : null;
