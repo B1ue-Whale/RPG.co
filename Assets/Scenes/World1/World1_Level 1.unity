@@ -465,6 +465,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602a406dc30dc3744b232e2ac154df01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelClearCondition
+  portal: {fileID: 0}
+  npcProgression: {fileID: 0}
 --- !u!114 &69240101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19647,6 +19649,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  statusEffects: {fileID: 0}
 --- !u!70 &1472330304
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -22956,6 +22959,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  statusEffects: {fileID: 0}
 --- !u!114 &2130377332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23133,8 +23137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGadgetController
   gadgets:
-  - {fileID: 402617070}
-  - {fileID: 2008735689}
+  - {fileID: 126317098}
+  - {fileID: 511104159}
   selectedIndex: 0
 --- !u!1 &7001000000
 GameObject:
