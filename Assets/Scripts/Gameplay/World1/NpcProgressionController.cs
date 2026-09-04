@@ -47,6 +47,10 @@ public class NpcProgressionController : MonoBehaviour
     [Header("Death")]
     [Tooltip("Seconds the NPC stays hidden after the death clip finishes, before respawning at the first checkpoint.")]
     [SerializeField] private float respawnDelay = 4f;
+    [Tooltip("Percentage of the Crash Gauge's maximum value removed when this NPC dies. Optional. Found automatically if left unassigned.")]
+    [SerializeField] [Range(0f, 100f)] private float crashGaugeReductionPercent = 20f;
+    [Tooltip("Optional. Found automatically if left unassigned.")]
+    [SerializeField] private CrashGaugeManager crashGauge;
 
     [Header("Collision")]
     [Tooltip("If both are assigned, collision between the player and this NPC is disabled - otherwise the player's body can physically bump the NPC off its recorded path, causing arrival checks to fail just short of the checkpoint.")]
@@ -134,6 +138,11 @@ public class NpcProgressionController : MonoBehaviour
         _suspicion = GetComponent<NpcSuspicionController>();
         _visualAnimator = GetComponent<PlayerAnimator>();
         _jumpReaction = GetComponent<NpcMonsterJumpReaction>();
+
+        if (crashGauge == null)
+        {
+            crashGauge = FindFirstObjectByType<CrashGaugeManager>();
+        }
     }
 
     /// <summary>
@@ -240,6 +249,7 @@ public class NpcProgressionController : MonoBehaviour
         // clears) - otherwise the reaction component keeps zeroing moveInput every tick
         // forever, even after playback itself is free to move again.
         _jumpReaction?.Cancel();
+        _jumpReaction?.OnNpcDied();
         playback?.Stop();
         playback?.ForceFreeze();
 
@@ -252,6 +262,11 @@ public class NpcProgressionController : MonoBehaviour
         if (_suspicion != null)
         {
             _suspicion.ResetSuspicion();
+        }
+
+        if (crashGauge != null)
+        {
+            crashGauge.Reduce(crashGauge.MaxValue * crashGaugeReductionPercent / 100f);
         }
 
         _visualAnimator?.SetDead(true);

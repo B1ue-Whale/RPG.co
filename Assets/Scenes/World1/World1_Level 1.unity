@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7997e2153a1d17a5d97ab47a769f6545, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelOutcomeController
   npcProgression: {fileID: 0}
   npcSuspicion: {fileID: 0}
@@ -1762,18 +1762,18 @@ RectTransform:
   m_GameObject: {fileID: 520928174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 3}
+  m_LocalScale: {x: 4, y: 4, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 449978267}
   - {fileID: 1514197582}
   m_Father: {fileID: 1530111412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 950}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 20, y: -20}
   m_SizeDelta: {x: 160, y: 20}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &520928176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19676,6 +19676,8 @@ MonoBehaviour:
     m_Bits: 8
   recoveryWallCheckDistance: 0.15
   respawnDelay: 4
+  crashGaugeReductionPercent: 20
+  crashGauge: {fileID: 0}
   playerCollider: {fileID: 2130377328}
   npcCollider: {fileID: 1472330304}
 --- !u!114 &1472330308
@@ -19771,7 +19773,9 @@ MonoBehaviour:
   detectionRadius: 1.2
   reactionLeadTime: 0.35
   reactionCooldown: 0.5
-  ignoreChance: 0.1
+  baseFailureChance: 0.1
+  run1FailureIncrement: 0.07
+  run2FailureIncrement: 0.03
   showDetectionGizmos: 0
   detectionRadiusColor: {r: 1, g: 0.92, b: 0.016, a: 0.5}
   worstCaseRadiusColor: {r: 1, g: 0.15, b: 0.15, a: 0.8}
@@ -22825,7 +22829,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player 
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &2130377334
@@ -23031,6 +23035,10 @@ PrefabInstance:
       propertyPath: targetTilemap
       value: 
       objectReference: {fileID: 1603556872}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: bugAgeThreshold
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: agedBugCrashRate
       value: 0.25
