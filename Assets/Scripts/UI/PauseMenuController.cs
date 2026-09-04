@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -5,39 +6,41 @@ using UnityEngine.UI;
 
 /// <summary>
 /// 게임 중 일시정지 메뉴를 열고 닫고, 입력/시간 흐름을 제어한다.
+/// 오버레이는 승리/실패 스크린과 같은 스타일로 코드에서 생성한다.
 /// </summary>
 public class PauseMenuController : MonoBehaviour
 {
-    [Header("Pause UI")]
-    [SerializeField] private GameObject pausePanel;
-    [SerializeField] private Selectable firstSelected;
-    [SerializeField] private Button resumeButton;
-    [SerializeField] private Button restartButton;
-    [SerializeField] private Button levelSelectButton;
-    [SerializeField] private Button mainMenuButton;
-
     [Header("Input")]
     [SerializeField] private PlayerInput playerInput;
 
+    [Header("Look")]
+    [Tooltip("Title font. Leave empty to use TextMesh Pro's default.")]
+    [SerializeField] private TMP_FontAsset font;
+    [Tooltip("Button label font. Leave empty to use the title font.")]
+    [SerializeField] private TMP_FontAsset buttonFont;
+
     private bool isPaused;
     private float previousTimeScale = 1f;
+    private GameObject overlayRoot;
+    private Button resumeButton;
+    private TMP_FontAsset resolvedFont;
+    private TMP_FontAsset resolvedButtonFont;
 
     private void Start()
     {
-        if (pausePanel != null)
-            pausePanel.SetActive(false);
+        resolvedFont = font != null ? font : TMP_Settings.defaultFontAsset;
+        resolvedButtonFont = buttonFont != null ? buttonFont : resolvedFont;
 
-        if (resumeButton != null)
-            resumeButton.onClick.AddListener(Resume);
+        if (playerInput == null)
+            playerInput = FindFirstObjectByType<PlayerInput>();
 
-        if (restartButton != null)
-            restartButton.onClick.AddListener(RestartLevel);
+        BuildOverlay();
+    }
 
-        if (levelSelectButton != null)
-            levelSelectButton.onClick.AddListener(OpenLevelSelection);
-
-        if (mainMenuButton != null)
-            mainMenuButton.onClick.AddListener(BackToMainMenu);
+    private void OnDestroy()
+    {
+        if (overlayRoot != null)
+            Destroy(overlayRoot);
     }
 
     private void Update()
@@ -46,14 +49,14 @@ public class PauseMenuController : MonoBehaviour
             return;
 
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
-        {
             TogglePause();
-        }
     }
 
     public void TogglePause()
     {
-        if (GameManager.Instance != null && !GameManager.Instance.IsState(Enums.GameState.Level))
+        if (GameManager.Instance != null
+            && !GameManager.Instance.IsState(Enums.GameState.Level)
+            && !GameManager.Instance.IsState(Enums.GameState.Paused))
             return;
 
         if (isPaused)
@@ -74,17 +77,13 @@ public class PauseMenuController : MonoBehaviour
         if (GameManager.Instance != null)
             GameManager.Instance.ChangeState(Enums.GameState.Paused);
 
-        if (pausePanel != null)
-            pausePanel.SetActive(true);
+        if (overlayRoot != null)
+            overlayRoot.SetActive(true);
 
-        if (playerInput != null)
-        {
-            if (playerInput.actions != null && playerInput.actions.FindActionMap("UI") != null)
-                playerInput.SwitchCurrentActionMap("UI");
-        }
+        SetPlayerInputEnabled(false);
 
-        if (EventSystem.current != null && firstSelected != null)
-            EventSystem.current.SetSelectedGameObject(firstSelected.gameObject);
+        if (EventSystem.current != null && resumeButton != null)
+            EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
     }
 
     public void Resume()
@@ -95,17 +94,16 @@ public class PauseMenuController : MonoBehaviour
         isPaused = false;
         Time.timeScale = previousTimeScale;
 
-        if (pausePanel != null)
-            pausePanel.SetActive(false);
+        if (overlayRoot != null)
+            overlayRoot.SetActive(false);
 
         if (GameManager.Instance != null)
             GameManager.Instance.ChangeState(Enums.GameState.Level);
 
-        if (playerInput != null)
-        {
-            if (playerInput.actions != null && playerInput.actions.FindActionMap("Player") != null)
-                playerInput.SwitchCurrentActionMap("Player");
-        }
+        SetPlayerInputEnabled(true);
+
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void RestartLevel()
@@ -124,5 +122,60 @@ public class PauseMenuController : MonoBehaviour
     {
         Resume();
         LevelTransition.GoToMain();
+    }
+
+    private void SetPlayerInputEnabled(bool enabled)
+    {
+        if (playerInput == null)
+            return;
+
+        if (enabled)
+            playerInput.ActivateInput();
+        else
+            playerInput.DeactivateInput();
+    }
+
+    private void BuildOverlay()
+    {
+        overlayRoot = OverlayMenuUi.CreateOverlayRoot("PauseOverlay", OverlayMenuUi.PauseSortingOrder);
+
+        Image dim = OverlayMenuUi.CreateImage(overlayRoot.transform, "Dim", OverlayMenuUi.DimColor);
+        OverlayMenuUi.Stretch(dim.rectTransform);
+
+        TMP_Text title = OverlayMenuUi.CreateText(
+            overlayRoot.transform,
+            "Title",
+            "일시정지",
+            OverlayMenuUi.TitleFontSize,
+            OverlayMenuUi.PausedColor,
+            resolvedFont);
+        OverlayMenuUi.Place(title.rectTransform, new Vector2(0f, 180f), OverlayMenuUi.TitleSize);
+
+        TMP_Text subtitle = OverlayMenuUi.CreateText(
+            overlayRoot.transform,
+            "Subtitle",
+            "paused",
+            OverlayMenuUi.SubtitleFontSize,
+            Color.white,
+            resolvedFont);
+        OverlayMenuUi.Place(subtitle.rectTransform, new Vector2(0f, 90f), OverlayMenuUi.SubtitleSize);
+
+        resumeButton = OverlayMenuUi.CreateButton(
+            overlayRoot.transform, "ResumeButton", "재개", new Vector2(-170f, -20f), resolvedButtonFont);
+        resumeButton.onClick.AddListener(Resume);
+
+        Button restart = OverlayMenuUi.CreateButton(
+            overlayRoot.transform, "RestartButton", "재시작", new Vector2(170f, -20f), resolvedButtonFont);
+        restart.onClick.AddListener(RestartLevel);
+
+        Button levelSelect = OverlayMenuUi.CreateButton(
+            overlayRoot.transform, "LevelSelectButton", "레벨 선택", new Vector2(-170f, -120f), resolvedButtonFont);
+        levelSelect.onClick.AddListener(OpenLevelSelection);
+
+        Button mainMenu = OverlayMenuUi.CreateButton(
+            overlayRoot.transform, "MainMenuButton", "메인 메뉴", new Vector2(170f, -120f), resolvedButtonFont);
+        mainMenu.onClick.AddListener(BackToMainMenu);
+
+        overlayRoot.SetActive(false);
     }
 }

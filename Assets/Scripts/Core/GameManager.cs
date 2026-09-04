@@ -60,6 +60,9 @@ public class GameManager : Singleton<GameManager>
             return;
 
         ApplyStateForScene(scene);
+
+        if (InferStateFromScene(scene.name) == Enums.GameState.Level)
+            LevelTransition.RestoreGameplayInput();
     }
 
     public void ChangeState(Enums.GameState newState)

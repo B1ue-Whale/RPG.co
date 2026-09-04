@@ -117,100 +117,38 @@ public class LevelOutcomeController : MonoBehaviour
 
     private void ShowResultScreen(bool won, string reason)
     {
-        _overlayRoot = new GameObject("LevelResultOverlay");
+        _overlayRoot = OverlayMenuUi.CreateOverlayRoot("LevelResultOverlay", OverlayMenuUi.ResultSortingOrder);
 
-        var canvas = _overlayRoot.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 500; // Above pause menu / HUD.
+        Image dim = OverlayMenuUi.CreateImage(_overlayRoot.transform, "Dim", OverlayMenuUi.DimColor);
+        OverlayMenuUi.Stretch(dim.rectTransform);
 
-        var scaler = _overlayRoot.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
-
-        _overlayRoot.AddComponent<GraphicRaycaster>();
-
-        // Full-screen dim.
-        Image dim = CreateImage(_overlayRoot.transform, "Dim", new Color(0f, 0f, 0f, 0.75f));
-        Stretch(dim.rectTransform);
-
-        // Title.
-        TMP_Text title = CreateText(_overlayRoot.transform, "Title",
+        TMP_Text title = OverlayMenuUi.CreateText(
+            _overlayRoot.transform,
+            "Title",
             won ? "LEVEL CLEAR!" : "GAME OVER",
-            96f,
-            won ? new Color(0.4f, 1f, 0.5f) : new Color(1f, 0.35f, 0.3f));
-        Place(title.rectTransform, new Vector2(0f, 140f), new Vector2(1200f, 130f));
+            OverlayMenuUi.TitleFontSize,
+            won ? OverlayMenuUi.ClearColor : OverlayMenuUi.GameOverColor,
+            _resolvedFont);
+        OverlayMenuUi.Place(title.rectTransform, new Vector2(0f, 140f), OverlayMenuUi.TitleSize);
 
-        // Reason line.
-        TMP_Text reasonText = CreateText(_overlayRoot.transform, "Reason", reason, 36f, Color.white);
-        Place(reasonText.rectTransform, new Vector2(0f, 40f), new Vector2(1200f, 60f));
+        TMP_Text reasonText = OverlayMenuUi.CreateText(
+            _overlayRoot.transform,
+            "Reason",
+            reason,
+            OverlayMenuUi.SubtitleFontSize,
+            Color.white,
+            _resolvedFont);
+        OverlayMenuUi.Place(reasonText.rectTransform, new Vector2(0f, 40f), OverlayMenuUi.SubtitleSize);
 
-        // Buttons.
-        Button retry = CreateButton(_overlayRoot.transform, "RetryButton", "Retry", new Vector2(-170f, -100f));
+        Button retry = OverlayMenuUi.CreateButton(
+            _overlayRoot.transform, "RetryButton", "Retry", new Vector2(-170f, -100f), _resolvedFont);
         retry.onClick.AddListener(LevelTransition.RestartCurrentScene);
 
-        Button levelSelect = CreateButton(_overlayRoot.transform, "LevelSelectButton", "Level Select", new Vector2(170f, -100f));
+        Button levelSelect = OverlayMenuUi.CreateButton(
+            _overlayRoot.transform, "LevelSelectButton", "Level Select", new Vector2(170f, -100f), _resolvedFont);
         levelSelect.onClick.AddListener(LevelTransition.GoToLevelSelection);
 
         if (EventSystem.current != null)
             EventSystem.current.SetSelectedGameObject(retry.gameObject);
-    }
-
-    private static Image CreateImage(Transform parent, string name, Color color)
-    {
-        var go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        var image = go.AddComponent<Image>();
-        image.color = color;
-        return image;
-    }
-
-    private TMP_Text CreateText(Transform parent, string name, string text, float fontSize, Color color)
-    {
-        var go = new GameObject(name, typeof(RectTransform));
-        go.transform.SetParent(parent, false);
-        var tmp = go.AddComponent<TextMeshProUGUI>();
-        if (_resolvedFont != null)
-            tmp.font = _resolvedFont;
-        tmp.text = text;
-        tmp.fontSize = fontSize;
-        tmp.color = color;
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.raycastTarget = false;
-        return tmp;
-    }
-
-    private Button CreateButton(Transform parent, string name, string label, Vector2 anchoredPosition)
-    {
-        Image background = CreateImage(parent, name, new Color(0.15f, 0.15f, 0.2f, 0.95f));
-        Place(background.rectTransform, anchoredPosition, new Vector2(280f, 80f));
-
-        var button = background.gameObject.AddComponent<Button>();
-        ColorBlock colors = button.colors;
-        colors.highlightedColor = new Color(0.3f, 0.3f, 0.4f, 1f);
-        colors.pressedColor = new Color(0.1f, 0.1f, 0.15f, 1f);
-        colors.selectedColor = colors.highlightedColor;
-        button.colors = colors;
-
-        TMP_Text text = CreateText(background.transform, "Label", label, 34f, Color.white);
-        Stretch(text.rectTransform);
-
-        return button;
-    }
-
-    /// <summary>Centered rect at the given anchored position/size.</summary>
-    private static void Place(RectTransform rect, Vector2 anchoredPosition, Vector2 size)
-    {
-        rect.anchorMin = rect.anchorMax = new Vector2(0.5f, 0.5f);
-        rect.anchoredPosition = anchoredPosition;
-        rect.sizeDelta = size;
-    }
-
-    /// <summary>Stretches the rect to fill its parent.</summary>
-    private static void Stretch(RectTransform rect)
-    {
-        rect.anchorMin = Vector2.zero;
-        rect.anchorMax = Vector2.one;
-        rect.offsetMin = Vector2.zero;
-        rect.offsetMax = Vector2.zero;
     }
 }

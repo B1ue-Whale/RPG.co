@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public static class LevelTransition
@@ -17,12 +19,10 @@ public static class LevelTransition
             return;
         }
 
-        Time.timeScale = 1f;
+        RestoreGameplayInput();
 
         if (GameManager.Instance != null)
-        {
             GameManager.Instance.ChangeState(Enums.GameState.Level);
-        }
 
         SceneManager.LoadScene(sceneName);
     }
@@ -32,7 +32,7 @@ public static class LevelTransition
         if (GameManager.Instance != null)
             GameManager.Instance.ChangeState(Enums.GameState.Main);
 
-        Time.timeScale = 1f;
+        RestoreGameplayInput();
         SceneManager.LoadScene("Main Scene");
     }
 
@@ -41,7 +41,7 @@ public static class LevelTransition
         if (GameManager.Instance != null)
             GameManager.Instance.ChangeState(Enums.GameState.WorldSelection);
 
-        Time.timeScale = 1f;
+        RestoreGameplayInput();
         SceneManager.LoadScene("WorldSelectionScene");
     }
 
@@ -50,17 +50,54 @@ public static class LevelTransition
         if (GameManager.Instance != null)
             GameManager.Instance.ChangeState(Enums.GameState.LevelSelection);
 
-        Time.timeScale = 1f;
+        RestoreGameplayInput();
         SceneManager.LoadScene("LevelSelectScene");
     }
 
     public static void RestartCurrentScene()
     {
-        Time.timeScale = 1f;
+        RestoreGameplayInput();
 
         if (GameManager.Instance != null)
             GameManager.Instance.ChangeState(Enums.GameState.Level);
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    /// <summary>
+    /// Re-enables gameplay input after pause/result (timeScale 0, UI action map).
+    /// PlayerInput shares the project InputActionAsset, so a map switch can stick
+    /// across scene loads if Default Action Map is empty.
+    /// </summary>
+    public static void RestoreGameplayInput()
+    {
+        Time.timeScale = 1f;
+
+        EnablePlayerMap(InputSystem.actions);
+
+        PlayerInput[] playerInputs = Object.FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
+        for (int i = 0; i < playerInputs.Length; i++)
+        {
+            PlayerInput playerInput = playerInputs[i];
+            EnablePlayerMap(playerInput.actions);
+
+            if (playerInput.actions != null && playerInput.actions.FindActionMap("Player") != null)
+                playerInput.SwitchCurrentActionMap("Player");
+
+            playerInput.ActivateInput();
+        }
+
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    private static void EnablePlayerMap(InputActionAsset asset)
+    {
+        if (asset == null)
+            return;
+
+        InputActionMap playerMap = asset.FindActionMap("Player");
+        if (playerMap != null && !playerMap.enabled)
+            playerMap.Enable();
     }
 }
