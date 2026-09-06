@@ -3,26 +3,22 @@ using UnityEngine.InputSystem;
 
 public class PlayerGadgetController : MonoBehaviour
 {
-    private GadgetBase equippedGadget;
-
     [SerializeField] private GadgetBase[] gadgets = new GadgetBase[2]; //매 스테이지 2 개
     [SerializeField] private int selectedIndex;
 
     public GadgetBase[] Gadgets => gadgets;
     public int SelectedIndex => selectedIndex;
     public GadgetBase SelectedGadget => GetGadget(selectedIndex);
-    public GadgetBase EquippedGadget => equippedGadget;
 
+    private void Start()
+    {
+        SelectGadget(0);
+    }
     private void Update()
     {
         if (Keyboard.current == null)
         {
             return;
-        }
-
-        if (Keyboard.current.qKey.wasPressedThisFrame)
-        {
-            ToggleGadget(); //탈부착
         }
 
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
@@ -37,7 +33,7 @@ public class PlayerGadgetController : MonoBehaviour
 
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
-            UseGadget(); 
+            UseGadget();
         }
     }
 
@@ -50,25 +46,7 @@ public class PlayerGadgetController : MonoBehaviour
         }
 
         selectedIndex = index;
-
-        if (equippedGadget != null)
-        {
-            EquipGadget(selectedGadget);
-        }
-
         Debug.Log("선택");
-    }
-
-    public void ToggleGadget()
-    {
-        if (equippedGadget == null)
-        {
-            EquipGadget(SelectedGadget);
-        }
-        else
-        {
-            UnequipGadget();
-        }
     }
 
     public void UseGadget()
@@ -78,28 +56,16 @@ public class PlayerGadgetController : MonoBehaviour
 
     public bool TryUseSelectedGadget()
     {
-        GadgetBase gadget = EquippedGadget;
+        GadgetBase gadget = SelectedGadget;
         if (gadget == null)
         {
-            Debug.Log("No Gadget Equipped");
+            Debug.Log("No Gadget Selected");
             return false;
         }
 
         bool success = gadget.TryUse();
-        Debug.Log(success ? "사용" : "쿨타임");
+        Debug.Log(success ? "사용" : $"쿨타임{gadget.RemainingCooldown:F0}초 남음");
         return success;
-    }
-
-    public void EquipGadget(GadgetBase gadget)
-    {
-        equippedGadget = gadget;
-        Debug.Log("착용");
-    }
-
-    public void UnequipGadget()
-    {
-        equippedGadget = null;
-        Debug.Log("탈착");
     }
 
     public GadgetBase GetGadget(int index)
