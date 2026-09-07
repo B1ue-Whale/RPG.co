@@ -28,10 +28,18 @@ public class PlayerHideController : MonoBehaviour
         {
             Debug.Log("인식안됨");
             return false;
-        }    
+        }
         Debug.Log("CanHideHere 호출됨");
         _currentHideCell = hideableTilemap.WorldToCell(hideCheckPoint.position);
         return hideableTilemap.HasHideTile(_currentHideCell);
+    }
+
+    /// <summary>Whether the given cell (already selected by the caller, e.g. the nearest
+    /// infected tile) is a valid hide/interact tile - the same check CanHideHere() does
+    /// for the fixed hideCheckPoint cell, but for an arbitrary cell.</summary>
+    public bool CanHideAt(Vector3Int cell)
+    {
+        return hideableTilemap != null && hideableTilemap.HasHideTile(cell);
     }
 
     public void EnterHide()
@@ -41,12 +49,29 @@ public class PlayerHideController : MonoBehaviour
             Debug.Log("EnterHide 인식되었으나 조건 안맞아 취소");
             return;
         }
-            
-        Debug.Log("EnterHide 호출됨");
+
+        EnterHideAt(_currentHideCell);
+    }
+
+    /// <summary>
+    /// Same positioning/occupation logic as EnterHide() (hide the sprite, disable body
+    /// collision, highlight the cell) but for an already-selected cell rather than the
+    /// fixed hideCheckPoint cell below the player. Used for auto-targeted interactions
+    /// (e.g. E-only nearest-bug targeting) that pick their own cell.
+    /// </summary>
+    public void EnterHideAt(Vector3Int cell)
+    {
+        if (IsHidden)
+        {
+            return;
+        }
+
+        Debug.Log("EnterHideAt 호출됨");
+        _currentHideCell = cell;
         IsHidden = true;
         SetGraphicsVisible(false);
         SetBodyCollisionActive(false);
-        hideableTilemap.ShowHighlight(_currentHideCell);
+        hideableTilemap.ShowHighlight(cell);
     }
 
     public void ExitHide()

@@ -37,8 +37,22 @@ public class NpcMonsterJumpReaction : MonoBehaviour
     [Header("Reaction")]
     [Tooltip("Minimum seconds between reaction jumps, so landing next to the same monster doesn't cause repeated hops.")]
     [SerializeField] private float reactionCooldown = 0.5f;
-    [Tooltip("Chance [0-1] that a qualifying trigger is ignored entirely - the NPC just continues whatever it was doing (recorded playback, or stays Suspicious) as if the monster wasn't there. Rolled once per trigger, not per tick, and still starts reactionCooldown so an ignored encounter doesn't just get re-rolled again a moment later against the same monster.")]
-    [SerializeField, Range(0f, 1f)] private float ignoreChance = 0.1f;
+
+    [Header("Dodge Failure Escalation")]
+    [Tooltip("Chance [0-1] that a qualifying trigger is ignored entirely (the dodge \"fails\") - the NPC just continues whatever it was doing as if the monster wasn't there. What this run's failure chance escalates from after each successful dodge. Rolled once per trigger, not per tick, and still starts reactionCooldown so a failed roll doesn't just get re-rolled again a moment later against the same monster.")]
+    [SerializeField, Range(0f, 1f)] private float baseFailureChance = 0.1f;
+    [Tooltip("Percentage points (as a 0-1 fraction) added to the failure chance per successful dodge during the NPC's first run (its life before the first death).")]
+    [SerializeField, Range(0f, 1f)] private float run1FailureIncrement = 0.15f;
+    [Tooltip("Percentage points (as a 0-1 fraction) added to the failure chance per successful dodge during the NPC's second run (between its first and second death).")]
+    [SerializeField, Range(0f, 1f)] private float run2FailureIncrement = 0.03f;
+
+    // 1 = the NPC's first life this session, 2 = after its first death, 3+ = after its
+    // second death - from run 3 onward the probabilistic failure roll is disabled
+    // entirely (dodge movement can still fail physically, just not this roll).
+    private int _runIndex = 1;
+    // Successful dodges (rolled and entered the reaction) so far in the current run.
+    // Reset to 0 whenever the NPC dies and a new run begins.
+    private int _successfulDodgeCount;
 
     [Header("Gizmos")]
     [Tooltip("Draw the detection radius and worst-case trigger range in the Scene view.")]
@@ -78,6 +92,38 @@ public class NpcMonsterJumpReaction : MonoBehaviour
         }
 
         EndReaction();
+    }
+
+    /// <summary>
+    /// Called once per NPC death (from NpcProgressionController.DieRoutine, alongside
+    /// Cancel()) to advance the dodge-failure escalation to the next run and reset the
+    /// successful-dodge count for it. Deliberately separate from Cancel(), which aborts
+    /// an in-progress jump and can also run while merely dying, not just on the actual
+    /// death transition.
+    /// </summary>
+    public void OnNpcDied()
+    {
+        _runIndex++;
+        _successfulDodgeCount = 0;
+        Debug.Log($"[{nameof(NpcMonsterJumpReaction)}] '{name}' died - dodge escalation advanced to run {_runIndex} (failure chance reset to {CurrentFailureChance():P0}).", this);
+    }
+
+    /// <summary>
+    /// Current probabilistic dodge-failure chance for this run: baseFailureChance plus
+    /// this run's per-success increment for every successful dodge so far, clamped to
+    /// [0, 1]. Runs 1 and 2 escalate (7pp and 3pp per success respectively); run 3
+    /// onward is always 0 - the roll is disabled, though the jump itself can still fail
+    /// physically.
+    /// </summary>
+    private float CurrentFailureChance()
+    {
+        if (_runIndex >= 3)
+        {
+            return 0f;
+        }
+
+        float increment = _runIndex == 1 ? run1FailureIncrement : run2FailureIncrement;
+        return Mathf.Clamp01(baseFailureChance + increment * _successfulDodgeCount);
     }
 
     private void FixedUpdate()
@@ -124,17 +170,24 @@ public class NpcMonsterJumpReaction : MonoBehaviour
             return;
         }
 
-        if (Random.value < ignoreChance)
+        float failureChance = CurrentFailureChance();
+        if (Random.value < failureChance)
         {
             // Rolled to ignore this specific encounter entirely - starts the same
             // cooldown a real reaction would, so it isn't just re-rolled again a tick
-            // later against the same still-closing monster.
-            Debug.Log($"[{nameof(NpcMonsterJumpReaction)}] '{threat.name}' entered trigger range of '{name}' but was ignored (time-to-collision={timeToCollision:F2}s).", this);
+            // later against the same still-closing monster. Does not count as a
+            // successful dodge and does not advance the escalation.
+            Debug.Log($"[{nameof(NpcMonsterJumpReaction)}] Dodge FAILED (run {_runIndex}, chance {failureChance:P0}, successes {_successfulDodgeCount}) vs '{threat.name}', time-to-collision={timeToCollision:F2}s.", this);
             _cooldownRemaining = reactionCooldown;
             return;
         }
 
-        Debug.Log($"[{nameof(NpcMonsterJumpReaction)}] '{threat.name}' entered trigger range of '{name}' (time-to-collision={timeToCollision:F2}s, reactionLeadTime={reactionLeadTime:F2}s).", this);
+        // Passed the probabilistic dodge check and is entering the reaction path - this
+        // is what counts as a "successful dodge" for the escalation, regardless of
+        // whether the jump itself ends up physically avoiding the monster.
+        _successfulDodgeCount++;
+
+        Debug.Log($"[{nameof(NpcMonsterJumpReaction)}] Dodge SUCCEEDED (run {_runIndex}, chance was {failureChance:P0}, successes now {_successfulDodgeCount}) vs '{threat.name}', time-to-collision={timeToCollision:F2}s.", this);
         BeginReaction();
     }
 

@@ -1834,7 +1834,7 @@ RectTransform:
   m_GameObject: {fileID: 520928174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 3}
+  m_LocalScale: {x: 4, y: 4, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 449978267}
@@ -1843,9 +1843,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 438, y: -114}
+  m_AnchoredPosition: {x: 20, y: -40}
   m_SizeDelta: {x: 160, y: 20}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &520928176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19790,6 +19790,8 @@ MonoBehaviour:
     m_Bits: 8
   recoveryWallCheckDistance: 0.15
   respawnDelay: 4
+  crashGaugeReductionPercent: 20
+  crashGauge: {fileID: 0}
   playerCollider: {fileID: 2130377328}
   npcCollider: {fileID: 1472330304}
 --- !u!114 &1472330308
@@ -19885,7 +19887,9 @@ MonoBehaviour:
   detectionRadius: 1.2
   reactionLeadTime: 0.35
   reactionCooldown: 0.5
-  ignoreChance: 0.1
+  baseFailureChance: 0.1
+  run1FailureIncrement: 0.15
+  run2FailureIncrement: 0.03
   showDetectionGizmos: 0
   detectionRadiusColor: {r: 1, g: 0.92, b: 0.016, a: 0.5}
   worstCaseRadiusColor: {r: 1, g: 0.15, b: 0.15, a: 0.8}
@@ -22963,7 +22967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e2d8eddf68863498031446f6c331bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GarryMode_Gadget
-  icon: {fileID: 1829129800224813866, guid: 307ecf1db88584f4bb986ae271a9da3e, type: 3}
+  icon: {fileID: -7581981364296773619, guid: 9d49da8294ce6274c9f563659ed1d31b, type: 3}
   displayName: "\uC911\uB825"
   description: 
   cooldown: 5
@@ -23228,6 +23232,8 @@ MonoBehaviour:
   combat: {fileID: 2130377336}
   interactionAgent: {fileID: 2130377337}
   playerHideController: {fileID: 2130377335}
+  bugZone: {fileID: 0}
+  bugSnapRange: 2
 --- !u!114 &2130377333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23389,7 +23395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGadgetController
   gadgets:
-  - {fileID: 126317098}
+  - {fileID: 2008735689}
   - {fileID: 402617070}
   selectedIndex: 0
 --- !u!1 &7001000000
@@ -24211,15 +24217,19 @@ PrefabInstance:
       objectReference: {fileID: 2130377330}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: npcSafeRadius
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: targetTilemap
       value: 
       objectReference: {fileID: 1603556872}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: bugAgeThreshold
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: agedBugCrashRate
-      value: 0.4
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: infectionTilemap
@@ -24235,7 +24245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: npcNearbyCrashRate
-      value: 2
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: reliefInfectionThreshold
@@ -24243,7 +24253,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: spawnDirector.batchInterval
-      value: 13
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: spawnDirector.maxBugsPerBatch
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
+      propertyPath: spawnDirector.minBugsPerBatch
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: spawnDirector.liveGizmoPreview

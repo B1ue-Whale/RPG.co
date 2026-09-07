@@ -9,6 +9,8 @@ public class PlayerGadgetController : MonoBehaviour
     public GadgetBase[] Gadgets => gadgets;
     public int SelectedIndex => selectedIndex;
     public GadgetBase SelectedGadget => GetGadget(selectedIndex);
+    // No separate equip/unequip state - the selected gadget is always equipped.
+    public GadgetBase EquippedGadget => SelectedGadget;
 
     private void Start()
     {
@@ -46,6 +48,7 @@ public class PlayerGadgetController : MonoBehaviour
         }
 
         selectedIndex = index;
+
         Debug.Log("선택");
     }
 

@@ -77,4 +77,21 @@ public class CrashGaugeManager : MonoBehaviour
         hasMaxedOut = false;
         GaugeChanged?.Invoke(CurrentValue);
     }
+
+    /// <summary>Removes a flat amount from the gauge (e.g. NPC death relief), clamped to MinValue. Re-arms GaugeMaxed if the reduction brings the gauge back below MaxValue.</summary>
+    public void Reduce(float amount)
+    {
+        if (amount <= 0f)
+            return;
+
+        float newValue = Mathf.Clamp(CurrentValue - amount, MinValue, MaxValueConst);
+        if (newValue == CurrentValue)
+            return;
+
+        CurrentValue = newValue;
+        if (hasMaxedOut && CurrentValue < MaxValueConst)
+            hasMaxedOut = false;
+
+        GaugeChanged?.Invoke(CurrentValue);
+    }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -114,9 +115,22 @@ public class BugZone : MonoBehaviour
                 player = playerObject.transform;
         }
 
-        SpawnInitialRandomInfections();
+        // One frame late, deliberately: BugZone has no DefaultExecutionOrder (runs at 0),
+        // while NpcProgressionController is +100 and only snaps the NPC onto its first
+        // checkpoint inside ITS OWN Start(). Seeding here immediately would read the
+        // NPC's raw, pre-snap scene position - not where it's about to teleport to - and
+        // exclude the wrong area, so a seed could land right where the NPC ends up a
+        // moment later. Every Start() in the scene finishes before any Update()/coroutine
+        // continuation runs, so a one-frame delay is enough regardless of execution order.
+        StartCoroutine(SpawnInitialRandomInfectionsNextFrame());
 
         spawnTimer = spawnDirector.FirstBatchDelay;
+    }
+
+    private IEnumerator SpawnInitialRandomInfectionsNextFrame()
+    {
+        yield return null;
+        SpawnInitialRandomInfections();
     }
 
     /// <summary>
