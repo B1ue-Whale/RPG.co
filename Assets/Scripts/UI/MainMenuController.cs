@@ -7,12 +7,10 @@ public class MainMenuController : MonoBehaviour
 {
     [Header("Buttons")]
     [SerializeField] private Button startButton;
-    [SerializeField] private Button testLevelButton;
     [SerializeField] private Button quitButton;
 
     [Header("Scene Names")]
     [SerializeField] private string levelSelectSceneName = "LevelSelectScene";
-    [SerializeField] private string testSceneName = "World1_TestScene";
 
     [Header("World Select")]
     [SerializeField] private WorldSelectionController worldSelection;
@@ -20,9 +18,12 @@ public class MainMenuController : MonoBehaviour
     [Header("Look")]
     [Tooltip("Leave empty to use TextMesh Pro's default.")]
     [SerializeField] private TMP_FontAsset font;
+    [Tooltip("Leave empty to use the same font as the menu buttons.")]
+    [SerializeField] private TMP_FontAsset titleFont;
 
     private GameObject buttonRoot;
     private TMP_FontAsset resolvedFont;
+    private TMP_FontAsset resolvedTitleFont;
 
     private const float ButtonMargin = 72f;
     private const float ButtonSpacing = 24f;
@@ -30,6 +31,7 @@ public class MainMenuController : MonoBehaviour
     private void Start()
     {
         resolvedFont = font != null ? font : TMP_Settings.defaultFontAsset;
+        resolvedTitleFont = titleFont != null ? titleFont : resolvedFont;
 
         if (worldSelection == null)
             worldSelection = GetComponent<WorldSelectionController>();
@@ -62,11 +64,6 @@ public class MainMenuController : MonoBehaviour
         LevelTransition.GoToLevelSelection(levelSelectSceneName);
     }
 
-    public void OpenTestScene()
-    {
-        LevelTransition.EnterLevel(testSceneName);
-    }
-
     public void QuitGame()
     {
 #if UNITY_EDITOR
@@ -89,12 +86,45 @@ public class MainMenuController : MonoBehaviour
 
     private void DisableLegacyButtons()
     {
+        Canvas legacyCanvas = null;
         if (startButton != null)
-            startButton.gameObject.SetActive(false);
-        if (testLevelButton != null)
-            testLevelButton.gameObject.SetActive(false);
-        if (quitButton != null)
-            quitButton.gameObject.SetActive(false);
+            legacyCanvas = startButton.GetComponentInParent<Canvas>();
+        if (legacyCanvas == null && quitButton != null)
+            legacyCanvas = quitButton.GetComponentInParent<Canvas>();
+
+        if (legacyCanvas != null)
+            legacyCanvas.gameObject.SetActive(false);
+
+        HideLeftoverTestButtons();
+    }
+
+    private static void HideLeftoverTestButtons()
+    {
+        Button[] buttons = FindObjectsByType<Button>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            Button button = buttons[i];
+            if (button == null)
+                continue;
+
+            if (!IsTestButton(button))
+                continue;
+
+            button.gameObject.SetActive(false);
+        }
+    }
+
+    private static bool IsTestButton(Button button)
+    {
+        if (button.name == "Test" || button.name == "TestButton")
+            return true;
+
+        TMP_Text tmp = button.GetComponentInChildren<TMP_Text>();
+        if (tmp != null && tmp.text == "Test")
+            return true;
+
+        Text text = button.GetComponentInChildren<Text>();
+        return text != null && text.text == "Test";
     }
 
     private void BuildMenuButtons()
@@ -103,15 +133,36 @@ public class MainMenuController : MonoBehaviour
             "MainMenuButtons",
             OverlayMenuUi.MainMenuSortingOrder);
 
+        CreateTitle();
+
         Vector2 size = OverlayMenuUi.MainMenuButtonSize;
         float y = ButtonMargin;
         CreateCornerButton("QuitButton", "Quit", y, size, QuitGame);
 
         y += size.y + ButtonSpacing;
-        CreateCornerButton("TestButton", "Test", y, size, OpenTestScene);
-
-        y += size.y + ButtonSpacing;
         CreateCornerButton("StartButton", "Start", y, size, OpenWorldSelection);
+    }
+
+    private void CreateTitle()
+    {
+        TMP_Text title = OverlayMenuUi.CreateText(
+            buttonRoot.transform,
+            "Title",
+            "RPG.co",
+            OverlayMenuUi.MainMenuTitleFontSize,
+            Color.white,
+            resolvedTitleFont);
+
+        title.alignment = TextAlignmentOptions.TopLeft;
+        title.outlineWidth = 0.25f;
+        title.outlineColor = new Color(0f, 0f, 0f, 0.85f);
+
+        OverlayMenuUi.PlaceAnchored(
+            title.rectTransform,
+            new Vector2(0f, 1f),
+            new Vector2(0f, 1f),
+            new Vector2(ButtonMargin, -ButtonMargin),
+            OverlayMenuUi.MainMenuTitleSize);
     }
 
     private void CreateCornerButton(

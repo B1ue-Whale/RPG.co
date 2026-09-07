@@ -18,19 +18,26 @@ public static class OverlayMenuUi
     public static readonly Vector2 ButtonSize = new Vector2(280f, 80f);
     public static readonly Vector2 WorldButtonSize = new Vector2(760f, 240f);
     public static readonly Vector2 WorldBackButtonSize = new Vector2(480f, 120f);
+    public static readonly Vector2 LevelButtonSize = new Vector2(500f, 220f);
+    public static readonly Vector2 LevelBackButtonSize = new Vector2(480f, 120f);
     public static readonly Vector2 MainMenuButtonSize = new Vector2(520f, 140f);
+    public static readonly Vector2 MainMenuTitleSize = new Vector2(1100f, 220f);
     public static readonly Vector2 TitleSize = new Vector2(1200f, 130f);
     public static readonly Vector2 SubtitleSize = new Vector2(1200f, 60f);
 
     public static readonly Color WorldSelectDimColor = new Color(0.45f, 0.45f, 0.48f, 0.4f);
+    public static readonly Color LevelSelectDimColor = new Color(0.08f, 0.1f, 0.16f, 0.32f);
 
     public const float TitleFontSize = 96f;
     public const float SubtitleFontSize = 36f;
     public const float ButtonLabelFontSize = 34f;
     public const float WorldButtonLabelFontSize = 64f;
+    public const float LevelButtonLabelFontSize = 56f;
     public const float MainMenuButtonLabelFontSize = 52f;
+    public const float MainMenuTitleFontSize = 148f;
 
     public const int MainMenuSortingOrder = 10;
+    public const int LevelSelectionSortingOrder = 20;
     public const int WorldSelectionSortingOrder = 200;
     public const int PauseSortingOrder = 400;
     public const int ResultSortingOrder = 500;

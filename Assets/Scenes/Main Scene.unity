@@ -151,12 +151,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainMenuController
   startButton: {fileID: 2092797298}
-  testLevelButton: {fileID: 1030444173}
   quitButton: {fileID: 706211700}
   levelSelectSceneName: LevelSelectScene
-  testSceneName: World1_TestScene
   worldSelection: {fileID: 27382593}
   font: {fileID: 11400000, guid: a623f076cc28bb4448d80edec179c364, type: 2}
+  titleFont: {fileID: 11400000, guid: a623f076cc28bb4448d80edec179c364, type: 2}
 --- !u!4 &27382591
 Transform:
   m_ObjectHideFlags: 0

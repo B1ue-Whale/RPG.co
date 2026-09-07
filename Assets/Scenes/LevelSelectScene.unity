@@ -881,9 +881,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSelectionController
   levels:
-  - button: {fileID: 1931415426}
+  - label: Level 1
     sceneName: World1_Level 1
-  backButton: {fileID: 1343811816}
+  - label: Level 2
+    sceneName: World1_Level 2
+  - label: Level 3
+    sceneName: World1_Level 3
+  font: {fileID: 11400000, guid: a623f076cc28bb4448d80edec179c364, type: 2}
+  sprite: {fileID: -1955448553306655712, guid: 1cd4ea09cf8f8374f88e3eda36401007, type: 3}
+  texture: {fileID: 0}
+  tint: {r: 1, g: 1, b: 1, a: 1}
+  sortingOrder: -10
 --- !u!4 &1934103785
 Transform:
   m_ObjectHideFlags: 0
@@ -918,7 +926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1975190072
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -650,6 +650,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Potion_Gadget
   icon: {fileID: 5210547765587161778, guid: f5e2c792cc3d6704f966a29575c5f684, type: 3}
   displayName: "\uB9C8\uB098 \uD3EC\uC158"
+  description: 
   cooldown: 10
   statusEffectController: {fileID: 2130377341}
   cleanseTimeReduction: 1.5
@@ -1225,6 +1226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FPS_Gadget
   icon: {fileID: 8857627004432727006, guid: 91f7850417b7d754ca848afaa495e124, type: 3}
   displayName: "\uD604\uB300\uC2DD \uC218\uB958\uD0C4"
+  description: 
   cooldown: 5
   range: 3
   bugZone: {fileID: 1301147711}
@@ -1693,6 +1695,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Racing_Gadget
   icon: {fileID: 6502556437320629215, guid: 4487e2d4ec4855745b6e62ba632b0807, type: 3}
   displayName: "\uB808\uC774\uC2F1 \uAC8C\uC784"
+  description: 
   cooldown: 5
   statusEffectController: {fileID: 0}
   speedBonus: 2
@@ -23327,6 +23330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GarryMode_Gadget
   icon: {fileID: 1829129800224813866, guid: 307ecf1db88584f4bb986ae271a9da3e, type: 3}
   displayName: "\uC911\uB825"
+  description: 
   cooldown: 5
   range: 10
   duration: 3
@@ -23695,7 +23699,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130377327}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 719366bdd1cf4dc4912d459eaf6edc84, type: 3}
   m_Name: 
@@ -23712,7 +23716,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130377327}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80b5c4afad4e4881a45dcc9ecd908b99, type: 3}
   m_Name: 
@@ -23837,6 +23841,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e222c36f47fd2e94abbaee1859396d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GadgetSlotUI
+  tooltipBackground: {fileID: 0}
+  tooltipText: {fileID: 0}
+  tooltipFont: {fileID: 0}
+  tooltipOffset: {x: 0, y: 120}
+  tooltipSize: {x: 90, y: 260}
+  tooltipFontSize: 18
 --- !u!1 &7001000020
 GameObject:
   m_ObjectHideFlags: 0
@@ -24189,6 +24199,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e222c36f47fd2e94abbaee1859396d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GadgetSlotUI
+  tooltipBackground: {fileID: 0}
+  tooltipText: {fileID: 0}
+  tooltipFont: {fileID: 0}
+  tooltipOffset: {x: 0, y: 120}
+  tooltipSize: {x: 90, y: 260}
+  tooltipFontSize: 18
 --- !u!1 &7001000120
 GameObject:
   m_ObjectHideFlags: 0
