@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -7,6 +8,9 @@ using UnityEngine.UI;
 /// </summary>
 public static class OverlayMenuUi
 {
+    public static readonly Vector2 ReferenceResolution = new Vector2(1920f, 1080f);
+    public const float MatchWidthOrHeight = 0.5f;
+
     public static readonly Color DimColor = new Color(0f, 0f, 0f, 0.75f);
     public static readonly Color ButtonColor = new Color(0.15f, 0.15f, 0.2f, 0.95f);
     public static readonly Color ButtonHighlighted = new Color(0.3f, 0.3f, 0.4f, 1f);
@@ -54,12 +58,33 @@ public static class OverlayMenuUi
             | AdditionalCanvasShaderChannels.Normal
             | AdditionalCanvasShaderChannels.Tangent;
 
-        var scaler = root.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        ConfigureScaler(root.AddComponent<CanvasScaler>());
 
         root.AddComponent<GraphicRaycaster>();
         return root;
+    }
+
+    public static void ConfigureScaler(Canvas canvas)
+    {
+        if (canvas == null)
+            return;
+
+        var scaler = canvas.GetComponent<CanvasScaler>();
+        if (scaler == null)
+            scaler = canvas.gameObject.AddComponent<CanvasScaler>();
+
+        ConfigureScaler(scaler);
+    }
+
+    public static void ConfigureScaler(CanvasScaler scaler)
+    {
+        if (scaler == null)
+            return;
+
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = ReferenceResolution;
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        scaler.matchWidthOrHeight = MatchWidthOrHeight;
     }
 
     public static Image CreateImage(Transform parent, string name, Color color)
@@ -168,5 +193,42 @@ public static class OverlayMenuUi
         rect.anchorMax = Vector2.one;
         rect.offsetMin = Vector2.zero;
         rect.offsetMax = Vector2.zero;
+    }
+}
+
+/// <summary>
+/// Scene canvases default to Constant Pixel Size, which keeps HUD widgets at a
+/// fixed pixel size and offset. That looks fine near 1080p and falls apart on
+/// larger displays. Force every overlay canvas onto the shared reference scale.
+/// </summary>
+public static class SceneCanvasScaleBootstrap
+{
+    private static bool installed;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void Install()
+    {
+        if (!installed)
+        {
+            installed = true;
+            SceneManager.sceneLoaded += (_, _) => ApplyToLoadedCanvases();
+        }
+
+        ApplyToLoadedCanvases();
+    }
+
+    private static void ApplyToLoadedCanvases()
+    {
+        Canvas[] canvases = Object.FindObjectsByType<Canvas>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        for (int i = 0; i < canvases.Length; i++)
+        {
+            Canvas canvas = canvases[i];
+            if (canvas == null || canvas.renderMode != RenderMode.ScreenSpaceOverlay)
+                continue;
+            if (canvas.name == "KonamiEasterEggCanvas")
+                continue;
+
+            OverlayMenuUi.ConfigureScaler(canvas);
+        }
     }
 }

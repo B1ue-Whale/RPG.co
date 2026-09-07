@@ -17,7 +17,7 @@ public class GadgetSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private TMP_FontAsset tooltipFont;
     [SerializeField] private Vector2 tooltipOffset = new Vector2(0f, 120f);
     [SerializeField] private Vector2 tooltipSize = new Vector2(90f, 260f);
-    [SerializeField] private float tooltipFontSize = 18f; // 20 > 
+    [SerializeField] private float tooltipFontSize = 12f; 
 
     private RectTransform tooltipRect;
    

@@ -242,11 +242,7 @@ public class LevelSelectionController : MonoBehaviour
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = sortingOrder;
 
-        var scaler = backgroundRoot.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
-        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        scaler.matchWidthOrHeight = 0.5f;
+        OverlayMenuUi.ConfigureScaler(canvas);
 
         var fill = new GameObject("Fill", typeof(RectTransform));
         fill.transform.SetParent(backgroundRoot.transform, false);

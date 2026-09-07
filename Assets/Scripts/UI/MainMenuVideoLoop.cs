@@ -117,11 +117,7 @@ public class MainMenuVideoLoop : MonoBehaviour
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = -10;
 
-        var scaler = canvasRoot.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
-        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        scaler.matchWidthOrHeight = 0.5f;
+        OverlayMenuUi.ConfigureScaler(canvas);
 
         var fill = new GameObject("VideoFill", typeof(RectTransform));
         fill.transform.SetParent(canvasRoot.transform, false);

@@ -10,6 +10,10 @@ public class CrashGaugeUI : MonoBehaviour
 {
     private const string DefaultFormat = "Crash probability: {0}%";
     private const float RapidColorHold = 0.15f;
+    private static readonly Vector2 LabelAnchor = new Vector2(0f, 1f);
+    private static readonly Vector2 LabelPivot = new Vector2(0f, 1f);
+    private static readonly Vector2 LabelPosition = new Vector2(36f, -20f);
+    private static readonly Vector2 LabelSize = new Vector2(920f, 72f);
 
     [SerializeField] private CrashGaugeManager crashGaugeManager;
     [Tooltip("Legacy fill bar. Hidden at runtime if assigned.")]
@@ -43,6 +47,7 @@ public class CrashGaugeUI : MonoBehaviour
             return;
         }
 
+        OverlayMenuUi.ConfigureScaler(GetComponentInParent<Canvas>());
         HideSliderVisuals();
         EnsureValueText();
         ApplyLook();
@@ -105,44 +110,44 @@ public class CrashGaugeUI : MonoBehaviour
 
     private void EnsureValueText()
     {
-        if (valueText != null)
-            return;
-
-        if (_runtimeText != null)
-        {
+        if (valueText == null && _runtimeText != null)
             valueText = _runtimeText;
-            return;
-        }
 
-        Transform parent = transform.parent != null ? transform.parent : transform;
-        TMP_FontAsset resolvedFont = font != null ? font : FindHudFont(parent);
-        if (resolvedFont == null)
-            resolvedFont = TMP_Settings.defaultFontAsset;
-
-        valueText = OverlayMenuUi.CreateText(
-            parent,
-            "CrashProbability",
-            FormatLabel(0f),
-            fontSize,
-            calmColor,
-            resolvedFont);
-        valueText.outlineWidth = 0.2f;
-        valueText.outlineColor = Color.black;
-        valueText.enableWordWrapping = false;
-
-        _runtimeText = valueText;
-
-        if (transform is RectTransform source)
+        if (valueText == null)
         {
-            float visualWidth = Mathf.Abs(source.rect.width * source.localScale.x);
-            float visualHeight = Mathf.Abs(source.rect.height * source.localScale.y);
-            OverlayMenuUi.PlaceAnchored(
-                valueText.rectTransform,
-                source.anchorMin,
-                source.pivot,
-                source.anchoredPosition,
-                new Vector2(Mathf.Max(visualWidth, 720f), Mathf.Max(visualHeight, 64f)));
+            Transform parent = transform.parent != null ? transform.parent : transform;
+            TMP_FontAsset resolvedFont = font != null ? font : FindHudFont(parent);
+            if (resolvedFont == null)
+                resolvedFont = TMP_Settings.defaultFontAsset;
+
+            valueText = OverlayMenuUi.CreateText(
+                parent,
+                "CrashProbability",
+                FormatLabel(0f),
+                fontSize,
+                calmColor,
+                resolvedFont);
+            valueText.outlineWidth = 0.2f;
+            valueText.outlineColor = Color.black;
+            valueText.enableWordWrapping = false;
+            _runtimeText = valueText;
         }
+
+        LayoutValueText();
+    }
+
+    private void LayoutValueText()
+    {
+        if (valueText == null)
+            return;
+
+        valueText.alignment = TextAlignmentOptions.TopLeft;
+        OverlayMenuUi.PlaceAnchored(
+            valueText.rectTransform,
+            LabelAnchor,
+            LabelPivot,
+            LabelPosition,
+            LabelSize);
     }
 
     private void ApplyLook()
