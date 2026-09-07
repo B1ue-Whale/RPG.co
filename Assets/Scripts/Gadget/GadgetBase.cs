@@ -8,6 +8,10 @@ public abstract class GadgetBase : MonoBehaviour
     public Sprite Icon => icon; 
     public string DisplayName => displayName;
 
+    [SerializeField, TextArea]
+    private string description;
+    public string Description => description;
+
     [SerializeField]
     private float cooldown = 5f;
 

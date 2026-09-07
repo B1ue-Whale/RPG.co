@@ -651,7 +651,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Potion_Gadget
   icon: {fileID: 5210547765587161778, guid: f5e2c792cc3d6704f966a29575c5f684, type: 3}
-  displayName: 
+  displayName: "\uB9C8\uB098 \uD3EC\uC158"
+  description: "\uBC84\uADF8 \uC0AD\uC81C \uC2DC\uAC04 \uC904\uC774\uAE30"
   cooldown: 10
   statusEffectController: {fileID: 2130377341}
   cleanseTimeReduction: 1.5
@@ -1318,7 +1319,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FPS_Gadget
   icon: {fileID: 8857627004432727006, guid: 91f7850417b7d754ca848afaa495e124, type: 3}
-  displayName: 
+  displayName: "\uD604\uB300\uC2DD \uC218\uB958\uD0C4"
+  description: "\uADFC\uCC98\uC5D0 \uC788\uB294 \uBC84\uADF8\uBE14\uB7ED \uBC14\uB85C
+    \uC0AD\uC81C(NPC \uACBD\uACC4\uB3C4 \uD06C\uAC8C \uC99D\uAC00) "
   cooldown: 5
   range: 3
   bugZone: {fileID: 1301147711}
@@ -1786,7 +1789,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Racing_Gadget
   icon: {fileID: 6502556437320629215, guid: 4487e2d4ec4855745b6e62ba632b0807, type: 3}
-  displayName: 
+  displayName: "\uB808\uC774\uC2F1 \uAC8C\uC784"
+  description: "\uC774\uB3D9\uC18D\uB3C4 \uC99D\uAC00"
   cooldown: 5
   statusEffectController: {fileID: 0}
   speedBonus: 2
@@ -22961,6 +22965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GarryMode_Gadget
   icon: {fileID: 1829129800224813866, guid: 307ecf1db88584f4bb986ae271a9da3e, type: 3}
   displayName: "\uC911\uB825"
+  description: 
   cooldown: 5
   range: 10
   duration: 3
@@ -23450,8 +23455,8 @@ RectTransform:
   m_GameObject: {fileID: 7001000010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7001000021}
   - {fileID: 7001000031}
@@ -23461,7 +23466,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -34, y: 0}
+  m_AnchoredPosition: {x: -90, y: 0}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7001000012
@@ -23476,6 +23481,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e222c36f47fd2e94abbaee1859396d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GadgetSlotUI
+  tooltipBackground: {fileID: 0}
+  tooltipText: {fileID: 0}
+  tooltipFont: {fileID: 0}
+  tooltipOffset: {x: -30, y: 100}
+  tooltipSize: {x: 90, y: 200}
+  tooltipFontSize: 20
 --- !u!1 &7001000020
 GameObject:
   m_ObjectHideFlags: 0
@@ -23802,8 +23813,8 @@ RectTransform:
   m_GameObject: {fileID: 7001000110}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7001000121}
   - {fileID: 7001000131}
@@ -23828,6 +23839,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e222c36f47fd2e94abbaee1859396d7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GadgetSlotUI
+  tooltipBackground: {fileID: 0}
+  tooltipText: {fileID: 0}
+  tooltipFont: {fileID: 0}
+  tooltipOffset: {x: -30, y: 100}
+  tooltipSize: {x: 90, y: 200}
+  tooltipFontSize: 20
 --- !u!1 &7001000120
 GameObject:
   m_ObjectHideFlags: 0
