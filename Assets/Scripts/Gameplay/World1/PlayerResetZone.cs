@@ -2,15 +2,16 @@ using UnityEngine;
 
 /// <summary>
 /// Reset zone for the player. Any collider belonging to the player that enters this
-/// trigger is teleported back to startPoint, with velocity and jump/move transient
-/// state cleared - the same reset primitives used elsewhere (ProgressCheckpoint.SnapTo,
-/// NpcCommandPlayback.ResetToStart). Attach to a GameObject with any Collider2D set
-/// as a trigger (e.g. a BoxCollider2D covering a pit or hazard area).
+/// trigger is teleported back to the last position CharacterMotor2D had them grounded
+/// at, with velocity and jump/move transient state cleared - the same reset primitives
+/// used elsewhere (ProgressCheckpoint.SnapTo, NpcCommandPlayback.ResetToStart). Attach
+/// to a GameObject with any Collider2D set as a trigger (e.g. a BoxCollider2D covering
+/// a pit or hazard area).
 /// </summary>
 [RequireComponent(typeof(Collider2D))]
 public class PlayerResetZone : MonoBehaviour
 {
-    [Tooltip("Where the player is teleported to when this zone is touched.")]
+    [Tooltip("Fallback used only if the player has no recorded grounded position yet (e.g. this is the very first zone hit).")]
     [SerializeField] private Transform startPoint;
 
     private void Reset()
@@ -32,18 +33,28 @@ public class PlayerResetZone : MonoBehaviour
             return;
         }
 
-        if (startPoint == null)
+        CharacterMotor2D motor = player.GetComponent<CharacterMotor2D>();
+        Vector2 destination;
+        if (motor != null)
         {
-            Debug.LogWarning($"{nameof(PlayerResetZone)} on '{name}' has no startPoint assigned.", this);
+            destination = motor.LastGroundedPosition;
+        }
+        else if (startPoint != null)
+        {
+            destination = startPoint.position;
+        }
+        else
+        {
+            Debug.LogWarning($"{nameof(PlayerResetZone)} on '{name}' has no {nameof(CharacterMotor2D)} and no startPoint fallback assigned.", this);
             return;
         }
 
         Rigidbody2D body = other.attachedRigidbody != null ? other.attachedRigidbody : player.GetComponent<Rigidbody2D>();
         if (body != null)
         {
-            ProgressCheckpoint.TeleportRigidbody(body, startPoint.position);
+            ProgressCheckpoint.TeleportRigidbody(body, destination);
         }
 
-        player.GetComponent<CharacterMotor2D>()?.ResetTransientState();
+        motor?.ResetTransientState();
     }
 }

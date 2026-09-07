@@ -39,6 +39,8 @@ public class CharacterMotor2D : MonoBehaviour
     [SerializeField] private Vector2 groundCheckSize = new Vector2(0.4f, 0.1f);
     [Tooltip("Layers that count as ground.")]
     [SerializeField] private LayerMask groundLayer;
+    [Tooltip("Width of one tile. When the grounded position used for LastGroundedPosition has no ground within this distance on one side (i.e. it's right at an edge), it's nudged this far toward the side that does have ground.")]
+    [SerializeField] private float edgeAvoidanceTileSize = 1f;
 
     [Header("Status Effects")]
     [Tooltip("Optional. When assigned (or found on this object), MoveSpeed effects from gadgets are added to horizontal speed immediately.")]
@@ -75,6 +77,13 @@ public class CharacterMotor2D : MonoBehaviour
 
     /// <summary>True while the ground-check box overlaps a ground collider.</summary>
     public bool IsGrounded { get; private set; }
+
+    /// <summary>
+    /// Rigidbody position the last time this character was grounded. Used by things like
+    /// <see cref="PlayerResetZone"/> that need to send the player back to solid ground
+    /// rather than a fixed spawn point.
+    /// </summary>
+    public Vector2 LastGroundedPosition { get; private set; }
 
     /// <summary>Transform marking the ground-check point (typically at/near the character's feet).</summary>
     public Transform GroundCheck => groundCheck;
@@ -123,6 +132,7 @@ public class CharacterMotor2D : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        LastGroundedPosition = transform.position;
         if (statusEffects == null)
         {
             statusEffects = GetComponent<StatusEffectController>();
@@ -212,6 +222,7 @@ public class CharacterMotor2D : MonoBehaviour
         if (_rigidbody != null)
         {
             _rigidbody.gravityScale = _baseGravityScale;
+            LastGroundedPosition = _rigidbody.position;
         }
     }
 
@@ -313,9 +324,34 @@ public class CharacterMotor2D : MonoBehaviour
             if (hit.collider != null && hit.normal.y > 0.5f)
             {
                 IsGrounded = true;
+                LastGroundedPosition = AwayFromEdge(_rigidbody.position, feet, rayLength);
                 break;
             }
         }
+    }
+
+    /// <summary>
+    /// If groundedPosition is close enough to a ledge that a tile-width check to one
+    /// side finds no ground, nudge it a tile toward the side that does have ground.
+    /// Keeps a reset-to-last-grounded-position from dropping the character back at
+    /// the exact edge it just fell off of.
+    /// </summary>
+    private Vector2 AwayFromEdge(Vector2 groundedPosition, Vector2 feet, float rayLength)
+    {
+        bool groundLeft = Physics2D.Raycast(feet + Vector2.left * edgeAvoidanceTileSize, Vector2.down, rayLength, groundLayer);
+        bool groundRight = Physics2D.Raycast(feet + Vector2.right * edgeAvoidanceTileSize, Vector2.down, rayLength, groundLayer);
+
+        if (groundLeft && !groundRight)
+        {
+            return groundedPosition + Vector2.left * edgeAvoidanceTileSize;
+        }
+
+        if (groundRight && !groundLeft)
+        {
+            return groundedPosition + Vector2.right * edgeAvoidanceTileSize;
+        }
+
+        return groundedPosition;
     }
 
     private void UpdateJumpTimers()
