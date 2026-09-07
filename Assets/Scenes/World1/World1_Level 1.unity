@@ -23385,7 +23385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGadgetController
   gadgets:
   - {fileID: 126317098}
-  - {fileID: 511104159}
+  - {fileID: 402617070}
   selectedIndex: 0
 --- !u!1 &7001000000
 GameObject:
