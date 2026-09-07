@@ -8,6 +8,10 @@ public abstract class GadgetBase : MonoBehaviour
     public Sprite Icon => icon; 
     public string DisplayName => displayName;
 
+    [SerializeField, TextArea]
+    private string description;
+    public string Description => description;
+
     [SerializeField]
     private float cooldown = 5f;
 
@@ -36,6 +40,7 @@ public abstract class GadgetBase : MonoBehaviour
         return true; 
 
     }
+    
     protected abstract bool Use();
     //모든 가젯은 Use()라는 기능을 반드시 하나씩 구현해야 한다.
 }
