@@ -142,7 +142,31 @@ public class CrashGaugeUI : MonoBehaviour
                 source.pivot,
                 source.anchoredPosition,
                 new Vector2(Mathf.Max(visualWidth, 720f), Mathf.Max(visualHeight, 64f)));
+
+            // The box is padded well beyond the text's own width/height so long labels
+            // never clip, but that means Center alignment (OverlayMenuUi.CreateText's
+            // default) visually floats the text away from the corner it's pivoted to.
+            // Align it toward that same corner instead so it hugs the pivot.
+            valueText.alignment = CornerAlignment(source.pivot);
         }
+    }
+
+    private static TextAlignmentOptions CornerAlignment(Vector2 pivot)
+    {
+        bool left = pivot.x <= 0.25f;
+        bool right = pivot.x >= 0.75f;
+        bool top = pivot.y >= 0.75f;
+        bool bottom = pivot.y <= 0.25f;
+
+        if (top && left) return TextAlignmentOptions.TopLeft;
+        if (top && right) return TextAlignmentOptions.TopRight;
+        if (bottom && left) return TextAlignmentOptions.BottomLeft;
+        if (bottom && right) return TextAlignmentOptions.BottomRight;
+        if (left) return TextAlignmentOptions.Left;
+        if (right) return TextAlignmentOptions.Right;
+        if (top) return TextAlignmentOptions.Top;
+        if (bottom) return TextAlignmentOptions.Bottom;
+        return TextAlignmentOptions.Center;
     }
 
     private void ApplyLook()
