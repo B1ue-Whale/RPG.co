@@ -42,7 +42,7 @@ public class NpcMonsterJumpReaction : MonoBehaviour
     [Tooltip("Chance [0-1] that a qualifying trigger is ignored entirely (the dodge \"fails\") - the NPC just continues whatever it was doing as if the monster wasn't there. What this run's failure chance escalates from after each successful dodge. Rolled once per trigger, not per tick, and still starts reactionCooldown so a failed roll doesn't just get re-rolled again a moment later against the same monster.")]
     [SerializeField, Range(0f, 1f)] private float baseFailureChance = 0.1f;
     [Tooltip("Percentage points (as a 0-1 fraction) added to the failure chance per successful dodge during the NPC's first run (its life before the first death).")]
-    [SerializeField, Range(0f, 1f)] private float run1FailureIncrement = 0.07f;
+    [SerializeField, Range(0f, 1f)] private float run1FailureIncrement = 0.15f;
     [Tooltip("Percentage points (as a 0-1 fraction) added to the failure chance per successful dodge during the NPC's second run (between its first and second death).")]
     [SerializeField, Range(0f, 1f)] private float run2FailureIncrement = 0.03f;
 

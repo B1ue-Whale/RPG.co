@@ -19,7 +19,10 @@ public class BugClean : MonoBehaviour
 
     private void Awake()
     {
-        progressBar = WorldSpaceProgressBar.Create(playerHideController.transform, progressBarOffset, progressBarSize, progressBarBackground, progressBarFill);
+        // Not parented to the player: the tile being cleaned can be up to bugSnapRange
+        // away (auto-targeted), not necessarily right under the player, so the bar
+        // tracks the bug tile's own world position instead (see Update).
+        progressBar = WorldSpaceProgressBar.Create(null, Vector3.zero, progressBarSize, progressBarBackground, progressBarFill);
         if (statusEffects == null && playerHideController != null)
         {
             statusEffects = playerHideController.GetComponent<StatusEffectController>();
@@ -48,6 +51,7 @@ public class BugClean : MonoBehaviour
         // 맞으면 timer 증가
 
         timer += Time.deltaTime;
+        progressBar.transform.position = bugZone.GetCellWorldCenter(currentCell) + progressBarOffset;
         progressBar.SetVisible(true);
         float effectiveCleanseTime = GetEffectiveCleanseTime();
         progressBar.SetFill(timer / effectiveCleanseTime);

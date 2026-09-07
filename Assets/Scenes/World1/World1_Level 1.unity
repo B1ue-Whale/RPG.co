@@ -1837,11 +1837,11 @@ RectTransform:
   - {fileID: 1514197582}
   m_Father: {fileID: 1530111412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -522, y: 966}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -40}
   m_SizeDelta: {x: 160, y: 20}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &520928176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19884,7 +19884,7 @@ MonoBehaviour:
   reactionLeadTime: 0.35
   reactionCooldown: 0.5
   baseFailureChance: 0.1
-  run1FailureIncrement: 0.07
+  run1FailureIncrement: 0.15
   run2FailureIncrement: 0.03
   showDetectionGizmos: 0
   detectionRadiusColor: {r: 1, g: 0.92, b: 0.016, a: 0.5}
@@ -22963,7 +22963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30e2d8eddf68863498031446f6c331bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GarryMode_Gadget
-  icon: {fileID: 1829129800224813866, guid: 307ecf1db88584f4bb986ae271a9da3e, type: 3}
+  icon: {fileID: -7581981364296773619, guid: 9d49da8294ce6274c9f563659ed1d31b, type: 3}
   displayName: "\uC911\uB825"
   cooldown: 5
   range: 10
@@ -23227,6 +23227,8 @@ MonoBehaviour:
   combat: {fileID: 2130377336}
   interactionAgent: {fileID: 2130377337}
   playerHideController: {fileID: 2130377335}
+  bugZone: {fileID: 0}
+  bugSnapRange: 2
 --- !u!114 &2130377333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23388,7 +23390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGadgetController
   gadgets:
-  - {fileID: 126317098}
+  - {fileID: 2008735689}
   - {fileID: 511104159}
   selectedIndex: 0
 --- !u!1 &7001000000
@@ -24210,7 +24212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: agedBugCrashRate
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8744833543343490996, guid: a3de7b0a77962144d82ffcaa4cb3e29f, type: 3}
       propertyPath: infectionTilemap
@@ -24367,7 +24369,6 @@ SceneRoots:
   - {fileID: 1530111412}
   - {fileID: 1426254949}
   - {fileID: 666887997}
-  - {fileID: 402617071}
   - {fileID: 987266593}
   - {fileID: 685513833}
   - {fileID: 1752816952}
