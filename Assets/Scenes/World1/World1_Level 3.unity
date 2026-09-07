@@ -1749,9 +1749,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 438, y: -114}
+  m_AnchoredPosition: {x: 20, y: -20}
   m_SizeDelta: {x: 160, y: 20}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &520928176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1767,12 +1767,45 @@ MonoBehaviour:
   crashGaugeManager: {fileID: 69240101}
   slider: {fileID: 520928177}
   valueText: {fileID: 0}
-  labelFormat: 'Crash probability: {0}%'
+  labelFormat: '          {0}%'
   font: {fileID: 0}
-  fontSize: 42
-  calmColor: {r: 0.65, g: 1, b: 0.55, a: 1}
+  fontSize: 21
+  calmColor: {r: 1, g: 0, b: 1, a: 1}
   rapidRiseColor: {r: 1, g: 0.22, b: 0.22, a: 1}
   rapidRiseThreshold: 8
+  displaySmoothTime: 0.35
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0.35}
+  backgroundPadding: 10
+  arcRadius: 72
+  needleLength: 60
+  needleThickness: 4
+  needlePivotColor: {r: 0.85, g: 0.85, b: 0.9, a: 1}
+  pivotDotSize: 8
+  needleMinAngle: 90
+  needleMaxAngle: -90
+  tickCount: 5
+  tickLength: 15
+  tickThickness: 6
+  tickColor: {r: 1, g: 1, b: 1, a: 0.9}
+  dangerZoneStartPercent: 70
+  dangerZoneTickColor: {r: 1, g: 0.45, b: 0.3, a: 0.95}
+  pulseStartPercent: 70
+  pulseSpeed: 3
+  pulseAmount: 0.15
+  jitterStartPercent: 85
+  jitterMinAngle: 0.4
+  jitterMaxAngle: 4
+  jitterSpeed: 14
+  textPulseStartPercent: 92
+  textPulseSpeed: 6
+  visualRoot: {fileID: 0}
+  background: {fileID: 0}
+  arcContainer: {fileID: 0}
+  pivot: {fileID: 0}
+  needleRotator: {fileID: 0}
+  needleImage: {fileID: 0}
+  pivotDot: {fileID: 0}
+  ticks: []
 --- !u!114 &520928177
 MonoBehaviour:
   m_ObjectHideFlags: 0
